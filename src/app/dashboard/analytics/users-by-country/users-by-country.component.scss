@@ -1,0 +1,160 @@
+.users-by-country-card {
+    .mat-mdc-card-content {
+        .image {
+            margin-top: 35px;
+        }
+        ul {
+            margin-top: 0;
+            
+            li {
+                flex: 0 0 auto;
+                width: 50%;
+
+                div {
+                    border-top: 1px solid var(--borderColor);
+                    margin-top: 15px;
+                    padding: {
+                        left: 30px;
+                        top: 15px;
+                    };
+                    img {
+                        left: 0;
+                        top: 18px;
+                        width: 20px;
+                        position: absolute;
+                    }
+                    span {
+                        font-size: 12px;
+                        margin-bottom: 5px;
+                    }
+                    h6 {
+                        font-size: 16px;
+                    }
+                }
+                &:first-child, &:nth-child(2) {
+                    div {
+                        border-top-width: 0;
+                    }
+                }
+            }
+        }
+    }
+    &.component-rtl-enabled {
+        .mat-mdc-card-content {
+            ul {
+                li {
+                    div {
+                        padding: {
+                            left: 0;
+                            right: 30px;
+                        };
+                        img {
+                            left: auto;
+                            right: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    .users-by-country-card {
+        .mat-mdc-card-content {
+            .image {
+                margin-top: 17px;
+            }
+            ul {
+                margin-top: -5px;
+                
+                li {
+                    div {
+                        margin-top: 10px;
+                        padding: {
+                            left: 28px;
+                            top: 10px;
+                        };
+                        h6 {
+                            font-size: 15px;
+                        }
+                    }
+                }
+            }
+        }
+        &.component-rtl-enabled {
+            .mat-mdc-card-content {
+                ul {
+                    li {
+                        div {
+                            padding: {
+                                right: 28px;
+                                left: 0;
+                            };
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {
+
+    .users-by-country-card {
+        .mat-mdc-card-content {
+            ul {
+                max-width: 450px;
+                margin: {
+                    left: auto;
+                    right: auto;
+                };
+            }
+        }
+    }
+
+}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {
+
+    .users-by-country-card {
+        .mat-mdc-card-content {
+            ul {
+                li {
+                    div {
+                        padding-left: 28px;
+                    }
+                }
+            }
+        }
+        &.component-rtl-enabled {
+            .mat-mdc-card-content {
+                ul {
+                    li {
+                        div {
+                            padding: {
+                                left: 0;
+                                right: 28px;
+                            };
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}

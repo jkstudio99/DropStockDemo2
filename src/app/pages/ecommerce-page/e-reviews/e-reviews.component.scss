@@ -1,0 +1,76 @@
+::ng-deep {
+    .reviews-card {
+        .mat-mdc-card-header {
+            .mat-mdc-card-header-text {
+                display: block;
+
+                .mat-mdc-card-subtitle {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    ::ng-deep {
+        .reviews-card {
+            .mat-mdc-card-header {
+                .mat-mdc-card-header-text {
+                    .mat-mdc-card-subtitle {
+                        display: block;
+
+                        .search-box {
+                            margin: {
+                                top: 0;
+                                bottom: 12px;
+                            };
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {
+
+    ::ng-deep {
+        .reviews-card {
+            .mat-mdc-card-header {
+                .mat-mdc-card-header-text {
+                    .mat-mdc-card-subtitle {
+                        display: flex;
+
+                        .search-box {
+                            width: 265px;
+                            margin: {
+                                top: 0;
+                                bottom: 0;
+                            };
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}

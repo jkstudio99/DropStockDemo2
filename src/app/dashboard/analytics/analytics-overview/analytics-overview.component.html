@@ -1,0 +1,124 @@
+<mat-card
+    class="analytics-overview-card mb-25 border-radius d-block bg-white border-0 shadow-none"
+    [class.component-rtl-enabled]="themeService.isRTLEnabled()"
+    [class.component-dark-theme]="themeService.isDark()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                Analytics Overview
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <button type="button" mat-button>
+                Day
+            </button>
+            <button type="button" color="active" mat-button>
+                Week
+            </button>
+            <button type="button" mat-button>
+                Month
+            </button>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <p>
+            Track, Analyze, and Optimize Performance
+        </p>
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="chart">
+                    <div id="analytics_overview_chart"></div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <ul class="content p-0 list-unstyled">
+                    <li>
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <span class="d-block text-black">
+                                    New Users
+                                </span>
+                                <h5 class="mb-0">
+                                    19.5k
+                                </h5>
+                            </div>
+                            <div>
+                                <span class="d-block text-black">
+                                    Goal Reached
+                                </span>
+                                <h5 class="mb-0 text-body text-end">
+                                    75%
+                                </h5>
+                            </div>
+                        </div>
+                        <mat-progress-bar mode="determinate" value="75"></mat-progress-bar>
+                    </li>
+                    <li>
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <span class="d-block text-black">
+                                    Page Views
+                                </span>
+                                <h5 class="mb-0">
+                                    48k
+                                </h5>
+                            </div>
+                            <div>
+                                <span class="d-block text-black">
+                                    Goal Reached
+                                </span>
+                                <h5 class="mb-0 text-body text-end">
+                                    45%
+                                </h5>
+                            </div>
+                        </div>
+                        <mat-progress-bar mode="determinate" class="page-views-progressbar" value="45"></mat-progress-bar>
+                    </li>
+                    <li>
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <span class="d-block text-black">
+                                    Page Sessions
+                                </span>
+                                <h5 class="mb-0">
+                                    33.3k
+                                </h5>
+                            </div>
+                            <div>
+                                <span class="d-block text-black">
+                                    Goal Reached
+                                </span>
+                                <h5 class="mb-0 text-body text-end">
+                                    55%
+                                </h5>
+                            </div>
+                        </div>
+                        <mat-progress-bar mode="determinate" class="page-sessions-progressbar" value="55"></mat-progress-bar>
+                    </li>
+                    <li>
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <span class="d-block text-black">
+                                    Bounce Rate
+                                </span>
+                                <h5 class="mb-0">
+                                    22.45%
+                                </h5>
+                            </div>
+                            <div>
+                                <span class="d-block text-black">
+                                    Goal Reached
+                                </span>
+                                <h5 class="mb-0 text-body text-end">
+                                    35%
+                                </h5>
+                            </div>
+                        </div>
+                        <mat-progress-bar mode="determinate" class="bounce-rate-progressbar" value="75"></mat-progress-bar>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

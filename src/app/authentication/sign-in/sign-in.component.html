@@ -1,0 +1,105 @@
+<div class="sign-in-container" [class.dark-theme]="themeService.isDark()">
+  <div class="image-section">
+    <img src="images/sign-in.jpg" alt="{{ 'SIGN_IN.IMAGE_ALT' | translate }}">
+  </div>
+  <div class="form-section">
+    <div class="trezo-form ml-auto mr-auto"
+         [class.component-dark-theme]="themeService.isDark()"
+         [class.component-rtl-enabled]="themeService.isRTLEnabled()">
+      <div class="form-content">
+        <div class="logo">
+          <img src="images/logo-big.svg" alt="{{ 'SIGN_IN.LOGO_ALT' | translate }}">
+          <img src="images/white-logo-big.svg" class="d-none" alt="{{ 'SIGN_IN.LOGO_ALT' | translate }}">
+        </div>
+        <div class="title">
+          <h1 class="fw-semibold">{{ 'SIGN_IN.WELCOME_BACK' | translate }}</h1>
+          <p class="fw-medium">{{ 'SIGN_IN.SIGN_IN_WITH' | translate }}</p>
+        </div>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label class="main-label d-block fw-medium text-black">
+              {{ 'SIGN_IN.USERNAME' | translate }}
+            </label>
+            <mat-form-field>
+              <mat-label>{{ 'SIGN_IN.USERNAME_PLACEHOLDER' | translate }}</mat-label>
+              <input matInput formControlName="username" placeholder="Username">
+            </mat-form-field>
+            <div class="error text-danger" *ngIf="loginForm.get('username')?.invalid && (loginForm.get('username')?.dirty || loginForm.get('username')?.touched)">
+              <div *ngIf="loginForm.get('username')?.errors?.['required']">
+                {{ 'SIGN_IN.USERNAME_REQUIRED' | translate }}
+              </div>
+              <div *ngIf="loginForm.get('username')?.errors?.['pattern']">
+                {{ 'SIGN_IN.USERNAME_INVALID' | translate }}
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="main-label d-block fw-medium text-black">
+              {{ 'SIGN_IN.PASSWORD' | translate }}
+            </label>
+            <mat-form-field>
+              <mat-label>{{ 'SIGN_IN.PASSWORD_PLACEHOLDER' | translate }}</mat-label>
+              <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" placeholder="Password">
+              <button mat-icon-button matSuffix (click)="togglePasswordVisibility()" [attr.aria-label]="'SIGN_IN.HIDE_PASSWORD' | translate" [attr.aria-pressed]="hide">
+                <span class="material-symbols-outlined">
+                  {{hide ? 'visibility_off' : 'visibility'}}
+                </span>
+              </button>
+            </mat-form-field>
+            <div class="error text-danger" *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)">
+              <div *ngIf="loginForm.get('password')?.errors?.['required']">
+                {{ 'SIGN_IN.PASSWORD_REQUIRED' | translate }}
+              </div>
+              <div *ngIf="loginForm.get('password')?.errors?.['minlength']">
+                {{ 'SIGN_IN.PASSWORD_MIN_LENGTH' | translate }}
+              </div>
+            </div>
+          </div>
+          <div class="info d-flex justify-content-between align-items-center">
+            <mat-checkbox formControlName="rememberMe">
+              <ng-container>{{ 'SIGN_IN.REMEMBER_ME' | translate }}</ng-container>
+            </mat-checkbox>
+            <a routerLink="/authentication/forgot-password" class="fw-semibold text-primary">
+              {{ 'SIGN_IN.FORGOT_PASSWORD' | translate }}
+            </a>
+          </div>
+          <button type="submit" mat-button [disabled]="isLoading || loginForm.invalid">
+            <span class="mdc-button__label">
+              <i class="material-symbols-outlined">login</i>
+              {{ 'SIGN_IN.SIGN_IN_BUTTON' | translate }}
+            </span>
+          </button>
+          <p class="info">
+            {{ 'SIGN_IN.NO_ACCOUNT' | translate }} <a routerLink="/authentication/sign-up" class="fw-semibold text-primary">{{ 'SIGN_IN.SIGN_UP' | translate }}</a>
+          </p>
+          <p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="language-menu">
+  <button mat-button [matMenuTriggerFor]="languageMenu">
+    <i class="material-symbols-outlined">translate</i>
+    {{ getCurrentLanguage() | uppercase }}
+  </button>
+  <mat-menu class="language-menu-dropdown" #languageMenu="matMenu" xPosition="before">
+    <span class="title fw-semibold text-black d-block">
+      {{ 'LANGUAGE.SELECT' | translate }}
+    </span>
+    <ul class="menu-body p-0 mb-0 mt-0 list-unstyled">
+      <li>
+        <button mat-button (click)="changeLanguage('en')">
+          <img src="assets/images/flags/uk.svg" alt="EN">
+          English
+        </button>
+      </li>
+      <li>
+        <button mat-button (click)="changeLanguage('th')" class="language-button">
+          <img src="assets/images/flags/thailand.svg" alt="TH">
+          <span class="language-text">ภาษาไทย</span>
+        </button>
+      </li>
+    </ul>
+  </mat-menu>
+</div>

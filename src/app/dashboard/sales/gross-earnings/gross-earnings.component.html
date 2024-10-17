@@ -1,0 +1,45 @@
+<mat-card
+    class="gross-earnings-card mb-25 border-radius d-block border-0 shadow-none"
+    [class.component-rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-content>
+        <div class="gross-earnings d-flex align-items-center">
+            <img src="images/icons/gross-earnings.svg" alt="gross-earnings">
+            <div>
+                <span class="d-block text-body text-uppercase">
+                    Gross Earnings
+                </span>
+                <h4 class="mb-0 fw-semibold">
+                    $78,350.00
+                    <span class="text-success fw-medium position-relative">
+                        <i class="material-symbols-outlined">
+                            trending_up
+                        </i>
+                        +2.3%
+                    </span>
+                </h4>
+            </div>
+        </div>
+        <div class="chart">
+            <div id="gross_earnings_chart"></div>
+        </div>
+        <div class="info d-flex justify-content-between">
+            <div>
+                <span class="d-block text-body">
+                    Total Balance
+                </span>
+                <h6 class="mb-0 fw-medium">
+                    $3,42,890
+                </h6>
+            </div>
+            <div>
+                <span class="d-block text-body">
+                    Withdrawals
+                </span>
+                <h6 class="mb-0 fw-medium">
+                    $2,35,425
+                </h6>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

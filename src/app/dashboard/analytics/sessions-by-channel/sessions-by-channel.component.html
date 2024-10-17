@@ -1,0 +1,102 @@
+<mat-card
+    class="sessions-by-channel-card mb-25 border-radius d-block bg-white border-0 shadow-none"
+    [class.component-rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                Sessions by Channel
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <button mat-button [matMenuTriggerFor]="cardHeaderMenu" class="card-header-menu without-border d-inline-block border-radius">
+                Last 30 Days
+            </button>
+            <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                <ul class="p-0 mt-0 mb-0 list-unstyled">
+                    <li>
+                        <button mat-menu-item>
+                            Last Day
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item>
+                            Last Week
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item>
+                            Last Month
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item>
+                            Last Year
+                        </button>
+                    </li>
+                </ul>
+            </mat-menu>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="chart">
+            <div id="sessions_by_channel_chart"></div>
+        </div>
+        <ul class="list p-0 list-unstyled">
+            <li>
+                <span class="d-block title text-body d-flex align-items-center justify-content-center">
+                    <span class="dot d-block email"></span>
+                    Email
+                </span>
+                <h6 class="mb-0 fw-medium lh-1">
+                    976
+                </h6>
+            </li>
+            <li>
+                <span class="d-block title text-body d-flex align-items-center justify-content-center">
+                    <span class="dot d-block organic-search"></span>
+                    Organic Search
+                </span>
+                <h6 class="mb-0 fw-medium lh-1">
+                    651
+                </h6>
+            </li>
+            <li>
+                <span class="d-block title text-body d-flex align-items-center justify-content-center">
+                    <span class="dot d-block direct-browse"></span>
+                    Direct Browse
+                </span>
+                <h6 class="mb-0 fw-medium lh-1">
+                    818
+                </h6>
+            </li>
+            <li>
+                <span class="d-block title text-body d-flex align-items-center justify-content-center">
+                    <span class="dot d-block paid-search"></span>
+                    Paid Search
+                </span>
+                <h6 class="mb-0 fw-medium lh-1">
+                    459
+                </h6>
+            </li>
+            <li>
+                <span class="d-block title text-body d-flex align-items-center justify-content-center">
+                    <span class="dot d-block social"></span>
+                    Social
+                </span>
+                <h6 class="mb-0 fw-medium lh-1">
+                    320
+                </h6>
+            </li>
+            <li>
+                <span class="d-block title text-body d-flex align-items-center justify-content-center">
+                    <span class="dot d-block referral"></span>
+                    Referral
+                </span>
+                <h6 class="mb-0 fw-medium lh-1">
+                    209
+                </h6>
+            </li>
+        </ul>
+    </mat-card-content>
+</mat-card>

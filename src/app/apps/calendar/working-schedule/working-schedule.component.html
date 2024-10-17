@@ -1,0 +1,160 @@
+<!-- Working Schedule -->
+<mat-card
+    class="calendar-working-schedule-card mb-25 border-radius d-block bg-white border-0 shadow-none"
+    [class.component-rtl-enabled]="themeService.isRTLEnabled()"
+    [class.component-dark-theme]="themeService.isDark()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                Working Schedule
+            </h5>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-calendar></mat-calendar>
+        <div class="upcoming-events">
+            <span class="title d-block fw-medium">
+                Upcoming Events:
+            </span>
+            <owl-carousel-o [options]="upcomingEventsSlides">
+                <ng-template carouselSlide>
+                    <div class="event-item position-relative">
+                        <h6 class="fw-semibold">
+                            Pythons Unleashed: A Development Expedition
+                        </h6>
+                        <span>
+                            <span class="text-primary">
+                                15 April 2024
+                            </span>
+                            -  12.00 PM - 6.00 PM
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template carouselSlide>
+                    <div class="event-item position-relative">
+                        <h6 class="fw-semibold">
+                            Pythons Unleashed: A Development Expedition
+                        </h6>
+                        <span>
+                            <span class="text-primary">
+                                15 April 2024
+                            </span>
+                            -  12.00 PM - 6.00 PM
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template carouselSlide>
+                    <div class="event-item position-relative">
+                        <h6 class="fw-semibold">
+                            Pythons Unleashed: A Development Expedition
+                        </h6>
+                        <span>
+                            <span class="text-primary">
+                                15 April 2024
+                            </span>
+                            -  12.00 PM - 6.00 PM
+                        </span>
+                    </div>
+                </ng-template>
+            </owl-carousel-o>
+        </div>
+        <div class="text-end">
+            <button class="add-new-event-btn" type="button" mat-button (click)="toggleClass()">
+                <i class="material-symbols-outlined">
+                    add
+                </i>
+                Add New Event
+            </button>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+<!-- Add New Popup -->
+<div
+    class="add-new-popup"
+    [class.active]="classApplied"
+>
+    <div class="popup-dialog">
+        <mat-card class="border-radius d-block bg-white border-0 shadow-none">
+            <mat-card-header>
+                <mat-card-title>
+                    <h5 class="mb-0">
+                        Add Event
+                    </h5>
+                </mat-card-title>
+                <mat-card-subtitle>
+                    <button
+                        mat-button
+                        (click)="toggleClass()"
+                    >
+                        <i class="ri-close-fill"></i>
+                    </button>
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="main-label d-block fw-medium text-black">
+                                Event Title
+                            </label>
+                            <mat-form-field>
+                                <mat-label>
+                                    Add title
+                                </mat-label>
+                                <input matInput placeholder="E.g. Conference on Business">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="main-label d-block fw-medium text-black">
+                                Start Date
+                            </label>
+                            <mat-form-field>
+                                <mat-label>Choose a date</mat-label>
+                                <input matInput [matDatepicker]="startDatePicker">
+                                <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+                                <mat-datepicker-toggle matIconSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                                <mat-datepicker #startDatePicker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="main-label d-block fw-medium text-black">
+                                End Date
+                            </label>
+                            <mat-form-field>
+                                <mat-label>Choose a date</mat-label>
+                                <input matInput [matDatepicker]="endDatePicker">
+                                <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+                                <mat-datepicker-toggle matIconSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                                <mat-datepicker #endDatePicker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="btn-box">
+                    <button
+                        mat-button
+                        (click)="toggleClass()"
+                        color="warn"
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        mat-button
+                        color="primary"
+                    >
+                        <i class="material-symbols-outlined">
+                            add
+                        </i>
+                        Create
+                    </button>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

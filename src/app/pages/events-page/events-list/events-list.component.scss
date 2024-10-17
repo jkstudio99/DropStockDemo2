@@ -1,0 +1,30 @@
+::ng-deep {
+    .events-list-card {
+        .mat-mdc-card-header {
+            .mat-mdc-card-header-text {
+                .mat-mdc-card-title {
+                    line-height: initial;
+                    order: 2;
+                }
+                .mat-mdc-card-subtitle {
+                    order: 1;
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    ::ng-deep {
+        .events-list-card {
+            .mat-mdc-card-header {
+                .mat-mdc-card-header-text {
+                    display: block;
+                }
+            }
+        }
+    }
+
+}

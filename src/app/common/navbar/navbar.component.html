@@ -1,0 +1,80 @@
+<nav
+    class="navbar ml-auto mr-auto bg-white transition border-bottom-radius"
+    [ngClass]="{'sticky': isSticky}"
+>
+    <div class="collapse navbar-collapse scroll-container">
+        <button class="scroll-btn lh-1 p-0 bg-transparent border-none cursor-pointer d-inline-block transition left-btn" *ngIf="showScrollButtons" (click)="scrollLeft()">
+            <i class="ri-arrow-left-s-line"></i>
+        </button>
+        <div class="scroll-content" #scrollContent>
+            <ul class="navbar-nav list-unstyled p-0 m-0">
+                <li class="nav-item position-relative">
+                    <a href="#" class="nav-link active dropdown-toggle">
+                        <i class="material-symbols-outlined">
+                            dashboard
+                        </i>
+                        Dashboard
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="nav-item position-relative">
+                            <a href="#" class="nav-link">
+                                eCommerce
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item position-relative">
+                    <a href="#" class="nav-link dropdown-toggle">
+                        <i class="material-symbols-outlined">
+                            dashboard
+                        </i>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item position-relative">
+                    <a href="#" class="nav-link dropdown-toggle">
+                        <i class="material-symbols-outlined">
+                            dashboard
+                        </i>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item position-relative">
+                    <a href="#" class="nav-link dropdown-toggle">
+                        <i class="material-symbols-outlined">
+                            dashboard
+                        </i>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item position-relative">
+                    <a href="#" class="nav-link dropdown-toggle">
+                        <i class="material-symbols-outlined">
+                            dashboard
+                        </i>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item position-relative">
+                    <a href="#" class="nav-link dropdown-toggle">
+                        <i class="material-symbols-outlined">
+                            dashboard
+                        </i>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item position-relative">
+                    <a href="#" class="nav-link dropdown-toggle">
+                        <i class="material-symbols-outlined">
+                            dashboard
+                        </i>
+                        Dashboard
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <button class="scroll-btn lh-1 p-0 bg-transparent border-none cursor-pointer d-inline-block transition right-btn" *ngIf="showScrollButtons" (click)="scrollRight()">
+            <i class="ri-arrow-right-s-line"></i>
+        </button>
+    </div>
+</nav>

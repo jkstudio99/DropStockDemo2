@@ -1,0 +1,233 @@
+::ng-deep {
+    .realtime-active-users-card {
+        --primaryColor: #4936F5;
+
+        .mat-mdc-card-content {
+            position: relative;
+            z-index: 1;
+
+            h6 {
+                font-size: 16px;
+                margin-bottom: 6px;
+            }
+            h2 {
+                font-size: 36px;
+                margin-bottom: 47px;
+                letter-spacing: -1px;
+            }
+            .sub-title {
+                padding-bottom: 8px;
+                border-bottom: 1px solid #605DFF;
+            }
+            .chart {
+                margin: {
+                    left: -29px;
+                    right: -17px;
+                };
+            }
+            ul {
+                margin: {
+                    top: 12px;
+                    bottom: 25px;
+                };
+                li {
+                    border-bottom: 1px solid #605DFF;
+                    padding-bottom: 7.3px;
+                    margin-bottom: 7.3px;
+
+                    span {
+                        i {
+                            margin-left: 5px;
+                        }
+                    }
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+            .mat-mdc-button {
+                padding: 6px 12px;
+                border-radius: 4px;
+                color: var(--whiteColor);
+                border: 1px solid #757DFF;
+                font: {
+                    size: var(--fontSize);
+                    weight: 500;
+                };
+                .mdc-button__label {
+                    display: block;
+                    padding-right: 17px;
+
+                    i {
+                        top: 50%;
+                        right: -6px;
+                        font-size: 20px;
+                        position: absolute;
+                        transform: translateY(-50%);
+                    }
+                }
+                &:hover {
+                    color: var(--blackColor);
+                    border-color: var(--whiteColor);
+                    background-color: var(--whiteColor);
+                }
+            }
+            .shape {
+                top: -25px;
+                z-index: -1;
+                right: -25px;
+                position: absolute;
+            }
+        }
+        &.component-rtl-enabled {
+            .mat-mdc-card-content {
+                .chart {
+                    margin: {
+                        right: -29px;
+                        left: -17px;
+                    };
+                }
+                ul {
+                    li {
+                        span {
+                            i {
+                                margin: {
+                                    left: 0;
+                                    right: 5px;
+                                };
+                            }
+                        }
+                    }
+                }
+                .mat-mdc-button {
+                    .mdc-button__label {
+                        padding: {
+                            right: 0;
+                            left: 17px;
+                        };
+                        i {
+                            right: auto;
+                            left: -6px;
+                        }
+                    }
+                }
+                .shape {
+                    transform: scaleX(-1);
+                    left: -25px;
+                    right: 0;
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    ::ng-deep {
+        .realtime-active-users-card {
+            .mat-mdc-card-content {
+                h6 {
+                    font-size: 14px;
+                    margin-bottom: 7px;
+                }
+                h2 {
+                    font-size: 30px;
+                    margin-bottom: 20px;
+                    letter-spacing: -.7px;
+                }
+                .sub-title {
+                    padding-bottom: 7px;
+                }
+                .chart {
+                    margin: {
+                        top: -5px;
+                        bottom: -10px;
+                    };
+                }
+                ul {
+                    margin: {
+                        top: 12px;
+                        bottom: 17px;
+                    };
+                    li {
+                        padding-bottom: 7px;
+                        margin-bottom: 7px;
+                    }
+                }
+                .mat-mdc-button {
+                    font-size: 13px;
+                }
+                .shape {
+                    top: -17px;
+                    right: -17px;
+                }
+            }
+            &.component-rtl-enabled {
+                .mat-mdc-card-content {
+                    .shape {
+                        right: auto;
+                        left: -17px;
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {
+
+    ::ng-deep {
+        .realtime-active-users-card {
+            .mat-mdc-card-content {
+                .shape {
+                    top: -20px;
+                    right: -20px;
+                }
+            }
+            &.component-rtl-enabled {
+                .mat-mdc-card-content {
+                    .shape {
+                        right: auto;
+                        left: -20px;
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {
+
+    ::ng-deep {
+        .realtime-active-users-card {
+            .mat-mdc-card-content {
+                h6 {
+                    font-size: 15px;
+                }
+                h2 {
+                    font-size: 34px;
+                    margin-bottom: 35px;
+                    letter-spacing: -.9px;
+                }
+                ul {
+                    margin-bottom: 20px;
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}

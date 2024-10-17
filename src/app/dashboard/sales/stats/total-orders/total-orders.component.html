@@ -1,0 +1,30 @@
+<div
+    class="orders-box total-orders-box border-radius position-relative overflow-hidden"
+    [class.component-rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <div class="content d-flex align-items-center">
+        <div class="icon bg-purple-100 text-white text-center position-relative z-1">
+            <i class="ri-shopping-bag-3-line"></i>
+        </div>
+        <div class="title">
+            <h6 class="fw-medium">
+                1,250
+            </h6>
+            <span class="d-block text-body">
+                Total Orders
+            </span>
+        </div>
+    </div>
+    <div class="info d-flex align-items-center">
+        <span class="info-badge fw-medium d-inline-block position-relative">
+            <i class="ri-arrow-up-fill"></i>
+            8%
+        </span>
+        <span class="days d-block">
+            from last month
+        </span>
+    </div>
+    <div class="chart">
+        <div id="stats_total_orders_chart"></div>
+    </div>
+</div>

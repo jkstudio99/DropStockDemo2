@@ -1,0 +1,146 @@
+::ng-deep {
+    .p-about-me-card {
+        .mat-mdc-card-content {
+            border-top: 1px solid var(--borderColor);
+            padding-top: 25px;
+    
+            h6 {
+                font-size: 16px;
+                margin-bottom: 10px;
+    
+                &:not(:first-child) {
+                    margin-top: 25px;
+                }
+            }
+        }
+    }
+    .p-followers-card {
+        .mat-mdc-card-content {
+            .follower {
+                margin-bottom: 15px;
+                padding-bottom: 15px;
+                border-bottom: 1px solid var(--borderColor);
+    
+                .image {
+                    img {
+                        width: 42px;
+                        margin-bottom: -3px;
+                    }
+                }
+                .title {
+                    margin-left: 12px;
+                    
+                    span {
+                        &:not(:first-child) {
+                            margin-top: 6px;
+                        }
+                    }
+                }
+                .link-btn {
+                    padding: 0;
+                    width: 36px;
+                    height: 36px;
+                    min-width: auto;
+                    transition: unset;
+                    text-align: center;
+                    color: var(--bodyColor);
+                    border: 1px solid var(--borderColor);
+    
+                    .mdc-button__label {
+                        left: 0;
+                        right: 0;
+                        top: 50%;
+                        margin-top: 2px;
+                        position: absolute;
+                        transform: translateY(-50%);
+    
+                        i {
+                            font-size: 18px;
+                        }
+                    }
+                }
+                &:last-child {
+                    border-bottom-width: 0;
+                    padding-bottom: 0;
+                    margin-bottom: 0;
+                }
+            }
+        }
+        &.component-rtl-enabled {
+            .mat-mdc-card-content {
+                .follower {
+                    .title {
+                        margin: {
+                            left: 0;
+                            right: 12px;
+                        };
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    ::ng-deep {
+        .p-about-me-card {
+            .mat-mdc-card-content {
+                padding-top: 17px;
+        
+                h6 {
+                    font-size: 14px;
+        
+                    &:not(:first-child) {
+                        margin-top: 17px;
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {
+
+    ::ng-deep {
+        .p-about-me-card {
+            .mat-mdc-card-content {
+                padding-top: 20px;
+        
+                h6 {
+                    &:not(:first-child) {
+                        margin-top: 20px;
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {
+
+    ::ng-deep {
+        .p-about-me-card {
+            .mat-mdc-card-content {
+                h6 {
+                    font-size: 15px;
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}

@@ -1,0 +1,41 @@
+.example-container {
+    -webkit-overflow-scrolling: touch;
+    overflow-x: auto;
+    height: 400px;
+
+    &::-webkit-scrollbar {
+        -webkit-appearance: none;
+
+        &:vertical {
+            width: 6px;
+        }
+        &:horizontal {
+            height: 6px;
+        }
+    }
+    &::-webkit-scrollbar-thumb {
+        cursor: pointer;
+        border-radius: 7px;
+        background-color: var(--blackColor);
+    }
+    &::-webkit-scrollbar-track {
+        border-radius: 7px;
+        background-color: #F6F7F9;
+    }
+}
+.mat-mdc-table-sticky-border-elem-right {
+    border-left: 1px dashed var(--borderColor);
+}
+.mat-mdc-table-sticky-border-elem-left {
+    border-right: 1px dashed var(--borderColor);
+}
+.component-dark-theme {
+    &.example-container {
+        &::-webkit-scrollbar-thumb {
+            background-color: #0A0E19;
+        }
+        &::-webkit-scrollbar-track {
+            background-color: #15203c;
+        }
+    }
+}

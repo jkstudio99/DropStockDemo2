@@ -1,0 +1,11 @@
+.mat-mdc-cell {
+    border-bottom-width: 0 !important;
+    border-top: 1px solid var(--borderColor)  !important;
+}
+.mat-mdc-row {
+    &:last-child {
+        .mat-mdc-cell {
+            border-bottom-width: 1px !important;
+        }
+    }
+}

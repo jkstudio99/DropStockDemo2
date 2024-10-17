@@ -1,0 +1,170 @@
+.gross-earnings-card {
+    background: #F3E8FF;
+
+    .mat-mdc-card-content {
+        .gross-earnings {
+            div {
+                margin-left: 10px;
+
+                h4 {
+                    margin-top: 6px;
+                    font-size: 20px;
+
+                    span {
+                        top: -1px;
+                        font-size: 14px;
+                        color: #D8FFC8;
+                        margin-left: 2px;
+                        padding-left: 25px;
+
+                        i {
+                            left: 0;
+                            top: 50%;
+                            font-size: 20px;
+                            position: absolute;
+                            transform: translateY(-50%);
+                        }
+                    }
+                }
+            }
+        }
+        .chart {
+            margin: {
+                top: -15px;
+                bottom: -5px;
+            };
+        }
+        .info {
+            border-top: 1px solid var(--borderColor);
+            padding-top: 25px;
+
+            span {
+                font-size: 12px;
+            }
+            h6 {
+                font-size: 18px;
+                margin-top: 5px;
+
+                span {
+                    padding-left: 16px;
+
+                    i {
+                        left: 0;
+                        top: 50%;
+                        font-size: 16px;
+                        position: absolute;
+                        transform: translateY(-50%);
+                    }
+                }
+            }
+        }
+    }
+    &.component-rtl-enabled {
+        .mat-mdc-card-content {
+            .gross-earnings {
+                div {
+                    margin: {
+                        left: 0;
+                        right: 10px;
+                    };
+                    h4 {
+                        span {
+                            margin: {
+                                left: 0;
+                                right: 2px;
+                            };
+                            padding: {
+                                left: 0;
+                                right: 25px;
+                            };
+                            i {
+                                left: auto;
+                                right: 0;
+                            }
+                        }
+                    }
+                }
+            }
+            .info {
+                h6 {
+                    span {
+                        padding: {
+                            left: 0;
+                            right: 16px;
+                        };
+                        i {
+                            left: auto;
+                            right: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    .gross-earnings-card {
+        .mat-mdc-card-content {
+            .gross-earnings {
+                div {
+                    h4 {
+                        margin-top: 5px;
+                        font-size: 18px;
+                    }
+                }
+            }
+            .chart {
+                margin: {
+                    top: -15px;
+                    bottom: -15px;
+                };
+            }
+            .info {
+                padding-top: 20px;
+    
+                h6 {
+                    font-size: 16px;
+    
+                    span {
+                        i {
+                            font-size: 15px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {
+
+    .gross-earnings-card {
+        .mat-mdc-card-content {
+            .gross-earnings {
+                div {
+                    h4 {
+                        font-size: 19px;
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}

@@ -1,0 +1,34 @@
+.example-listbox {
+    display: flex;
+    padding: 0;
+}
+.example-option {
+    flex: 1;
+    display: flex;
+    cursor: pointer;
+    list-style: none;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    padding: 12px !important;
+    border-width: 1px 1px 1px 0;
+    border: solid var(--borderColor);
+
+    &:first-child {
+        border-left-width: 1px;
+    }
+    &[aria-selected='true'] {
+        &::before {
+            top: 3px;
+            content: '';
+            bottom: 3px;
+            position: absolute;
+            left: 3px !important;
+            right: 3px !important;
+            border: 2px solid var(--primaryColor);
+        }
+    }
+    &[aria-selected='true'] {
+        color: var(--blackColor) !important;
+    }
+}

@@ -1,0 +1,38 @@
+<mat-card class="total-sales-card mb-25 border-radius d-block bg-white border-0 shadow-none">
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                Total Sales
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <button mat-button [matMenuTriggerFor]="cardHeaderMenu" class="card-header-menu d-inline-block border-radius">
+                Monthly
+            </button>
+            <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                <ul class="p-0 mt-0 mb-0 list-unstyled">
+                    <li>
+                        <button mat-menu-item>
+                            Weekly
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item>
+                            Monthly
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item>
+                            Yearly
+                        </button>
+                    </li>
+                </ul>
+            </mat-menu>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="chart">
+            <div id="ecommerce_total_sales_chart"></div>
+        </div>
+    </mat-card-content>
+</mat-card>

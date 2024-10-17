@@ -1,0 +1,144 @@
+<mat-card
+    class="ecommerce-sales-by-locations-card mb-25 border-radius d-block bg-white border-0 shadow-none"
+    [class.component-rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                Sales by Locations
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <button mat-button [matMenuTriggerFor]="cardHeaderMenu" class="dot-menu p-0 d-inline-block border-radius-0">
+                <i class="ri-more-fill"></i>
+            </button>
+            <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                <ul class="p-0 mt-0 mb-0 list-unstyled">
+                    <li>
+                        <button mat-menu-item>
+                            This Day
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item>
+                            This Week
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item>
+                            This Month
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item>
+                            This Year
+                        </button>
+                    </li>
+                </ul>
+            </mat-menu>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="text-center">
+            <img src="images/vector-map.png" alt="vector-map">
+        </div>
+        <ul class="p-0 mb-0 list-unstyled">
+            <li class="d-flex align-items-center">
+                <div class="flag flex-shrink-0">
+                    <img src="images/flags/usa.svg" alt="usa">
+                </div>
+                <div class="flex-grow-1">
+                    <span class="title d-block fw-medium">
+                        United States
+                    </span>
+                    <div class="progressbar d-flex align-items-center">
+                        <mat-progress-bar mode="determinate" value="85"></mat-progress-bar>
+                        <span class="d-block percentage">
+                            85%
+                        </span>
+                    </div>
+                </div>
+            </li>
+            <li class="d-flex align-items-center">
+                <div class="flag flex-shrink-0">
+                    <img src="images/flags/germany.svg" alt="germany">
+                </div>
+                <div class="flex-grow-1">
+                    <span class="title d-block fw-medium">
+                        Germany
+                    </span>
+                    <div class="progressbar d-flex align-items-center">
+                        <mat-progress-bar mode="determinate" value="75"></mat-progress-bar>
+                        <span class="d-block percentage">
+                            75%
+                        </span>
+                    </div>
+                </div>
+            </li>
+            <li class="d-flex align-items-center">
+                <div class="flag flex-shrink-0">
+                    <img src="images/flags/uk.svg" alt="uk">
+                </div>
+                <div class="flex-grow-1">
+                    <span class="title d-block fw-medium">
+                        United Kingdom
+                    </span>
+                    <div class="progressbar d-flex align-items-center">
+                        <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+                        <span class="d-block percentage">
+                            40%
+                        </span>
+                    </div>
+                </div>
+            </li>
+            <li class="d-flex align-items-center">
+                <div class="flag flex-shrink-0">
+                    <img src="images/flags/canada.svg" alt="canada">
+                </div>
+                <div class="flex-grow-1">
+                    <span class="title d-block fw-medium">
+                        Canada
+                    </span>
+                    <div class="progressbar d-flex align-items-center">
+                        <mat-progress-bar mode="determinate" value="10"></mat-progress-bar>
+                        <span class="d-block percentage">
+                            10%
+                        </span>
+                    </div>
+                </div>
+            </li>
+            <li class="d-flex align-items-center">
+                <div class="flag flex-shrink-0">
+                    <img src="images/flags/portugal.svg" alt="portugal">
+                </div>
+                <div class="flex-grow-1">
+                    <span class="title d-block fw-medium">
+                        Portugal
+                    </span>
+                    <div class="progressbar d-flex align-items-center">
+                        <mat-progress-bar mode="determinate" value="5"></mat-progress-bar>
+                        <span class="d-block percentage">
+                            05%
+                        </span>
+                    </div>
+                </div>
+            </li>
+            <li class="d-flex align-items-center">
+                <div class="flag flex-shrink-0">
+                    <img src="images/flags/spain.svg" alt="spain">
+                </div>
+                <div class="flex-grow-1">
+                    <span class="title d-block fw-medium">
+                        Spain
+                    </span>
+                    <div class="progressbar d-flex align-items-center">
+                        <mat-progress-bar mode="determinate" value="15"></mat-progress-bar>
+                        <span class="d-block percentage">
+                            15%
+                        </span>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </mat-card-content>
+</mat-card>

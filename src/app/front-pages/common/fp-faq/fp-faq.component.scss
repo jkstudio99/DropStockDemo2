@@ -1,0 +1,189 @@
+::ng-deep {
+    .faq-accordion {
+        max-width: 738px;
+
+        &.mat-accordion {
+            .mat-expansion-panel {
+                border-radius: 7px;
+                margin-bottom: 15px;
+                color: var(--blackColor);
+                background-color: var(--whiteColor);
+
+                &.mat-expansion-panel-spacing {
+                    margin: 0 0 15px;
+
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                }
+                .mat-expansion-panel-header-title {
+                    color: var(--blackColor);
+                }
+                .mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
+                    margin-right: 15px;
+                }
+                .mat-expansion-panel-header {
+                    height: auto;
+                    padding: 13px 25px;
+                    font: {
+                        size: 16px;
+                        weight: 500;
+                    };
+                }
+                .mat-expansion-panel-content {
+                    .mat-expansion-panel-body {
+                        color: var(--bodyColor);
+                        padding: {
+                            left: 25px;
+                            right: 25px;
+                            bottom: 20px;
+                        };
+                        p {
+                            line-height: 1.6;
+                        }
+                        ol, ul {
+                            padding-left: 18px;
+                            margin: {
+                                top: 15px;
+                                bottom: 15px;
+                            };
+                            li {
+                                line-height: 1.6;
+                                margin-bottom: 7px;
+
+                                &:last-child {
+                                    margin-bottom: 0;
+                                }
+                            }
+                            &:last-child {
+                                margin-bottom: 0;
+                            }
+                        }
+                    }
+                }
+                &:not([class*=mat-elevation-z]) {
+                    box-shadow: unset;
+                }
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+            &.component-dark-theme {
+                .mat-expansion-panel {
+                    color: var(--whiteColor);
+                    background-color: #15203c;
+    
+                    .mat-expansion-panel-header-title {
+                        color: var(--whiteColor);
+                    }
+                }
+            }
+            &.component-rtl-enabled {
+                .mat-expansion-panel {
+                    .mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
+                        margin: {
+                            right: 0;
+                            left: 15px;
+                        };
+                    }
+                    .mat-expansion-panel-content {
+                        .mat-expansion-panel-body {
+                            ol, ul {
+                                padding: {
+                                    left: 0;
+                                    right: 18px;
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    ::ng-deep {
+        .faq-accordion {
+            max-width: 100%;
+    
+            &.mat-accordion {
+                .mat-expansion-panel {
+                    .mat-expansion-panel-header {
+                        padding: 12px 17px;
+                        font-size: 14px;
+                    }
+                    .mat-expansion-panel-content {
+                        .mat-expansion-panel-body {
+                            padding: {
+                                left: 17px;
+                                right: 17px;
+                                bottom: 17px;
+                            };
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {
+
+    ::ng-deep {
+        .faq-accordion {
+            &.mat-accordion {
+                .mat-expansion-panel {
+                    .mat-expansion-panel-header {
+                        padding: {
+                            left: 20px;
+                            right: 20px;
+                        };
+                    }
+                    .mat-expansion-panel-content {
+                        .mat-expansion-panel-body {
+                            padding: {
+                                left: 20px;
+                                right: 20px;
+                                bottom: 20px;
+                            };
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {
+
+    ::ng-deep {
+        .faq-accordion {
+            max-width: 100%;
+    
+            &.mat-accordion {
+                .mat-expansion-panel {
+                    .mat-expansion-panel-header {
+                        font-size: 15px;
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}

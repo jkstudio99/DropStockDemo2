@@ -1,0 +1,257 @@
+<div
+    [class.card-without-border-radius]="themeService.isCardWithoutBorderRadius()"
+    [class.card-with-box-shadow]="themeService.isCardWithBoxShadow()"
+    class="header-area bg-white border-bottom-radius transition"
+    [ngClass]="{'active': isSidebarToggled, 'sticky': isSticky}"
+    [class.component-rtl-enabled]="themeService.isRTLEnabled()"
+    [class.right-sidebar]="themeService.isRightSidebar()"
+    [class.hide-sidebar]="themeService.isHideSidebar()"
+    [class.card-borderd]="themeService.isCardBordered()"
+    [class.dark-header]="themeService.isHeaderDark()"
+>
+    <div class="d-md-flex align-items-center justify-content-between">
+        <div class="header-left-side d-flex align-items-center">
+            <div
+                class="burger-menu transition position-relative lh-1"
+                [ngClass]="{'active': isSidebarToggled}"
+                (click)="toggle()"
+            >
+                <i class="material-symbols-outlined">
+                    menu
+                </i>
+            </div>
+            <form class="search-box position-relative">
+                <input type="text" class="input-search" placeholder="Search here.....">
+                <button type="submit" class="bg-transparent p-0 border-none transition">
+                    <i class="material-symbols-outlined">
+                        search
+                    </i>
+                </button>
+            </form>
+        </div>
+        <ul class="header-right-side d-flex align-items-center m-0 p-0 list-unstyled">
+            <li>
+                <button
+                    mat-button
+                    (click)="toggleTheme()"
+                    class="dark-swtich-btn"
+                >
+                    <i class="material-symbols-outlined">
+                        light_mode
+                    </i>
+                </button>
+            </li>
+            <li>
+                <button type="button" mat-button [matMenuTriggerFor]="languageMenu" class="language-menu-btn">
+                    <i class="material-symbols-outlined">
+                        translate
+                    </i>
+                </button>
+                <mat-menu class="language-menu-dropdown" #languageMenu="matMenu" xPosition="before">
+                    <span class="title fw-semibold text-black d-block">
+                        เลือกภาษา
+                    </span>
+                    <ul class="menu-body p-0 mb-0 mt-0 list-unstyled">
+                        <li>
+                            <button mat-button>
+                                <img src="images/flags/uk.svg" alt="EN">
+                                English
+                            </button>
+                        </li>
+                        <li>
+                            <button mat-button>
+                                <img src="images/flags/thailand.svg" alt="TH">
+                                ภาษาไทย
+                            </button>
+                        </li>
+                    </ul>
+                </mat-menu>
+            </li>
+            <li>
+                <button
+                    mat-button
+                    (click)="toggleFullscreen()"
+                    class="fullscreen-btn"
+                >
+                    <i class="material-symbols-outlined">
+                        {{ isFullscreen ? 'fullscreen_exit' : 'fullscreen' }}
+                    </i>
+                </button>
+            </li>
+            <li>
+                <button mat-button [matMenuTriggerFor]="notificationsMenu" class="notifications-menu-btn">
+                    <i class="material-symbols-outlined">
+                        notifications
+                    </i>
+                    <div class="dot rounded-circle"></div>
+                </button>
+                <mat-menu class="notifications-menu-dropdown" #notificationsMenu="matMenu" xPosition="before">
+                    <div class="title d-flex align-items-center justify-content-between">
+                        <span class="fw-semibold text-black">
+                            Notifications
+                            <span class="text-body fw-normal">
+                                (03)
+                            </span>
+                        </span>
+                        <a href="javascript:void(0);" class="text-primary">
+                            Clear All
+                        </a>
+                    </div>
+                    <ul class="menu-body p-0 mt-0 list-unstyled">
+                        <li class="position-relative">
+                            <div class="icon rounded-circle d-flex align-items-center justify-content-center position-absolute text-center transition">
+                                <i class="material-symbols-outlined">
+                                    sms
+                                </i>
+                            </div>
+                            <span class="sub-title d-block text-black">
+                                You have requested to <strong class="fw-semibold">withdrawal</strong>
+                            </span>
+                            <span class="time d-block">
+                                2 hrs ago
+                            </span>
+                            <a routerLink="/dashboard/notifications" class="d-block left-0 top-0 bottom-0 right-0 z-1 position-absolute"></a>
+                        </li>
+                        <li class="position-relative">
+                            <div class="icon rounded-circle d-flex align-items-center justify-content-center position-absolute text-center transition">
+                                <i class="material-symbols-outlined">
+                                    person
+                                </i>
+                            </div>
+                            <span class="sub-title d-block text-black">
+                                <strong class="fw-semibold">A new user</strong> added in Trezo
+                            </span>
+                            <span class="time d-block">
+                                3 hrs ago
+                            </span>
+                            <a routerLink="/dashboard/notifications" class="d-block left-0 top-0 bottom-0 right-0 z-1 position-absolute"></a>
+                            <span class="unread d-inline-block rounded-circle bg-primary position-absolute"></span>
+                        </li>
+                        <li class="position-relative">
+                            <div class="icon rounded-circle d-flex align-items-center justify-content-center position-absolute text-center transition">
+                                <i class="material-symbols-outlined">
+                                    mark_email_unread
+                                </i>
+                            </div>
+                            <span class="sub-title d-block text-black">
+                                You have requested to <strong class="fw-semibold">withdrawal</strong>
+                            </span>
+                            <span class="time d-block">
+                                1 day ago
+                            </span>
+                            <a routerLink="/dashboard/notifications" class="d-block left-0 top-0 bottom-0 right-0 z-1 position-absolute"></a>
+                        </li>
+                    </ul>
+                    <div class="menu-footer text-center">
+                        <a routerLink="/dashboard/notifications" class="d-inline-block fw-medium position-relative text-primary">
+                            See All Notifications
+                        </a>
+                    </div>
+                </mat-menu>
+            </li>
+            <li>
+                <button mat-button [matMenuTriggerFor]="profileMenu" class="profile-menu-btn">
+                    <img src="images/admin.png" class="rounded-circle" alt="admin-image">
+                    <span class="fw-semibold text-black">
+                        สมชาย
+                    </span>
+                </button>
+                <mat-menu class="profile-menu-dropdown" #profileMenu="matMenu" xPosition="before">
+                    <div class="admin d-flex align-items-center">
+                        <img src="images/admin.png" class="rounded-circle" alt="admin-image">
+                        <div>
+                            <span class="d-block text-black fw-medium">
+                                สมชาย
+                            </span>
+                            <span class="d-block">
+                                Marketing Manager
+                            </span>
+                        </div>
+                    </div>
+                    <ul class="list p-0 mt-0 mb-0 list-unstyled">
+                        <li>
+                            <a routerLink="/dashboard/my-profile" class="d-block position-relative">
+                                <i class="material-symbols-outlined">
+                                    account_circle
+                                </i>
+                                My Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="/dashboard/apps/chat" class="d-block position-relative">
+                                <i class="material-symbols-outlined">
+                                    chat
+                                </i>
+                                Messages
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="/dashboard/apps" class="d-block position-relative">
+                                <i class="material-symbols-outlined">
+                                    format_list_bulleted
+                                </i>
+                                My Task
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="/dashboard/ecommerce-page/checkout" class="d-block position-relative">
+                                <i class="material-symbols-outlined">
+                                    credit_card
+                                </i>
+                                Billing
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="border-top"></div>
+                    <ul class="list p-0 mt-0 mb-0 list-unstyled">
+                        <li>
+                            <a routerLink="/dashboard/settings" class="d-block position-relative">
+                                <i class="material-symbols-outlined">
+                                    settings
+                                </i>
+                                Settings
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="/dashboard/faq" class="d-block position-relative">
+                                <i class="material-symbols-outlined">
+                                    support
+                                </i>
+                                Support
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="/authentication/lock-screen" class="d-block position-relative">
+                                <i class="material-symbols-outlined">
+                                    lock
+                                </i>
+                                Lock Screen
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="/authentication/logout" class="d-block position-relative">
+                                <i class="material-symbols-outlined">
+                                    logout
+                                </i>
+                                Logout
+                            </a>
+                        </li>
+                    </ul>
+                </mat-menu>
+            </li>
+            <li>
+                <button
+                    mat-button
+                    type="button"
+                    class="settings-btn"
+                    (click)="settingsButtonToggle()"
+                    [ngClass]="{'active': isToggled}"
+                >
+                    <i class="material-symbols-outlined">
+                        settings
+                    </i>
+                </button>
+            </li>
+        </ul>
+    </div>
+</div>

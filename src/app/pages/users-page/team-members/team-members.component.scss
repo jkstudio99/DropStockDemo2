@@ -1,0 +1,214 @@
+::ng-deep {
+    .team-member-card {
+        .mat-mdc-card-header {
+            margin-bottom: 0;
+            
+            .mat-mdc-card-header-text {
+                .mat-mdc-card-title {
+                    line-height: initial;
+                    order: 2;
+                }
+                .mat-mdc-card-subtitle {
+                    order: 1;
+                }
+            }
+        }
+        .mat-mdc-card-content {
+            .info {
+                img {
+                    width: 65px;
+                    height: 65px;
+                    margin-right: 12px;
+                    border: 2px solid var(--borderColor);
+                }
+                .title {
+                    font-size: 16px;
+                    margin-bottom: 6px;
+                }
+                .mat-mdc-button {
+                    &.dot-menu {
+                        height: 21.59px;
+                        min-width: auto;
+                        font-size: 26px;
+                        margin-right: -2px;
+                        line-height: 21.59px;
+                        color: var(--bodyColor);
+
+                        .mdc-button__ripple {
+                            display: none;
+                        }
+                        .mdc-button__label {
+                            display: block;
+                        }
+                        &:hover {
+                            color: var(--primaryColor);
+                        }
+                    }
+                }
+            }
+            ul {
+                margin-top: 15px;
+
+                li {
+                    margin-bottom: 13px;
+
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+            .socials-link {
+                margin-top: 20px;
+
+                a {
+                    width: 28px;
+                    height: 28px;
+                    margin-right: 10px;
+                    color: var(--whiteColor);
+                    background-color: var(--primaryColor);
+
+                    i {
+                        left: 0;
+                        right: 0;
+                        top: 50%;
+                        position: absolute;
+                        transform: translateY(-50%);
+                    }
+                    &:hover {
+                        transform: translateY(-4px);
+                    }
+                    &.facebook {
+                        background-color: #3a559f;
+                    }
+                    &.twitter {
+                        background-color: #03a9f4;
+                    }
+                    &.linkedin {
+                        background-color: #007ab9;
+                    }
+                    &.github {
+                        background-color: #000000;
+                    }
+                    &:last-child {
+                        margin-right: 0;
+                    }
+                }
+            }
+        }
+    }
+    .component-rtl-enabled {
+        .team-member-card {
+            .mat-mdc-card-content {
+                .info {
+                    img {
+                        margin: {
+                            right: 0;
+                            left: 12px;
+                        };
+                    }
+                    .mat-mdc-button {
+                        &.dot-menu {
+                            margin: {
+                                right: 0;
+                                left: -2px;
+                            };
+                        }
+                    }
+                }
+                .socials-link {
+                    a {
+                        margin: {
+                            left: 10px;
+                            right: 0;
+                        };
+                        &:last-child {
+                            margin-left: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    ::ng-deep {
+        .team-member-card {
+            .mat-mdc-card-header {
+                .mat-mdc-card-header-text {
+                    display: block;
+                }
+            }
+            .mat-mdc-card-content {
+                .info {
+                    img {
+                        width: 60px;
+                        height: 60px;
+                    }
+                    .title {
+                        font-size: 14px;
+                    }
+                }
+                ul {
+                    margin-top: 12px;
+                }
+                .socials-link {
+                    margin-top: 15px;
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {
+
+    ::ng-deep {
+        .team-member-card {
+            .mat-mdc-card-header {
+                .mat-mdc-card-header-text {
+                    display: flex;
+
+                    .search-box {
+                        width: 265px;
+                        margin-top: 0;
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {
+
+    ::ng-deep {
+        .team-member-card {
+            .mat-mdc-card-content {
+                .info {
+                    img {
+                        width: 60px;
+                        height: 60px;
+                    }
+                    .title {
+                        font-size: 15px;
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}

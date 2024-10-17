@@ -1,0 +1,58 @@
+<mat-card
+    class="analytics-stats-card mb-25 border-radius d-block bg-white border-0 shadow-none"
+    [class.component-rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-content>
+        <div class="row">
+            <div class="col-lg-4 col-sm-6">
+                <div class="item position-relative">
+                    <div class="title">
+                        <span class="d-block">
+                            Website Visits
+                        </span>
+                        <h5 class="mb-0">
+                            215.2k
+                        </h5>
+                    </div>
+                    <div class="chart">
+                        <div id="website_visits_chart"></div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <span class="info-badge d-inline-block">
+                            +10% Increase
+                        </span>
+                        <span class="days d-block">
+                            Last 7 days
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <div class="item position-relative">
+                    <div class="title">
+                        <span class="d-block">
+                            New Registers
+                        </span>
+                        <h5 class="mb-0">
+                            35.3k
+                        </h5>
+                    </div>
+                    <div class="chart">
+                        <div id="new_registers_chart"></div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <span class="info-badge d-inline-block">
+                            +15% Increase
+                        </span>
+                        <span class="days d-block">
+                            Last 7 days
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="shape">
+            <img src="images/spring-fat.png" alt="spring-fat">
+        </div>
+    </mat-card-content>
+</mat-card>

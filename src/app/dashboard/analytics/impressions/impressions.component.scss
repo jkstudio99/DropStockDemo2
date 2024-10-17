@@ -1,0 +1,124 @@
+.impressions-card {
+    .mat-mdc-card-content {
+        position: relative;
+
+        .sub-title {
+            margin-bottom: 5px;
+        }
+        h6 {
+            font-size: 20px;
+        }
+        .info-badge {
+            font-size: 10px;
+            margin-left: 11px;
+            border-radius: 2px;
+            background: #D8FFC8;
+            color: var(--successColor);
+            padding: 1.5px 7px 1.5px 25px;
+
+            i {
+                top: 50%;
+                left: 2px;
+                font-size: 22px;
+                position: absolute;
+                transform: translateY(-50%);
+            }
+            &.down {
+                background: #FFC8C0;
+                color: var(--dangerColor);
+            }
+        }
+        .days {
+            font-size: 12px;
+            margin-top: 30px;
+        }
+        .chart {
+            transform: translateY(-50%);
+            position: absolute;
+            max-width: 160px;
+            right: -9px;
+            top: 50%;
+        }
+    }
+    &.component-rtl-enabled {
+        .mat-mdc-card-content {
+            .info-badge {
+                margin: {
+                    left: 0;
+                    right: 11px;
+                };
+            }
+            .chart {
+                right: auto;
+                left: -9px;
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    .impressions-card {
+        .mat-mdc-card-content {
+            h6 {
+                font-size: 18px;
+            }
+            .info-badge {
+                margin-left: 7px;
+            }
+            .days {
+                margin-top: 25px;
+            }
+            .chart {
+                max-width: 140px;
+            }
+        }
+        &.component-rtl-enabled {
+            .mat-mdc-card-content {
+                .info-badge {
+                    margin: {
+                        left: 0;
+                        right: 7px;
+                    };
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {
+
+    .impressions-card {
+        .mat-mdc-card-content {
+            h6 {
+                font-size: 19px;
+            }
+        }
+    }
+
+}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {
+
+    .impressions-card {
+        .mat-mdc-card-content {
+            .chart {
+                max-width: 115px;
+            }
+        }
+    }
+
+}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}

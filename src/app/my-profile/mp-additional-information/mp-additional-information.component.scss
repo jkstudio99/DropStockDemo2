@@ -1,0 +1,13 @@
+.mp-additional-information-card {
+    .mat-mdc-card-content {
+        .info-list {
+            li {
+                margin-bottom: 14px;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,72 @@
+<mat-card
+    class="realtime-active-users-card mb-25 border-radius d-block bg-primary border-0 shadow-none"
+    [class.component-rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-content>
+        <h6 class="text-white fw-light">
+            Realtime Active Users
+        </h6>
+        <h2 class="fw-medium lh-1 text-white">
+            4,890
+        </h2>
+        <span class="d-block sub-title text-white">
+            Page views per second
+        </span>
+        <div class="chart">
+            <div id="realtime_active_users_chart"></div>
+        </div>
+        <span class="d-block sub-title text-white fw-semibold">
+            Top Active Pages
+        </span>
+        <ul class="p-0 list-unstyled">
+            <li class="text-white d-flex align-items-center justify-content-between">
+                <span>
+                    /reports/trends-analysis <a routerLink="." class="text-white"><i class="ri-external-link-line"></i></a>
+                </span>
+                <span>
+                    1520
+                </span>
+            </li>
+            <li class="text-white d-flex align-items-center justify-content-between">
+                <span>
+                    /monitoring/user-activity <a routerLink="." class="text-white"><i class="ri-external-link-line"></i></a>
+                </span>
+                <span>
+                    980
+                </span>
+            </li>
+            <li class="text-white d-flex align-items-center justify-content-between">
+                <span>
+                    /specific/industry-comparisons <a routerLink="." class="text-white"><i class="ri-external-link-line"></i></a>
+                </span>
+                <span>
+                    856
+                </span>
+            </li>
+            <li class="text-white d-flex align-items-center justify-content-between">
+                <span>
+                    /global-reach-2023/statistics <a routerLink="." class="text-white"><i class="ri-external-link-line"></i></a>
+                </span>
+                <span>
+                    735
+                </span>
+            </li>
+            <li class="text-white d-flex align-items-center justify-content-between">
+                <span>
+                    /security-alerts/2024-update <a routerLink="." class="text-white"><i class="ri-external-link-line"></i></a>
+                </span>
+                <span>
+                    520
+                </span>
+            </li>
+        </ul>
+        <div class="text-end">
+            <a routerLink="." mat-button>
+                All Real-Time Report <i class="ri-arrow-right-s-line"></i>
+            </a>
+        </div>
+        <div class="shape">
+            <img src="images/shape.png" alt="shape">
+        </div>
+    </mat-card-content>
+</mat-card>

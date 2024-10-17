@@ -1,0 +1,189 @@
+.device-sessions-card {
+    .mat-mdc-card-content {
+        .chart {
+            margin: {
+                left: -35px;
+                top: -25px;
+            };
+        }
+        .content {
+            margin: 0 0 25px -30px;
+
+            li {
+                padding-left: 22px;
+                border-bottom: 1px solid var(--borderColor);
+                padding: {
+                    top: 7px;
+                    bottom: 7px;
+                };
+                .dot {
+                    left: 0;
+                    top: 50%;
+                    width: 10px;
+                    height: 10px;
+                    position: absolute;
+                    transform: translateY(-50%);
+
+                    &.dekstop {
+                        background-color: #37D80A;
+                    }
+                    &.mobile {
+                        background-color: #757DFF;
+                    }
+                    &.tablet {
+                        background-color: #BF85FB;
+                    }
+                    &.others {
+                        background-color: #FE7A36;
+                    }
+                }
+                span {
+                    font-size: 12px;
+                    margin-bottom: 2px;
+                }
+                h6 {
+                    font-size: 16px;
+                }
+                div {
+                    &:last-child {
+                        h6 {
+                            font-size: 14px;
+                        }
+                    }
+                }
+                &:first-child {
+                    border-top: 1px solid var(--borderColor);
+                }
+            }
+        }
+        .info {
+            font-size: 12px;
+        }
+    }
+    &.component-rtl-enabled {
+        .mat-mdc-card-content {
+            .chart {
+                margin: {
+                    left: 0;
+                    right: -35px;
+                };
+            }
+            .content {
+                margin: {
+                    left: 0;
+                    right: -30px;
+                };
+                li {
+                    padding: {
+                        left: 0;
+                        right: 22px;
+                    };
+                    .dot {
+                        left: auto;
+                        right: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    .device-sessions-card {
+        .mat-mdc-card-content {
+            .chart {
+                margin: {
+                    left: 0;
+                    top: -7px;
+                };
+            }
+            .content {
+                margin: 5px 0 17px 0;
+    
+                li {
+                    h6 {
+                        font-size: 15px;
+                    }
+                }
+            }
+        }
+        &.component-rtl-enabled {
+            .mat-mdc-card-content {
+                .chart {
+                    margin: {
+                        right: 0;
+                    };
+                }
+                .content {
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {
+
+    .device-sessions-card {
+        .mat-mdc-card-content {
+            .chart {
+                margin: {
+                    left: 0;
+                    top: -5px;
+                };
+            }
+            .content {
+                margin: 10px 0 20px 0;
+            }
+        }
+        &.component-rtl-enabled {
+            .mat-mdc-card-content {
+                .chart {
+                    margin: {
+                        right: 0;
+                    };
+                }
+                .content {
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {
+
+    .device-sessions-card {
+        .mat-mdc-card-content {
+            .content {
+                margin: 0 0 20px -30px;
+            }
+        }
+        &.component-rtl-enabled {
+            .mat-mdc-card-content {
+                .content {
+                    margin: {
+                        left: 0;
+                        right: -30px;
+                    };
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}

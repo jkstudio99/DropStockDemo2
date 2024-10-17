@@ -1,0 +1,30 @@
+<div
+    class="sales-box total-sales-box border-radius position-relative overflow-hidden"
+    [class.component-rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <div class="content d-flex align-items-center">
+        <div class="icon bg-primary-100 text-white text-center position-relative z-1">
+            <i class="ri-shopping-cart-line"></i>
+        </div>
+        <div class="title">
+            <h6 class="fw-medium">
+                $150,000
+            </h6>
+            <span class="d-block text-body">
+                Total Sales
+            </span>
+        </div>
+    </div>
+    <div class="info d-flex align-items-center">
+        <span class="info-badge fw-medium d-inline-block position-relative">
+            <i class="ri-arrow-up-fill"></i>
+            12%
+        </span>
+        <span class="days d-block">
+            from last week
+        </span>
+    </div>
+    <div class="chart">
+        <div id="stats_total_sales_chart"></div>
+    </div>
+</div>

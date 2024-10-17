@@ -1,0 +1,163 @@
+.sessions-by-channel-card {
+    .mat-mdc-card-content {
+        .list {
+            text-align: center;
+            margin: {
+                top: 10px;
+                bottom: 10px;
+            };
+            li {
+                display: inline-block;
+                text-align: start;
+                margin: {
+                    top: 15px;
+                    left: 15px;
+                    right: 15px;
+                };
+                .title {
+                    font-size: 12px;
+                    margin-bottom: 8px;
+
+                    .dot {
+                        width: 11px;
+                        height: 11px;
+                        margin-right: 8px;
+                        border-radius: 3px;
+
+                        &.email {
+                            background: #3584FC;
+                        }
+                        &.direct-browse {
+                            background: #AD63F6;
+                        }
+                        &.organic-search {
+                            background: #37D80A;
+                        }
+                        &.paid-search {
+                            background: #90C7FF;
+                        }
+                        &.social {
+                            background: #605DFF;
+                        }
+                        &.referral {
+                            background: #FD5812;
+                        }
+                    }
+                }
+                h6 {
+                    font-size: 18px;
+                    margin-left: 19px;
+                }
+            }
+        }
+    }
+    &.component-rtl-enabled {
+        .mat-mdc-card-content {
+            .list {
+                li {
+                    .title {
+                        .dot {
+                            margin: {
+                                right: 0;
+                                left: 8px;
+                            };
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    .sessions-by-channel-card {
+        .mat-mdc-card-content {
+            .list {
+                margin: {
+                    top: 0;
+                    bottom: 0;
+                };
+                li {
+                    margin: {
+                        top: 10px;
+                        left: 10px;
+                        right: 10px;
+                    };
+                    .title {
+                        .dot {
+                            margin-right: 5px;
+                        }
+                    }
+                    h6 {
+                        font-size: 17px;
+                        margin-left: 16px;
+                    }
+                }
+            }
+        }
+        &.component-rtl-enabled {
+            .mat-mdc-card-content {
+                .list {
+                    li {
+                        .title {
+                            .dot {
+                                margin: {
+                                    right: 0;
+                                    left: 5px;
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {
+
+    .sessions-by-channel-card {
+        .mat-mdc-card-content {
+            .list {
+                li {
+                    margin: {
+                        left: 10px;
+                        right: 10px;
+                    };
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {
+
+    .sessions-by-channel-card {
+        .mat-mdc-card-content {
+            .list {
+                li {
+                    margin: {
+                        left: 9px;
+                        right: 9px;
+                    };
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}

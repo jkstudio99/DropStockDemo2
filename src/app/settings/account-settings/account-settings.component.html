@@ -1,0 +1,329 @@
+<div class="account-settings-card">
+    <h5>
+        Profile
+    </h5>
+    <p>
+        Update your photo and personal details here.
+    </p>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="main-label d-block fw-medium text-black">
+                    First Name
+                </label>
+                <mat-form-field>
+                    <mat-label>
+                        Enter first name
+                    </mat-label>
+                    <input matInput value="Olivia">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="main-label d-block fw-medium text-black">
+                    Last Name
+                </label>
+                <mat-form-field>
+                    <mat-label>
+                        Enter last name
+                    </mat-label>
+                    <input matInput value="John">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="main-label d-block fw-medium text-black">
+                    Email Address
+                </label>
+                <mat-form-field>
+                    <mat-label>
+                        Enter email address
+                    </mat-label>
+                    <input matInput value="olivia@trezo.com">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="main-label d-block fw-medium text-black">
+                    Phone Number
+                </label>
+                <mat-form-field>
+                    <mat-label>
+                        Enter phone number
+                    </mat-label>
+                    <input matInput value="+1 444 555 6699">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="main-label d-block fw-medium text-black">
+                    Address
+                </label>
+                <mat-form-field>
+                    <mat-label>
+                        Enter address
+                    </mat-label>
+                    <input matInput value="84 S. Arrowhead Court Branford">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="main-label d-block fw-medium text-black">
+                    Country
+                </label>
+                <mat-form-field>
+                    <mat-label>
+                        Select
+                    </mat-label>
+                    <mat-select [(value)]="countrySelected">
+                        <mat-option value="option1">
+                            Switzerland
+                        </mat-option>
+                        <mat-option value="option2">
+                            New Zealand
+                        </mat-option>
+                        <mat-option value="option3">
+                            Germany
+                        </mat-option>
+                        <mat-option value="option4">
+                            United States
+                        </mat-option>
+                        <mat-option value="option5">
+                            Japan
+                        </mat-option>
+                        <mat-option value="option6">
+                            Netherlands
+                        </mat-option>
+                        <mat-option value="option7">
+                            Sweden
+                        </mat-option>
+                        <mat-option value="option8">
+                            Canada
+                        </mat-option>
+                        <mat-option value="option9">
+                            United Kingdom
+                        </mat-option>
+                        <mat-option value="option10">
+                            Australia
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="main-label d-block fw-medium text-black">
+                    Date Of Birth
+                </label>
+                <mat-form-field>
+                    <mat-label>Choose a date</mat-label>
+                    <input matInput [matDatepicker]="dobPicker">
+                    <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+                    <mat-datepicker-toggle matIconSuffix [for]="dobPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #dobPicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="main-label d-block fw-medium text-black">
+                    Gender
+                </label>
+                <mat-form-field>
+                    <mat-label>
+                        Select
+                    </mat-label>
+                    <mat-select [(value)]="genderSelected">
+                        <mat-option value="option1">
+                            Male
+                        </mat-option>
+                        <mat-option value="option2">
+                            Female
+                        </mat-option>
+                        <mat-option value="option3">
+                            Custom
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="main-label d-block fw-medium text-black">
+                    Your Skills
+                </label>
+                <mat-form-field>
+                    <mat-label>
+                        Select
+                    </mat-label>
+                    <mat-select [(value)]="skillsSelected">
+                        <mat-option value="option1">
+                            Leadership
+                        </mat-option>
+                        <mat-option value="option2">
+                            Project Management
+                        </mat-option>
+                        <mat-option value="option3">
+                            Data Analysis
+                        </mat-option>
+                        <mat-option value="option4">
+                            Teamwork
+                        </mat-option>
+                        <mat-option value="option5">
+                            Web Development
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="main-label d-block fw-medium text-black">
+                    Your Profession
+                </label>
+                <mat-form-field>
+                    <mat-label>
+                        Select
+                    </mat-label>
+                    <mat-select [(value)]="professionSelected">
+                        <mat-option value="option1">
+                            Financial Manager
+                        </mat-option>
+                        <mat-option value="option2">
+                            IT Manager
+                        </mat-option>
+                        <mat-option value="option3">
+                            Software Developer
+                        </mat-option>
+                        <mat-option value="option4">
+                            Physician Assistant
+                        </mat-option>
+                        <mat-option value="option5">
+                            Data Scientist
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="main-label d-block fw-medium text-black">
+                    Company Name
+                </label>
+                <mat-form-field>
+                    <mat-label>
+                        Enter company name
+                    </mat-label>
+                    <input matInput value="Trezo Admin">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="main-label d-block fw-medium text-black">
+                    Company Website
+                </label>
+                <mat-form-field>
+                    <mat-label>
+                        Enter company website
+                    </mat-label>
+                    <input matInput value="http://website.com">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label class="main-label d-block fw-medium text-black">
+                    Add Your Bio
+                </label>
+                <mat-form-field>
+                    <mat-label>Type here....</mat-label>
+                    <textarea matInput value="It makes me feel..."></textarea>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <h4>
+        Your Photo
+    </h4>
+    <p>
+        This will be displayed on your profile.
+    </p>
+    <div class="form-group">
+        <file-upload class="file-uploader" [multiple]="multiple"></file-upload>
+    </div>
+    <h4>
+        Socials Profile
+    </h4>
+    <p></p>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="main-label d-block fw-medium text-black">
+                    Facebook
+                </label>
+                <mat-form-field>
+                    <mat-label>
+                        Enter facebook link
+                    </mat-label>
+                    <input matInput value="https://www.facebook.com/">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="main-label d-block fw-medium text-black">
+                    X
+                </label>
+                <mat-form-field>
+                    <mat-label>
+                        Enter x link
+                    </mat-label>
+                    <input matInput value="https://x.com/">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="main-label d-block fw-medium text-black">
+                    Linkedin
+                </label>
+                <mat-form-field>
+                    <mat-label>
+                        Enter linkedin link
+                    </mat-label>
+                    <input matInput value="https://www.linkedin.com/">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="main-label d-block fw-medium text-black">
+                    YouTube
+                </label>
+                <mat-form-field>
+                    <mat-label>
+                        Enter youtube link
+                    </mat-label>
+                    <input matInput value="https://www.youtube.com/">
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="form-btn-box">
+        <button type="button" mat-button color="warn">
+            Cancel
+        </button>
+        <button type="button" mat-button color="primary">
+            <i class="material-symbols-outlined">
+                check
+            </i>
+            Update Profile
+        </button>
+    </div>
+</div>

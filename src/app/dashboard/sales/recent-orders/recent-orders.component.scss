@@ -1,0 +1,148 @@
+::ng-deep {
+    .sales-recent-orders-card {
+        .mat-mdc-card-header {
+            .mat-mdc-card-header-text {
+                .mat-mdc-card-subtitle {
+                    display: flex;
+                    align-items: center;
+
+                    .search-box {
+                        width: 239px;
+                        margin-right: 20px;
+
+                        i {
+                            top: 50%;
+                            left: 13px;
+                            font-size: 20px;
+                            position: absolute;
+                            transform: translateY(-50%);
+                        }
+                        .input-search {
+                            height: 36px;
+                            font-size: 12px;
+                            padding-left: 38px;
+                        }
+                    }
+                }
+            }
+        }
+        &.component-rtl-enabled {
+            .mat-mdc-card-header {
+                .mat-mdc-card-header-text {
+                    .mat-mdc-card-subtitle {
+                        .search-box {
+                            margin: {
+                                right: 0;
+                                left: 20px;
+                            };
+                            i {
+                                left: auto;
+                                right: 13px;
+                            }
+                            .input-search {
+                                padding: {
+                                    left: 15px;
+                                    right: 38px;
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    ::ng-deep {
+        .sales-recent-orders-card {
+            .mat-mdc-card-header {
+                .mat-mdc-card-header-text {
+                    display: block;
+
+                    .mat-mdc-card-subtitle {
+                        margin-top: 12px;
+
+                        .search-box {
+                            width: 150px;
+                            margin: {
+                                right: 10px;
+                                top: 0;
+                            };
+                            i {
+                                left: 10px;
+                                font-size: 18px;
+                            }
+                            .input-search {
+                                height: 32px;
+                                padding-left: 35px;
+                            }
+                        }
+                    }
+                }
+            }
+            &.component-rtl-enabled {
+                .mat-mdc-card-header {
+                    .mat-mdc-card-header-text {
+                        .mat-mdc-card-subtitle {
+                            .search-box {
+                                margin: {
+                                    right: 0;
+                                    left: 10px;
+                                };
+                                i {
+                                    left: auto;
+                                    right: 10px;
+                                }
+                                .input-search {
+                                    padding: {
+                                        left: 10px;
+                                        right: 35px;
+                                    };
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {
+
+    ::ng-deep {
+        .sales-recent-orders-card {
+            .mat-mdc-card-header {
+                .mat-mdc-card-header-text {
+                    display: flex;
+
+                    .mat-mdc-card-subtitle {
+                        margin-top: 0;
+
+                        .search-box {
+                            width: 200px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}

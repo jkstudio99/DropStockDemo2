@@ -1,0 +1,383 @@
+<!-- Breadcrumb -->
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+    <h5 class="mb-0">
+        Edit Invoice
+    </h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 p-0">
+        <li class="breadcrumb-item d-inline-block position-relative">
+            <a routerLink="/dashboard" class="d-inline-block position-relative">
+                <i class="material-symbols-outlined">
+                    home
+                </i>
+                Dashboard
+            </a>
+        </li>
+        <li class="breadcrumb-item d-inline-block position-relative">
+            Invoices
+        </li>
+        <li class="breadcrumb-item d-inline-block position-relative">
+            Edit Invoice
+        </li>
+    </ol>
+</div>
+
+<!-- Edit Invoice -->
+<mat-card
+    class="edit-invoice-card mb-25 border-radius d-block bg-white border-0 shadow-none"
+    [class.component-rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-content>
+        <div class="row">
+            <div class="col-xxl-3 col-sm-6">
+                <div class="form-group">
+                    <label class="main-label d-block fw-medium text-black">
+                        Invoice ID
+                    </label>
+                    <mat-form-field>
+                        <input matInput disabled value="#JAN-2345">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-xxl-3 col-sm-6">
+                <div class="form-group">
+                    <label class="main-label d-block fw-medium text-black">
+                        Status
+                    </label>
+                    <mat-form-field>
+                        <mat-label>
+                            Select
+                        </mat-label>
+                        <mat-select [(value)]="statusSelected">
+                            <mat-option value="option1">
+                                Paid
+                            </mat-option>
+                            <mat-option value="option2">
+                                Unpaid
+                            </mat-option>
+                            <mat-option value="option3">
+                                Cancelled
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-xxl-3 col-sm-6">
+                <div class="form-group">
+                    <label class="main-label d-block fw-medium text-black">
+                        Date
+                    </label>
+                    <mat-form-field>
+                        <mat-label>Choose a date</mat-label>
+                        <input matInput [matDatepicker]="datePicker">
+                        <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+                        <mat-datepicker-toggle matIconSuffix [for]="datePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #datePicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-xxl-3 col-sm-6">
+                <div class="form-group">
+                    <label class="main-label d-block fw-medium text-black">
+                        Due Date
+                    </label>
+                    <mat-form-field>
+                        <mat-label>Choose a date</mat-label>
+                        <input matInput [matDatepicker]="dueDatePicker">
+                        <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+                        <mat-datepicker-toggle matIconSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #dueDatePicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="invoice-info position-relative border-radius">
+                    <div>
+                        <span class="title text-black fw-medium d-block">
+                            From:
+                        </span>
+                        <span class="d-block text-black fw-medium">
+                            Olivia John
+                        </span>
+                        <span class="d-block">
+                            olivia&#64;trezo.com
+                        </span>
+                        <span class="d-block">
+                            4545 Seth Street Ballinger, TX 78965
+                        </span>
+                        <span class="d-block">
+                            +1 444 556 8899
+                        </span>
+                    </div>
+                    <button type="button" mat-button>
+                        <i class="material-symbols-outlined">
+                            edit
+                        </i>
+                        Change
+                    </button>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="invoice-info position-relative border-radius">
+                    <div>
+                        <span class="title text-black fw-medium d-block">
+                            To:
+                        </span>
+                        <span class="d-block text-black fw-medium">
+                            Alina Smith
+                        </span>
+                        <span class="d-block">
+                            smith&#64;trezo.com
+                        </span>
+                        <span class="d-block">
+                            4545 Seth Street Ballinger, TX 78965
+                        </span>
+                        <span class="d-block">
+                            +1 444 556 8899
+                        </span>
+                    </div>
+                    <button type="button" mat-button>
+                        <i class="material-symbols-outlined">
+                            add
+                        </i>
+                        Add
+                    </button>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="basic-table table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col" class="fw-medium">
+                                    No
+                                </th>
+                                <th scope="col" class="fw-medium">
+                                    Item Description
+                                </th>
+                                <th scope="col" class="fw-medium">
+                                    Quantity
+                                </th>
+                                <th scope="col" class="fw-medium">
+                                    Price
+                                </th>
+                                <th scope="col" class="fw-medium">
+                                    Total
+                                </th>
+                                <th scope="col" class="fw-medium">
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-body">
+                                    1
+                                </td>
+                                <td class="fw-medium">
+                                    <mat-form-field>
+                                        <mat-label>
+                                            Enter item name
+                                        </mat-label>
+                                        <input matInput value="Apple MacBook Pro 16.2' with M3 Pro Chip">
+                                    </mat-form-field>
+                                </td>
+                                <td class="text-body">
+                                    <mat-form-field>
+                                        <input matInput type="number" value="4">
+                                    </mat-form-field>
+                                </td>
+                                <td class="text-body">
+                                    <mat-form-field>
+                                        <mat-label>
+                                            Enter price
+                                        </mat-label>
+                                        <input matInput value="$80.00">
+                                    </mat-form-field>
+                                </td>
+                                <td class="text-body">
+                                    $320.00
+                                </td>
+                                <td class="action">
+                                    <button type="button" mat-button>
+                                        <i class="material-symbols-outlined">
+                                            delete
+                                        </i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-body">
+                                    2
+                                </td>
+                                <td class="fw-medium">
+                                    <mat-form-field>
+                                        <mat-label>
+                                            Enter item name
+                                        </mat-label>
+                                        <input matInput value="SAMSUNG Galaxy Tab A9+ Tablet 11'">
+                                    </mat-form-field>
+                                </td>
+                                <td class="text-body">
+                                    <mat-form-field>
+                                        <input matInput type="number" value="3">
+                                    </mat-form-field>
+                                </td>
+                                <td class="text-body">
+                                    <mat-form-field>
+                                        <mat-label>
+                                            Enter price
+                                        </mat-label>
+                                        <input matInput value="$45.00">
+                                    </mat-form-field>
+                                </td>
+                                <td class="text-body">
+                                    $135.00
+                                </td>
+                                <td class="action">
+                                    <button type="button" mat-button>
+                                        <i class="material-symbols-outlined">
+                                            delete
+                                        </i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-body">
+                                    3
+                                </td>
+                                <td class="fw-medium">
+                                    <mat-form-field>
+                                        <mat-label>
+                                            Enter item name
+                                        </mat-label>
+                                        <input matInput value="Apple iPhone 15 Pro Max (512 GB)">
+                                    </mat-form-field>
+                                </td>
+                                <td class="text-body">
+                                    <mat-form-field>
+                                        <input matInput type="number" value="5">
+                                    </mat-form-field>
+                                </td>
+                                <td class="text-body">
+                                    <mat-form-field>
+                                        <mat-label>
+                                            Enter price
+                                        </mat-label>
+                                        <input matInput value="$30.00">
+                                    </mat-form-field>
+                                </td>
+                                <td class="text-body">
+                                    $150.00
+                                </td>
+                                <td class="action">
+                                    <button type="button" mat-button>
+                                        <i class="material-symbols-outlined">
+                                            delete
+                                        </i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button type="button" mat-flat-button>
+                                        + Add Item
+                                    </button>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <div class="form-group mb-0">
+                                        <label class="main-label d-block fw-medium text-black">
+                                            Discount(%)
+                                        </label>
+                                        <mat-form-field>
+                                            <input matInput value="0.54">
+                                        </mat-form-field>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group mb-0">
+                                        <label class="main-label d-block fw-medium text-black">
+                                            Tax(%)
+                                        </label>
+                                        <mat-form-field>
+                                            <input matInput value="0.22">
+                                        </mat-form-field>
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="text-body">
+                                    Sub Total:
+                                </td>
+                                <td class="text-body">
+                                    $971.00
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="text-body">
+                                    Tax (0.22%)
+                                </td>
+                                <td class="text-body">
+                                    $5.00
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="text-body">
+                                    Discount (0.52%)
+                                </td>
+                                <td class="text-body">
+                                    - $5.00
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="text-black fw-medium">
+                                    Grand Total
+                                </td>
+                                <td class="text-black">
+                                    $971.00
+                                </td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="form-btn-box text-center">
+            <button type="button" mat-button color="warn">
+                Cancel
+            </button>
+            <button type="button" mat-button color="primary">
+                <i class="material-symbols-outlined">
+                    add
+                </i>
+                Update
+            </button>
+        </div>
+    </mat-card-content>
+</mat-card>

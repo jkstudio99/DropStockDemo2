@@ -1,0 +1,410 @@
+::ng-deep {
+    .profile-card {
+        .mat-mdc-card-content {
+            .cover-image {
+                img {
+                    margin-bottom: -3px;
+                }
+                .edit-btn {
+                    &.mat-mdc-button {
+                        right: 28px;
+                        bottom: 28px;
+                        height: auto;
+                        min-width: auto;
+                        border-radius: 7px;
+                        position: absolute;
+                        padding: 10.5px 16px;
+                        color: var(--whiteColor);
+                        background-color: transparent;
+                        border: 1px solid var(--whiteColor);
+                    }
+                }
+            }
+            .profile-content {
+                margin-top: -60px;
+                padding: {
+                    left: 30px;
+                    right: 30px;
+                    bottom: 45px;
+                };
+                .image {
+                    width: 160px;
+    
+                    .profile-image {
+                        margin-bottom: -3.5px;
+                        border: 2px solid var(--whiteColor);
+                    }
+                    .verified {
+                        right: -7px;
+                        bottom: 11px;
+                        position: absolute;
+                    }
+                }
+                .title {
+                    margin-left: 30px;
+    
+                    span {
+                        font-size: 24px;
+    
+                        &:not(:first-child) {
+                            margin-top: 5px;
+                            font-size: 16px;
+                        }
+                    }
+                }
+                .btn-box {
+                    .mat-mdc-button {
+                        height: auto;
+                        min-width: auto;
+                        margin-right: 12px;
+                        padding: 13px 27px;
+                        border-radius: 7px;
+                        color: var(--bodyColor);
+                        border: 1px solid var(--borderColor);
+                        font: {
+                            size: 16px;
+                            weight: 500;
+                        };
+                        .mdc-button__label {
+                            display: flex;
+                            align-items: center;
+
+                            i {
+                                font-size: 20px;
+                                margin-right: 8px;
+                            }
+                        }
+                        &:nth-child(3) {
+                            margin-right: 0;
+                            color: var(--whiteColor);
+                            border-color: var(--primaryColor);
+                            background-color: var(--primaryColor);
+                        }
+                    }
+                }
+            }
+        }
+        &.component-dark-theme {
+            .mat-mdc-card-content {
+                .profile-content {
+                    .image {
+                        .profile-image {
+                            border-color: #0C1427;
+                        }
+                    }
+                }
+            }
+        }
+        &.card-without-border-radius {
+            .mat-mdc-card-content {
+                .cover-image {
+                    border-radius: 0 !important;
+
+                    img {
+                        border-radius: 0 !important;
+                    }
+                }
+            }
+        }
+        &.component-rtl-enabled {
+            .mat-mdc-card-content {
+                .cover-image {
+                    .edit-btn {
+                        &.mat-mdc-button {
+                            right: auto;
+                            left: 28px;
+                        }
+                    }
+                }
+                .profile-content {
+                    .image {
+                        .verified {
+                            right: auto;
+                            left: -7px;
+                        }
+                    }
+                    .title {
+                        margin: {
+                            left: 0;
+                            right: 30px;
+                        };
+                    }
+                    .btn-box {
+                        .mat-mdc-button {
+                            margin: {
+                                right: 0;
+                                left: 12px;
+                            };
+                            .mdc-button__label {
+                                i {
+                                    margin: {
+                                        right: 0;
+                                        left: 8px;
+                                    };
+                                }
+                            }
+                            &:nth-child(3) {
+                                margin-left: 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .profile-nav-links {
+        li {
+            margin: {
+                left: 5px;
+                right: 5px;
+            };
+            .mat-mdc-button {
+                height: auto;
+                min-width: auto;
+                font-weight: 500;
+                border-radius: 7px;
+                padding: 10.5px 15px;
+                color: var(--primaryColor);
+                background-color: transparent;
+                border: 1px solid var(--primaryColor);
+
+                &.active, &:hover {
+                    color: var(--whiteColor);
+                    background-color: var(--primaryColor);
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    ::ng-deep {
+        .profile-card {
+            .mat-mdc-card-content {
+                .cover-image {
+                    .edit-btn {
+                        &.mat-mdc-button {
+                            right: 0;
+                            bottom: 0;
+                            position: relative;
+                            color: var(--blackColor);
+                            border-color: var(--blackColor);
+                            margin: {
+                                left: 17px;
+                                top: 17px;
+                            };
+                        }
+                    }
+                }
+                .profile-content {
+                    margin-top: 17px;
+                    padding: {
+                        left: 20px;
+                        right: 20px;
+                        bottom: 17px;
+                    };
+                    .image {
+                        .profile-image {
+                            border-color: #f7f7f7;
+                        }
+                    }
+                    .title {
+                        margin: {
+                            left: 0;
+                            top: 12px;
+                        };
+                        span {
+                            font-size: 18px;
+        
+                            &:not(:first-child) {
+                                margin-top: 6px;
+                                font-size: 13px;
+                            }
+                        }
+                    }
+                    .btn-box {
+                        margin-top: 17px;
+
+                        .mat-mdc-button {
+                            margin-right: 10px;
+                            padding: 11px 25px;
+                            font-size: 13px;
+
+                            .mdc-button__label {
+                                i {
+                                    font-size: 18px;
+                                    margin-right: 5px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            &.component-rtl-enabled {
+                .mat-mdc-card-content {
+                    .cover-image {
+                        .edit-btn {
+                            &.mat-mdc-button {
+                                right: auto;
+                                left: 0;
+                                margin: {
+                                    left: 0;
+                                    right: 17px;
+                                };
+                            }
+                        }
+                    }
+                    .profile-content {
+                        .title {
+                            margin: {
+                                right: 0;
+                            };
+                        }
+                        .btn-box {
+                            .mat-mdc-button {
+                                margin: {
+                                    right: 0;
+                                    left: 10px;
+                                };
+                                .mdc-button__label {
+                                    i {
+                                        margin: {
+                                            right: 0;
+                                            left: 5px;
+                                        };
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .profile-nav-links {
+            li {
+                .mat-mdc-button {
+                    padding: 10px 15px;
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {
+
+    ::ng-deep {
+        .profile-card {
+            .mat-mdc-card-content {
+                .cover-image {
+                    .edit-btn {
+                        &.mat-mdc-button {
+                            margin-left: 20px;
+                        }
+                    }
+                }
+                .profile-content {
+                    padding-bottom: 20px;
+                }
+            }
+            &.component-rtl-enabled {
+                .mat-mdc-card-content {
+                    .cover-image {
+                        .edit-btn {
+                            &.mat-mdc-button {
+                                margin: {
+                                    left: 0;
+                                    right: 20px;
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .profile-nav-links {
+            li {
+                .mat-mdc-button {
+                    padding: 10px 15px;
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {
+
+    ::ng-deep {
+        .profile-card {
+            .mat-mdc-card-content {
+                .cover-image {
+                    .edit-btn {
+                        &.mat-mdc-button {
+                            right: 25px;
+                            bottom: 20px;
+                        }
+                    }
+                }
+                .profile-content {
+                    padding: {
+                        left: 25px;
+                        right: 25px;
+                        bottom: 40px;
+                    };
+                    .title {
+                        margin-left: 25px;
+        
+                        span {
+                            font-size: 20px;
+        
+                            &:not(:first-child) {
+                                font-size: 14px;
+                            }
+                        }
+                    }
+                    .btn-box {
+                        .mat-mdc-button {
+                            padding: 11px 25px;
+                            font-size: 14px;
+                        }
+                    }
+                }
+            }
+            &.component-rtl-enabled {
+                .mat-mdc-card-content {
+                    .cover-image {
+                        .edit-btn {
+                            &.mat-mdc-button {
+                                right: auto;
+                                left: 25px;
+                            }
+                        }
+                    }
+                    .profile-content {
+                        .title {
+                            margin: {
+                                left: 0;
+                                right: 25px;
+                            };
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}

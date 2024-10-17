@@ -1,0 +1,135 @@
+<div class="sign-up-container" [class.dark-theme]="themeService.isDark()">
+  <div class="image-section">
+    <img src="images/sign-up.jpg" alt="{{ 'SIGN_UP.IMAGE_ALT' | translate }}">
+  </div>
+  <div class="form-section">
+    <div class="trezo-form ml-auto mr-auto"
+         [class.component-dark-theme]="themeService.isDark()"
+         [class.component-rtl-enabled]="themeService.isRTLEnabled()">
+      <div class="form-content">
+        <div class="logo">
+          <img src="images/logo-big.svg" alt="{{ 'SIGN_UP.LOGO_ALT' | translate }}">
+          <img src="images/white-logo-big.svg" class="d-none" alt="{{ 'SIGN_UP.LOGO_ALT' | translate }}">
+        </div>
+        <div class="title">
+          <h1 class="fw-semibold">{{ 'SIGN_UP.TITLE' | translate }}</h1>
+          <p class="fw-medium">{{ 'SIGN_UP.SUBTITLE' | translate }}</p>
+        </div>
+        <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label class="main-label d-block fw-medium text-black">
+              {{ 'SIGN_UP.USERNAME' | translate }}
+            </label>
+            <mat-form-field>
+              <mat-label>{{ 'SIGN_UP.USERNAME_PLACEHOLDER' | translate }}</mat-label>
+              <input matInput formControlName="username" placeholder="{{ 'SIGN_UP.USERNAME_PLACEHOLDER' | translate }}">
+            </mat-form-field>
+            <div class="error text-danger" *ngIf="signUpForm.get('username')?.invalid && (signUpForm.get('username')?.dirty || signUpForm.get('username')?.touched)">
+              <div *ngIf="signUpForm.get('username')?.errors?.['required']">
+                {{ 'SIGN_UP.USERNAME_REQUIRED' | translate }}
+              </div>
+              <div *ngIf="signUpForm.get('username')?.errors?.['pattern']">
+                {{ 'SIGN_UP.USERNAME_INVALID' | translate }}
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="main-label d-block fw-medium text-black">
+              {{ 'SIGN_UP.EMAIL' | translate }}
+            </label>
+            <mat-form-field>
+              <mat-label>{{ 'SIGN_UP.EMAIL_PLACEHOLDER' | translate }}</mat-label>
+              <input matInput formControlName="email" placeholder="{{ 'SIGN_UP.EMAIL_PLACEHOLDER' | translate }}">
+            </mat-form-field>
+            <div class="error text-danger" *ngIf="signUpForm.get('email')?.invalid && (signUpForm.get('email')?.dirty || signUpForm.get('email')?.touched)">
+              <div *ngIf="signUpForm.get('email')?.errors?.['required']">
+                {{ 'SIGN_UP.EMAIL_REQUIRED' | translate }}
+              </div>
+              <div *ngIf="signUpForm.get('email')?.errors?.['email']">
+                {{ 'SIGN_UP.EMAIL_INVALID' | translate }}
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="main-label d-block fw-medium text-black">
+              {{ 'SIGN_UP.PASSWORD' | translate }}
+            </label>
+            <mat-form-field>
+              <mat-label>{{ 'SIGN_UP.PASSWORD_PLACEHOLDER' | translate }}</mat-label>
+              <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" placeholder="{{ 'SIGN_UP.PASSWORD_PLACEHOLDER' | translate }}">
+              <button mat-icon-button matSuffix (click)="togglePasswordVisibility()" [attr.aria-label]="'SIGN_UP.HIDE_PASSWORD' | translate" [attr.aria-pressed]="hidePassword">
+                <span class="material-symbols-outlined">
+                  {{hidePassword ? 'visibility_off' : 'visibility'}}
+                </span>
+              </button>
+            </mat-form-field>
+            <div class="error text-danger" *ngIf="signUpForm.get('password')?.invalid && (signUpForm.get('password')?.dirty || signUpForm.get('password')?.touched)">
+              <div *ngIf="signUpForm.get('password')?.errors?.['required']">
+                {{ 'SIGN_UP.PASSWORD_REQUIRED' | translate }}
+              </div>
+              <div *ngIf="signUpForm.get('password')?.errors?.['minlength']">
+                {{ 'SIGN_UP.PASSWORD_MIN_LENGTH' | translate }}
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="main-label d-block fw-medium text-black">
+              {{ 'SIGN_UP.CONFIRM_PASSWORD' | translate }}
+            </label>
+            <mat-form-field>
+              <mat-label>{{ 'SIGN_UP.CONFIRM_PASSWORD_PLACEHOLDER' | translate }}</mat-label>
+              <input matInput [type]="hideConfirmPassword ? 'password' : 'text'" formControlName="confirmPassword" placeholder="{{ 'SIGN_UP.CONFIRM_PASSWORD_PLACEHOLDER' | translate }}">
+              <button mat-icon-button matSuffix (click)="toggleConfirmPasswordVisibility()" [attr.aria-label]="'SIGN_UP.HIDE_PASSWORD' | translate" [attr.aria-pressed]="hideConfirmPassword">
+                <span class="material-symbols-outlined">
+                  {{hideConfirmPassword ? 'visibility_off' : 'visibility'}}
+                </span>
+              </button>
+            </mat-form-field>
+            <div class="error text-danger" *ngIf="signUpForm.hasError('passwordMismatch') && signUpForm.get('confirmPassword')?.touched">
+              {{ 'SIGN_UP.PASSWORD_MISMATCH' | translate }}
+            </div>
+          </div>
+          <button type="submit" mat-button [disabled]="isLoading || signUpForm.invalid">
+            <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+            <ng-container *ngIf="!isLoading">
+              <i class="material-symbols-outlined">person_4</i>
+              {{ 'SIGN_UP.SUBMIT_BUTTON' | translate }}
+            </ng-container>
+          </button>
+          <p class="info">
+            {{ 'SIGN_UP.TERMS_AGREEMENT' | translate }} <a class="fw-medium" routerLink=".">{{ 'SIGN_UP.TERMS_OF_SERVICE' | translate }}</a> {{ 'SIGN_UP.AND' | translate }} <a class="fw-medium" routerLink=".">{{ 'SIGN_UP.PRIVACY_POLICY' | translate }}</a>.
+          </p>
+          <p class="info">
+            {{ 'SIGN_UP.ALREADY_HAVE_ACCOUNT' | translate }} <a routerLink="/authentication/sign-in" class="fw-semibold text-primary">{{ 'SIGN_UP.SIGN_IN' | translate }}</a>
+          </p>
+          <p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="language-menu">
+  <button mat-button [matMenuTriggerFor]="languageMenu">
+    <i class="material-symbols-outlined">translate</i>
+    {{ getCurrentLanguage() | uppercase }}
+  </button>
+  <mat-menu class="language-menu-dropdown" #languageMenu="matMenu" xPosition="before">
+    <span class="title fw-semibold text-black d-block">
+      {{ 'LANGUAGE.SELECT' | translate }}
+    </span>
+    <ul class="menu-body p-0 mb-0 mt-0 list-unstyled">
+      <li>
+        <button mat-button (click)="changeLanguage('en')">
+          <img src="assets/images/flags/uk.svg" alt="EN">
+          English
+        </button>
+      </li>
+      <li>
+        <button mat-button (click)="changeLanguage('th')" class="language-button">
+          <img src="assets/images/flags/thailand.svg" alt="TH">
+          <span class="language-text">ภาษาไทย</span>
+        </button>
+      </li>
+    </ul>
+  </mat-menu>
+</div>

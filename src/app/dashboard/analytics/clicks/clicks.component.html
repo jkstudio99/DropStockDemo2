@@ -1,0 +1,25 @@
+<mat-card
+    class="clicks-card mb-25 border-radius d-block bg-white border-0 shadow-none"
+    [class.component-rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-content>
+        <span class="sub-title d-block text-body">
+            Clicks
+        </span>
+        <div class="d-flex align-items-center">
+            <h6 class="mb-0">
+                4,500
+            </h6>
+            <span class="info-badge fw-medium position-relative d-inline-block">
+                <i class="ri-arrow-up-s-fill"></i>
+                37.5%
+            </span>
+        </div>
+        <span class="days d-block text-body">
+            Last 30 days
+        </span>
+        <div class="chart">
+            <div id="analytics_clicks_chart"></div>
+        </div>
+    </mat-card-content>
+</mat-card>

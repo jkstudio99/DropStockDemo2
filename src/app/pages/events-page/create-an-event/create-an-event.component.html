@@ -1,0 +1,372 @@
+<!-- Breadcrumb -->
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+    <h5 class="mb-0">
+        Create An Event
+    </h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 p-0">
+        <li class="breadcrumb-item d-inline-block position-relative">
+            <a routerLink="/dashboard" class="d-inline-block position-relative">
+                <i class="material-symbols-outlined">
+                    home
+                </i>
+                Dashboard
+            </a>
+        </li>
+        <li class="breadcrumb-item d-inline-block position-relative">
+            Events
+        </li>
+        <li class="breadcrumb-item d-inline-block position-relative">
+            Create An Event
+        </li>
+    </ol>
+</div>
+
+<!-- Create An Event -->
+<mat-card class="mb-25 border-radius d-block bg-white border-0 shadow-none">
+    <mat-card-content>
+        <form>
+            <div class="row">
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label class="main-label d-block fw-medium text-black">
+                            Event Name
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Enter event name
+                            </mat-label>
+                            <input matInput placeholder="E.g. Annual Conference 2024">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label class="main-label d-block fw-medium text-black">
+                            Ticket Type
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Select
+                            </mat-label>
+                            <mat-select>
+                                <mat-option value="option1">
+                                    Free
+                                </mat-option>
+                                <mat-option value="option2">
+                                    Paid
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label class="main-label d-block fw-medium text-black">
+                            Ticket Price
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Enter ticket price
+                            </mat-label>
+                            <input matInput placeholder="E.g. $20.00">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label class="main-label d-block fw-medium text-black">
+                            Event Type
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Select
+                            </mat-label>
+                            <mat-select>
+                                <mat-option value="option1">
+                                    Online
+                                </mat-option>
+                                <mat-option value="option2">
+                                    Offline
+                                </mat-option>
+                                <mat-option value="option3">
+                                    Both
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label class="main-label d-block fw-medium text-black">
+                            Select Topic
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Select
+                            </mat-label>
+                            <mat-select multiple>
+                                <mat-option value="option1">
+                                    Pepper Festival
+                                </mat-option>
+                                <mat-option value="option2">
+                                    A Day of Comedy
+                                </mat-option>
+                                <mat-option value="option3">
+                                    Replicate Oktoberfest
+                                </mat-option>
+                                <mat-option value="option4">
+                                    Kite Flying Festival
+                                </mat-option>
+                                <mat-option value="option5">
+                                    Music Concert
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label class="main-label d-block fw-medium text-black">
+                            Event Vanue
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Enter event vanue
+                            </mat-label>
+                            <input matInput placeholder="E.g. 2750 Quadra Street Victoria Road">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label class="main-label d-block fw-medium text-black">
+                            Event Country
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Select
+                            </mat-label>
+                            <mat-select>
+                                <mat-option value="option1">
+                                    Switzerland
+                                </mat-option>
+                                <mat-option value="option2">
+                                    New Zealand
+                                </mat-option>
+                                <mat-option value="option3">
+                                    Germany
+                                </mat-option>
+                                <mat-option value="option4">
+                                    United States
+                                </mat-option>
+                                <mat-option value="option5">
+                                    Japan
+                                </mat-option>
+                                <mat-option value="option6">
+                                    Netherlands
+                                </mat-option>
+                                <mat-option value="option7">
+                                    Sweden
+                                </mat-option>
+                                <mat-option value="option8">
+                                    Canada
+                                </mat-option>
+                                <mat-option value="option9">
+                                    United Kingdom
+                                </mat-option>
+                                <mat-option value="option10">
+                                    Australia
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label class="main-label d-block fw-medium text-black">
+                            Event State
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Select
+                            </mat-label>
+                            <mat-select>
+                                <mat-option value="option1">
+                                    Florida
+                                </mat-option>
+                                <mat-option value="option2">
+                                    Wisconsin
+                                </mat-option>
+                                <mat-option value="option3">
+                                    Washington
+                                </mat-option>
+                                <mat-option value="option4">
+                                    Nebraska
+                                </mat-option>
+                                <mat-option value="option5">
+                                    Minnesota
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label class="main-label d-block fw-medium text-black">
+                            Event City
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Select
+                            </mat-label>
+                            <mat-select>
+                                <mat-option value="option1">
+                                    New York
+                                </mat-option>
+                                <mat-option value="option2">
+                                    Tokyo
+                                </mat-option>
+                                <mat-option value="option3">
+                                    London
+                                </mat-option>
+                                <mat-option value="option4">
+                                    Amsterdam
+                                </mat-option>
+                                <mat-option value="option5">
+                                    Paris
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label class="main-label d-block fw-medium text-black">
+                            Event Start Date
+                        </label>
+                        <mat-form-field>
+                            <mat-label>Choose a date</mat-label>
+                            <input matInput [matDatepicker]="eventStartDatePicker">
+                            <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+                            <mat-datepicker-toggle matIconSuffix [for]="eventStartDatePicker"></mat-datepicker-toggle>
+                            <mat-datepicker #eventStartDatePicker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label class="main-label d-block fw-medium text-black">
+                            Event End Date
+                        </label>
+                        <mat-form-field>
+                            <mat-label>Choose a date</mat-label>
+                            <input matInput [matDatepicker]="eventEndDatePicker">
+                            <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+                            <mat-datepicker-toggle matIconSuffix [for]="eventEndDatePicker"></mat-datepicker-toggle>
+                            <mat-datepicker #eventEndDatePicker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label class="main-label d-block fw-medium text-black">
+                            Event Time
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Select
+                            </mat-label>
+                            <mat-select>
+                                <mat-option value="option1">
+                                    9AM - 10AM
+                                </mat-option>
+                                <mat-option value="option2">
+                                    11AM - 12PM
+                                </mat-option>
+                                <mat-option value="option3">
+                                    2PM - 4PM
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label class="main-label d-block fw-medium text-black">
+                            Registration Deadline
+                        </label>
+                        <mat-form-field>
+                            <mat-label>Choose a date</mat-label>
+                            <input matInput [matDatepicker]="registrationDeadlineDatePicker">
+                            <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+                            <mat-datepicker-toggle matIconSuffix [for]="registrationDeadlineDatePicker"></mat-datepicker-toggle>
+                            <mat-datepicker #registrationDeadlineDatePicker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label class="main-label d-block fw-medium text-black">
+                            Event Organizers
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Enter event organizers name
+                            </mat-label>
+                            <input matInput placeholder="E.g. Hand Watch">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label class="main-label d-block fw-medium text-black">
+                            Event Sponsors
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Enter event sponsors name
+                            </mat-label>
+                            <input matInput placeholder="E.g. Hand Watch">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label class="main-label d-block fw-medium text-black">
+                            Event Details
+                        </label>
+                        <div class="NgxEditor__Wrapper">
+                            <ng-container *ngIf="editor">
+                                <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
+                                <ngx-editor [editor]="editor"></ngx-editor>
+                            </ng-container>
+                        </div>
+                        <!-- <mat-form-field>
+                            <mat-label>Type here....</mat-label>
+                            <textarea matInput></textarea>
+                        </mat-form-field> -->
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label class="main-label d-block fw-medium text-black">
+                            Event Image
+                        </label>
+                        <file-upload class="file-uploader" [multiple]="multiple"></file-upload>
+                    </div>
+                </div>
+            </div>
+            <div class="form-btn-box">
+                <button type="button" mat-button color="warn">
+                    Cancel
+                </button>
+                <button type="button" mat-button color="primary">
+                    <i class="material-symbols-outlined">
+                        add
+                    </i>
+                    Create/Publish
+                </button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,230 @@
+.cta-content {
+    max-width: 830px;
+
+    h2 {
+        font-size: 48px;
+        margin-bottom: 35px;
+        letter-spacing: -1.5px;
+    }
+    p {
+        max-width: 740px;
+        font-size: 18px;
+        margin: {
+            left: auto;
+            right: auto;
+        };
+    }
+    .mat-mdc-button {
+        height: auto;
+        min-width: auto;
+        margin-top: 30px;
+        border-radius: 7px;
+        padding: 14px 17px;
+        display: inline-block;
+        color: var(--whiteColor);
+        background-color: var(--purpleColor);
+        font: {
+            size: 16px;
+            weight: 500;
+        };
+        &:not(:disabled) {
+            color: var(--whiteColor);
+        }
+    }
+    
+}
+::ng-deep {
+    .cta-content {
+        .mat-mdc-button {
+            .mdc-button__label {
+                padding-left: 29px;
+
+                i {
+                    left: 0;
+                    top: 50%;
+                    position: absolute;
+                    transform: translateY(-50%);
+                }
+            }
+        }
+    }
+    .component-rtl-enabled {
+        .cta-content {
+            .mat-mdc-button {
+                .mdc-button__label {
+                    padding: {
+                        left: 0;
+                        right: 29px;
+                    };
+                    i {
+                        left: auto;
+                        right: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+.shape1 {
+    left: 10px;
+    top: -200px;
+    z-index: -1;
+    position: absolute;
+    filter: blur(150px);
+}
+.shape2 {
+    top: 150px;
+    right: 25px;
+    z-index: -1;
+    position: absolute;
+    filter: blur(125px);
+}
+.component-rtl-enabled {
+    .shape1 {
+        left: auto;
+        right: 10px;
+    }
+    .shape2 {
+        right: auto;
+        left: 25px;
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    .cta-content {
+        max-width: 100%;
+    
+        h2 {
+            font-size: 28px;
+            margin-bottom: 13px;
+            letter-spacing: -.5px;
+        }
+        p {
+            max-width: 100%;
+            font-size: 13px;
+        }
+        .mat-mdc-button {
+            margin-top: 5px;
+            font-size: 13px;
+        }
+        
+    }
+    ::ng-deep {
+        .cta-content {
+            .mat-mdc-button {
+                .mdc-button__label {
+                    padding-left: 25px;
+    
+                    i {
+                        font-size: 20px;
+                    }
+                }
+            }
+        }
+        .component-rtl-enabled {
+            .cta-content {
+                .mat-mdc-button {
+                    .mdc-button__label {
+                        padding: {
+                            left: 0;
+                            right: 25px;
+                        };
+                    }
+                }
+                
+            }
+        }
+    }
+    .shape2 {
+        display: none;
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {
+
+    .cta-content {
+        max-width: 680px;
+    
+        h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            letter-spacing: -.8px;
+        }
+        p {
+            max-width: 650px;
+            font-size: 15px;
+        }
+        .mat-mdc-button {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        
+    }
+    ::ng-deep {
+        .cta-content {
+            .mat-mdc-button {
+                .mdc-button__label {
+                    padding-left: 28px;
+    
+                    i {
+                        font-size: 22px;
+                    }
+                }
+            }
+        }
+        .component-rtl-enabled {
+            .cta-content {
+                .mat-mdc-button {
+                    .mdc-button__label {
+                        padding: {
+                            left: 0;
+                            right: 28px;
+                        };
+                    }
+                }
+                
+            }
+        }
+    }
+    .shape2 {
+        display: none;
+    }
+
+}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {
+
+    .cta-content {
+        max-width: 800px;
+    
+        h2 {
+            font-size: 45px;
+            margin-bottom: 25px;
+            letter-spacing: -1.2px;
+        }
+        p {
+            max-width: 680px;
+            font-size: 16px;
+        }
+        .mat-mdc-button {
+            margin-top: 20px;
+            font-size: 15px;
+        }
+        
+    }
+
+}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}

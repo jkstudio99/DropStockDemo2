@@ -1,0 +1,143 @@
+.navbar {
+    top: 70px;
+    left: 25px;
+    z-index: 5;
+    right: 25px;
+    position: fixed;
+    max-width: 1550px;
+    padding: 15px 25px;
+    border-top: 1px solid var(--borderColor);
+    
+    .navbar-collapse {
+        .navbar-nav {
+            display: flex;
+            align-items: center;
+
+            .nav-item {
+                margin: {
+                    left: 2px;
+                    right: 2px;
+                };
+                &:first-child {
+                    margin-left: 0;
+                }
+                &:last-child {
+                    margin-right: 0;
+                }
+                .nav-link {
+                    transition: var(--transition);
+                    color: var(--blackColor);
+                    border-radius: 7px;
+                    position: relative;
+                    display: block;
+                    font: {
+                        size: var(--fontSize);
+                        weight: 500;
+                    };
+                    padding: {
+                        bottom: 10px;
+                        right: 35px;
+                        left: 45px;
+                        top: 10px;
+                    };
+                    i {
+                        transition: var(--transition);
+                        transform: translateY(-50%);
+                        color: var(--bodyColor);
+                        position: absolute;
+                        font-size: 22px;
+                        line-height: 1;
+                        left: 15px;
+                        top: 50%;
+                    }
+                    &.dropdown-toggle {
+                        &::before {
+                            top: 50%;
+                            right: 12px;
+                            content: "\ea4e";
+                            position: absolute;
+                            display: inline-block;
+                            color: var(--bodyColor);
+                            transform: translateY(-50%);
+                            transition: var(--transition);
+                            font: {
+                                size: 18px;
+                                family: remixicon;
+                            };
+                        }
+                    }
+                    &:hover, &.active {
+                        color: var(--whiteColor);
+                        background-color: var(--primaryColor);
+
+                        i {
+                            color: var(--whiteColor);
+                        }
+                        &.dropdown-toggle {
+                            &::before {
+                                color: var(--whiteColor);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .scroll-container {
+        display: flex;
+        position: relative;
+        align-items: center;
+
+        .scroll-content {
+            width: 100%;
+            overflow-x: auto;
+            white-space: nowrap;
+            scroll-behavior: smooth;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+        }
+        .scroll-btn {
+            font-size: 20px;
+            color: var(--bodyColor);
+
+            &.left-btn {
+                margin: {
+                    right: 5px;
+                    left: -7px;
+                };
+            }
+            &.right-btn {
+                margin: {
+                    left: 5px;
+                    right: -7px;
+                };
+            }
+            &:hover {
+                color: var(--primaryColor);
+            }
+        }
+    }
+    &.sticky {
+        box-shadow: rgba(149, 157, 165, 0.12) 0px 8px 24px;
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}

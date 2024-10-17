@@ -1,0 +1,72 @@
+.order-summary-card {
+    .mat-mdc-card-content {
+        ul {
+            margin-top: -5px;
+
+            li {
+                margin-bottom: 14px;
+
+                .progressbar {
+                    margin-top: 2px;
+
+                    .mdc-linear-progress {
+                        position: relative;
+                        top: 2px;
+                    }
+                    .percentage {
+                        margin-left: 15px;
+                    }
+                }
+                &.completed-order {
+                    --mdc-linear-progress-active-indicator-color: #37D80A;
+                }
+                &.new-order {
+                    --mdc-linear-progress-active-indicator-color: var(--primaryColor);
+                }
+                &.pending-order {
+                    --mdc-linear-progress-active-indicator-color: var(--purpleColor);
+                }
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+    &.component-rtl-enabled {
+        .mat-mdc-card-content {
+            ul {
+                li {
+                    .progressbar {
+                        .percentage {
+                            margin: {
+                                left: 0;
+                                right: 15px;
+                            };
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    .order-summary-card {
+        .mat-mdc-card-content {
+            ul {
+                margin-top: -25px;
+    
+                li {
+                    margin-bottom: 12px;
+    
+                    .progressbar {
+                        margin-top: 1px;
+                    }
+                }
+            }
+        }
+    }
+
+}

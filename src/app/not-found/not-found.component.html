@@ -1,0 +1,21 @@
+<div
+    class="not-found-area"
+    [class.dark-theme]="themeService.isDark()"
+>
+    <div class="d-table">
+        <div class="d-table-cell">
+            <div class="not-found-content text-center ml-auto mr-auto">
+                <img src="images/error.png" alt="error-image">
+                <h4>
+                    ดูเหมือนว่าเราไม่พบหน้านี้ กรุณาลองใหม่อีกครั้งในภายหลัง
+                </h4>
+                <p>
+                    แต่ไม่ต้องกังวล! ทีมของเรากำลังค้นหาทุกที่ในขณะที่คุณรออย่างปลอดภัย
+                </p>
+                <a mat-button routerLink="/">
+                    กลับสู่หน้าหลัก
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

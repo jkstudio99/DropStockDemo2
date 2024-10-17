@@ -1,0 +1,51 @@
+<mat-card
+    class="welcome-card mb-25 border-radius d-block bg-primary-500 border-0 shadow-none"
+    [class.component-rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-content>
+        <div class="content">
+            <h5 class="fw-semibold text-white">
+                สวัสดีตอนเช้า, <span>คุณสมชาย</span>
+            </h5>
+            <p>
+                นี่คือสิ่งที่กำลังเกิดขึ้นกับร้านค้าของคุณในวันนี้
+            </p>
+            <mat-divider></mat-divider>
+            <div class="d-md-flex align-items-center">
+                <div class="item d-flex align-items-center">
+                    <div class="icon text-primary bg-primary-50 border-radius d-flex align-items-center justify-content-center">
+                        <i class="material-symbols-outlined">
+                            shopping_bag
+                        </i>
+                    </div>
+                    <div>
+                        <span class="title d-block fw-semibold text-white">
+                            86 New orders
+                        </span>
+                        <span class="d-block">
+                            Awaiting processing
+                        </span>
+                    </div>
+                </div>
+                <div class="item d-flex align-items-center">
+                    <div class="icon text-danger bg-danger-50 border-radius d-flex align-items-center justify-content-center">
+                        <i class="material-symbols-outlined">
+                            chat_error
+                        </i>
+                    </div>
+                    <div>
+                        <span class="title d-block fw-semibold text-white">
+                            35 Products
+                        </span>
+                        <span class="d-block">
+                            Out of stock
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="image">
+            <img src="images/online-learning.gif" alt="online-learning-image">
+        </div>
+    </mat-card-content>
+</mat-card>

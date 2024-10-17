@@ -1,0 +1,61 @@
+<mat-card
+    class="sales-stats-card p-0 border-radius d-block bg-white border-0 shadow-none"
+    [class.component-rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0 fw-normal d-flex align-items-center">
+                Welcome Back, <span class="text-primary fw-medium">Olivia!</span> <img src="images/icons/dog.svg" alt="dog">
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <div class="stats-list d-sm-flex align-items-center">
+                <mat-form-field>
+                    <i class="ri-calendar-line"></i>
+                    <mat-date-range-input
+                        [formGroup]="campaignOne"
+                        [rangePicker]="campaignOnePicker"
+                        [comparisonStart]="campaignTwo.value.start"
+                        [comparisonEnd]="campaignTwo.value.end">
+                        <input matStartDate placeholder="Start date" formControlName="start">
+                        <input matEndDate placeholder="End date" formControlName="end">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matIconSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+                </mat-form-field>
+                <button type="button" mat-button>
+                    <i class="ri-download-2-line"></i>
+                    Export CSV
+                </button>
+            </div>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="row">
+            <div class="col-xxl-3 col-sm-6">
+
+                <!-- Total Sales -->
+                <app-total-sales />
+
+            </div>
+            <div class="col-xxl-3 col-sm-6">
+
+                <!-- Total Orders -->
+                <app-total-orders />
+
+            </div>
+            <div class="col-xxl-3 col-sm-6">
+
+                <!-- Total Profit -->
+                <app-total-profit />
+
+            </div>
+            <div class="col-xxl-3 col-sm-6">
+
+                <!-- Total Revenue -->
+                <app-total-revenue />
+
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

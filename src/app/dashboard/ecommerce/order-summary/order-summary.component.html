@@ -1,0 +1,79 @@
+<mat-card
+    class="order-summary-card mb-25 border-radius d-block bg-white border-0 shadow-none"
+    [class.component-rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                Order Summary
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <button mat-button [matMenuTriggerFor]="cardHeaderMenu" class="card-header-menu d-inline-block border-radius">
+                Today
+            </button>
+            <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                <ul class="p-0 mt-0 mb-0 list-unstyled">
+                    <li>
+                        <button mat-menu-item>
+                            This Day
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item>
+                            This Week
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item>
+                            This Month
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item>
+                            This Year
+                        </button>
+                    </li>
+                </ul>
+            </mat-menu>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div id="ecommerce_order_summary_chart"></div>
+        <ul class="mb-0 p-0 list-unstyled">
+            <li class="completed-order">
+                <span class="d-block fw-medium">
+                    Completed Order
+                </span>
+                <div class="progressbar d-flex align-items-center">
+                    <mat-progress-bar mode="determinate" value="60"></mat-progress-bar>
+                    <span class="d-block percentage">
+                        60%
+                    </span>
+                </div>
+            </li>
+            <li class="new-order">
+                <span class="d-block fw-medium">
+                    New Order
+                </span>
+                <div class="progressbar d-flex align-items-center">
+                    <mat-progress-bar mode="determinate" value="30"></mat-progress-bar>
+                    <span class="d-block percentage">
+                        30%
+                    </span>
+                </div>
+            </li>
+            <li class="pending-order">
+                <span class="d-block fw-medium">
+                    Pending Order
+                </span>
+                <div class="progressbar d-flex align-items-center">
+                    <mat-progress-bar mode="determinate" value="10"></mat-progress-bar>
+                    <span class="d-block percentage">
+                        10%
+                    </span>
+                </div>
+            </li>
+        </ul>
+    </mat-card-content>
+</mat-card>

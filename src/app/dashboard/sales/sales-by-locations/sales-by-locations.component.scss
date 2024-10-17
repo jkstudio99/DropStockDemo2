@@ -1,0 +1,293 @@
+::ng-deep {
+    .sales-by-locations-card {
+        border: 1px solid var(--borderColor);
+        
+        .mat-mdc-card-content {
+            .mat-mdc-table {
+                &.mdc-data-table__table {
+                    margin-top: 10px;
+                    
+                    .mat-mdc-header-row {
+                        .mat-mdc-header-cell {
+                            font-size: 12px;
+                            text-align: end;
+                            color: var(--bodyColor);
+                            background-color: transparent;
+                            padding: {
+                                top: 0;
+                                bottom: 7px;
+                            };
+                            &:first-child {
+                                text-align: start;
+                                padding-left: 0;
+                            }
+                            &:last-child {
+                                padding-right: 0;
+                            }
+                        }
+                    }
+                    .mdc-data-table__content {
+                        .mat-mdc-row {
+                            .mat-mdc-cell {
+                                text-align: end;
+                                border: {
+                                    left-width: 0;
+                                    right-width: 0;
+                                };
+                                padding: {
+                                    top: 10px;
+                                    bottom: 10px;
+                                };
+                                .customer-info {
+                                    .img {
+                                        width: 22px;
+                                        border-radius: 0;
+            
+                                        img {
+                                            border-radius: 0;
+                                            margin-bottom: -3px;
+                                        }
+                                    }
+                                    span {
+                                        margin-left: 8px;
+                                    }
+                                }
+                                &:first-child {
+                                    text-align: start;
+                                    padding-left: 0;
+                                }
+                                &:last-child {
+                                    padding-right: 0;
+                                }
+                            }
+                            &:last-child {
+                                .mat-mdc-cell {
+                                    padding-bottom: 0;
+                                    border-bottom-width: 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        &.component-rtl-enabled {
+            .mat-mdc-card-content {
+                .mat-mdc-table {
+                    &.mdc-data-table__table {
+                        .mat-mdc-header-row {
+                            .mat-mdc-header-cell {
+                                &:first-child {
+                                    padding: {
+                                        left: 20px;
+                                        right: 0;
+                                    };
+                                }
+                                &:last-child {
+                                    padding: {
+                                        right: 20px;
+                                        left: 0;
+                                    };
+                                }
+                            }
+                        }
+                        .mdc-data-table__content {
+                            .mat-mdc-row {
+                                .mat-mdc-cell {
+                                    .customer-info {
+                                        span {
+                                            margin: {
+                                                left: 0;
+                                                right: 8px;
+                                            };
+                                        }
+                                    }
+                                    &:first-child {
+                                        padding: {
+                                            left: 20px;
+                                            right: 0;
+                                        };
+                                    }
+                                    &:last-child {
+                                        padding: {
+                                            right: 20px;
+                                            left: 0;
+                                        };
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    ::ng-deep {
+        .sales-by-locations-card {
+            &.component-rtl-enabled {
+                .mat-mdc-card-content {
+                    .mat-mdc-table {
+                        &.mdc-data-table__table {
+                            .mat-mdc-header-row {
+                                .mat-mdc-header-cell {
+                                    &:first-child {
+                                        padding: {
+                                            left: 17px;
+                                        };
+                                    }
+                                    &:last-child {
+                                        padding: {
+                                            right: 17px;
+                                        };
+                                    }
+                                }
+                            }
+                            .mdc-data-table__content {
+                                .mat-mdc-row {
+                                    .mat-mdc-cell {
+                                        &:first-child {
+                                            padding: {
+                                                left: 17px;
+                                            };
+                                        }
+                                        &:last-child {
+                                            padding: {
+                                                right: 217px0px;
+                                            };
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {
+
+    ::ng-deep {
+        .sales-by-locations-card {
+            &.component-rtl-enabled {
+                .mat-mdc-card-content {
+                    .mat-mdc-table {
+                        &.mdc-data-table__table {
+                            .mat-mdc-header-row {
+                                .mat-mdc-header-cell {
+                                    &:first-child {
+                                        padding: {
+                                            left: 20px;
+                                        };
+                                    }
+                                    &:last-child {
+                                        padding: {
+                                            right: 20px;
+                                        };
+                                    }
+                                }
+                            }
+                            .mdc-data-table__content {
+                                .mat-mdc-row {
+                                    .mat-mdc-cell {
+                                        &:first-child {
+                                            padding: {
+                                                left: 20px;
+                                            };
+                                        }
+                                        &:last-child {
+                                            padding: {
+                                                right: 20px;
+                                            };
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {
+
+    ::ng-deep {
+        .sales-by-locations-card {
+            .mat-mdc-card-content {
+                .mat-mdc-table {
+                    &.mdc-data-table__table {
+                        .mat-mdc-header-row {
+                            .mat-mdc-header-cell {
+                                padding: {
+                                    bottom: 9px;
+                                };
+                            }
+                        }
+                        .mdc-data-table__content {
+                            .mat-mdc-row {
+                                .mat-mdc-cell {
+                                    padding: {
+                                        top: 12px;
+                                        bottom: 12px;
+                                    };
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {
+
+    ::ng-deep {
+        .sales-by-locations-card {
+            .mat-mdc-card-content {
+                .mat-mdc-table {
+                    &.mdc-data-table__table {
+                        .mat-mdc-header-row {
+                            .mat-mdc-header-cell {
+                                padding: {
+                                    bottom: 9px;
+                                };
+                            }
+                        }
+                        .mdc-data-table__content {
+                            .mat-mdc-row {
+                                .mat-mdc-cell {
+                                    padding: {
+                                        top: 12px;
+                                        bottom: 12px;
+                                    };
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}

@@ -1,0 +1,63 @@
+::ng-deep {
+    .team-members-card {
+        padding-bottom: 4px;
+
+        .mat-mdc-card-content {
+            .mat-mdc-table {
+                &.mdc-data-table__table {
+                    .mdc-data-table__content {
+                        .mat-mdc-row {
+                            &:last-child {
+                                .mat-mdc-cell {
+                                    border-bottom-width: 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    ::ng-deep {
+        .team-members-card {
+            padding-bottom: 0;
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {
+
+    ::ng-deep {
+        .team-members-card {
+            padding-bottom: 0;
+        }
+    }
+
+}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {
+
+    ::ng-deep {
+        .team-members-card {
+            padding-bottom: 10px;
+        }
+    }
+
+}

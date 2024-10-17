@@ -1,0 +1,56 @@
+::ng-deep {
+    .categories-card {
+        .mat-mdc-card-header {
+            .mat-mdc-card-header-text {
+                .mat-mdc-card-title {
+                    line-height: initial;
+                    order: 2;
+                }
+                .mat-mdc-card-subtitle {
+                    order: 1;
+                }
+            }
+        }
+        .mat-mdc-card-content {
+            .mat-mdc-table {
+                &.mdc-data-table__table {
+                    .mat-mdc-header-row {
+                        .mat-mdc-header-cell {
+                            &:last-child {
+                                text-align: end;
+                            }
+                        }
+                    }
+                    .mdc-data-table__content {
+                        .mat-mdc-row {
+                            .mat-mdc-cell {
+                                &:last-child {
+                                    text-align: end;
+
+                                    .action-buttons {
+                                        justify-content: end;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    ::ng-deep {
+        .categories-card {
+            .mat-mdc-card-header {
+                .mat-mdc-card-header-text {
+                    display: block;
+                }
+            }
+        }
+    }
+
+}

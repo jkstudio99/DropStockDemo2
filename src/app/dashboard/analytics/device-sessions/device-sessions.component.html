@@ -1,0 +1,133 @@
+<mat-card
+    class="device-sessions-card mb-25 border-radius d-block bg-white border-0 shadow-none"
+    [class.component-rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                Device Sessions
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <button mat-button [matMenuTriggerFor]="cardHeaderMenu" class="card-header-menu without-border d-inline-block border-radius">
+                Last Week
+            </button>
+            <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                <ul class="p-0 mt-0 mb-0 list-unstyled">
+                    <li>
+                        <button mat-menu-item>
+                            Last Day
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item>
+                            Last Week
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item>
+                            Last Month
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item>
+                            Last Year
+                        </button>
+                    </li>
+                </ul>
+            </mat-menu>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="chart">
+                    <div id="device_sessions"></div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <ul class="content p-0 list-unstyled">
+                    <li class="d-flex justify-content-between position-relative">
+                        <div class="dot rounded-circle dekstop"></div>
+                        <div>
+                            <span class="d-block">
+                                Desktop
+                            </span>
+                            <h6 class="mb-0 fw-semibold">
+                                45.2%
+                            </h6>
+                        </div>
+                        <div>
+                            <span class="d-block">
+                                Sessions
+                            </span>
+                            <h6 class="mb-0 fw-semibold text-body">
+                                8,732
+                            </h6>
+                        </div>
+                    </li>
+                    <li class="d-flex justify-content-between position-relative">
+                        <div class="dot rounded-circle mobile"></div>
+                        <div>
+                            <span class="d-block">
+                                Mobile
+                            </span>
+                            <h6 class="mb-0 fw-semibold">
+                                48.7%
+                            </h6>
+                        </div>
+                        <div>
+                            <span class="d-block">
+                                Sessions
+                            </span>
+                            <h6 class="mb-0 fw-semibold text-body">
+                                9,416
+                            </h6>
+                        </div>
+                    </li>
+                    <li class="d-flex justify-content-between position-relative">
+                        <div class="dot rounded-circle tablet"></div>
+                        <div>
+                            <span class="d-block">
+                                Tablet
+                            </span>
+                            <h6 class="mb-0 fw-semibold">
+                                32.3%
+                            </h6>
+                        </div>
+                        <div>
+                            <span class="d-block">
+                                Sessions
+                            </span>
+                            <h6 class="mb-0 fw-semibold text-body">
+                                1,042
+                            </h6>
+                        </div>
+                    </li>
+                    <li class="d-flex justify-content-between position-relative">
+                        <div class="dot rounded-circle others"></div>
+                        <div>
+                            <span class="d-block">
+                                Others
+                            </span>
+                            <h6 class="mb-0 fw-semibold">
+                                15.4%
+                            </h6>
+                        </div>
+                        <div>
+                            <span class="d-block">
+                                Sessions
+                            </span>
+                            <h6 class="mb-0 fw-semibold text-body">
+                                135
+                            </h6>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <p class="info">
+            This data helps you understand which devices are most commonly used and how engagement metrics vary between them.
+        </p>
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,15 @@
+.example-buttons {
+    margin-bottom: -15px;
+    
+    button, a {
+        margin-bottom: 15px;
+    }
+    a {
+        &.mat-mdc-fab, &.mat-mdc-mini-fab {
+            color: var(--whiteColor, inherit);
+        }
+    }
+}
+.w-100 {
+    width: 100% !important;
+}
