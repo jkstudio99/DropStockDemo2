@@ -13,16 +13,25 @@ import { ResponseModel } from '../shared/DTOs/ResponseModel';
 export class AuthService {
     private currentUserSubject: BehaviorSubject<LoginResponse | null>;
     public currentUser: Observable<LoginResponse | null>;
+    private tokenSubject: BehaviorSubject<string | null>;
+    public token$: Observable<string | null>;
 
     constructor(private http: HttpClient) {
         this.currentUserSubject = new BehaviorSubject<LoginResponse | null>(
             JSON.parse(localStorage.getItem('currentUser') || 'null')
         );
         this.currentUser = this.currentUserSubject.asObservable();
+        this.tokenSubject = new BehaviorSubject<string | null>(this.getStoredToken());
+        this.token$ = this.tokenSubject.asObservable();
     }
 
     public get currentUserValue(): LoginResponse | null {
         return this.currentUserSubject.value;
+    }
+
+    private getStoredToken(): string | null {
+        const user = JSON.parse(localStorage.getItem('currentUser') || 'null');
+        return user?.token || null;
     }
 
     login(loginModel: LoginModel): Observable<LoginResponse> {
@@ -67,20 +76,22 @@ export class AuthService {
     isLoggedIn(): boolean {
         return !!this.currentUserValue;
     }
+
     getToken(): string | null {
-        const currentUser = this.currentUserValue;
-        return currentUser?.token || null;
+        return this.tokenSubject.value;
     }
 
     getRefreshToken(): string | null {
         return this.currentUserValue?.refreshToken || null;
     }
 
-    setToken(token: string) {
-        if (this.currentUserValue) {
-            const updatedUser = { ...this.currentUserValue, token };
+    setToken(token: string): void {
+        const currentUser = this.currentUserValue;
+        if (currentUser) {
+            const updatedUser = { ...currentUser, token };
             localStorage.setItem('currentUser', JSON.stringify(updatedUser));
             this.currentUserSubject.next(updatedUser);
+            this.tokenSubject.next(token);
         }
     }
 

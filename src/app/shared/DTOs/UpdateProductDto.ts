@@ -1,7 +1,7 @@
-export interface CreateUpdateProductDto {
+export interface UpdateProductDto {
   productname: string;
   unitprice: number;
   unitinstock: number;
   categoryid: number;
-  productpicture?: File;
+  productpicture?: string | File;
 }

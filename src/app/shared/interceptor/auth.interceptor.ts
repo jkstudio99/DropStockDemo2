@@ -1,21 +1,43 @@
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
+import { AuthService } from '../../services/auth.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
-    const token = currentUser?.token;
+  constructor(private authService: AuthService) {}
 
-    if (token) {
-      request = request.clone({
-        setHeaders: {
-          Authorization: `Bearer ${token}`
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return next.handle(this.addToken(request)).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401 && !request.url.includes('authentication/refresh-token')) {
+          return this.handle401Error(request, next);
         }
+        return throwError(() => error);
+      })
+    );
+  }
+
+  private addToken(request: HttpRequest<any>): HttpRequest<any> {
+    const token = this.authService.getToken();
+    if (token) {
+      return request.clone({
+        setHeaders: { Authorization: `Bearer ${token}` }
       });
     }
+    return request;
+  }
 
-    return next.handle(request);
+  private handle401Error(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return this.authService.refreshToken().pipe(
+      switchMap((token: string) => {
+        return next.handle(this.addToken(request));
+      }),
+      catchError((error) => {
+        this.authService.logout();
+        return throwError(() => error);
+      })
+    );
   }
 }

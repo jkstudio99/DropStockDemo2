@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, catchError, throwError, switchMap } from 'rxjs';
+import { Observable, catchError, throwError, switchMap, Subject, BehaviorSubject } from 'rxjs';
 import { ProductDto, ProductResponse } from '../shared/DTOs/ProductModel';
 import { environment } from '../../environments/environment';
 import { CloudinaryService } from './cloudinary.service';
@@ -11,6 +11,8 @@ import { AuthService } from './auth.service';
 })
 export class ProductService {
     private readonly apiUrl = `${environment.apiBaseUrl}/Product`;
+    private productsSubject = new BehaviorSubject<ProductResponse | null>(null);
+    products$ = this.productsSubject.asObservable();
 
     constructor(
         private http: HttpClient,
@@ -24,6 +26,8 @@ export class ProductService {
             limit = 100,
             searchQuery,
             selectedCategory,
+            sortField,
+            sortDirection
         } = options;
 
         // ดึง Token จาก AuthService
@@ -42,6 +46,10 @@ export class ProductService {
             params = params.set('selectedCategory', selectedCategory.toString());
         }
 
+        if (sortField && sortDirection) {
+            params = params.set('sortField', sortField).set('sortDirection', sortDirection);
+        }
+
         // เพิ่ม headers ในการเรียก API
         return this.http
             .get<ProductResponse>(this.apiUrl, { params, headers })
@@ -50,19 +58,36 @@ export class ProductService {
 
 
     getProduct(id: number): Observable<ProductDto> {
-        return this.http
-            .get<ProductDto>(`${this.apiUrl}/${id}`)
-            .pipe(catchError(this.handleError));
+        return this.authService.token$.pipe(
+            switchMap(token => {
+                if (!token) {
+                    return throwError(() => new Error('No authentication token available'));
+                }
+                const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+                return this.http.get<ProductDto>(`${this.apiUrl}/${id}`, { headers })
+                    .pipe(catchError(this.handleError));
+            })
+        );
     }
 
     createProduct(product: ProductDto, image: File): Observable<ProductDto> {
-        return this.cloudinaryService.uploadImage(image).pipe(
-            switchMap((response) => {
-                product.productpicture = response.secure_url;
-                return this.http.post<ProductDto>(this.apiUrl, product);
-            }),
-            catchError(this.handleError)
-        );
+        const formData = new FormData();
+        formData.append('image', image, image.name);
+        for (const key in product) {
+            if (product.hasOwnProperty(key)) {
+                formData.append(key, product[key as keyof ProductDto] as string | Blob);
+            }
+        }
+        const token = this.authService.getToken();
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+        return this.http.post<ProductDto>(`${this.apiUrl}`, formData, { headers })
+            .pipe(
+                catchError((error) => {
+                    console.error('Error in createProduct:', error);
+                    console.error('Error response:', error.error);
+                    return throwError(() => new Error(`Failed to create product: ${error.message}`));
+                })
+            );
     }
 
     updateProduct(
@@ -70,28 +95,50 @@ export class ProductService {
         product: ProductDto,
         image?: File
     ): Observable<ProductDto> {
-        if (image) {
-            return this.cloudinaryService.uploadImage(image).pipe(
-                switchMap((response) => {
-                    product.productpicture = response.secure_url;
-                    return this.http.put<ProductDto>(
-                        `${this.apiUrl}/${id}`,
-                        product
-                    );
-                }),
-                catchError(this.handleError)
-            );
-        } else {
-            return this.http
-                .put<ProductDto>(`${this.apiUrl}/${id}`, product)
-                .pipe(catchError(this.handleError));
-        }
+        return this.authService.token$.pipe(
+            switchMap(token => {
+                if (!token) {
+                    return throwError(() => new Error('No authentication token available'));
+                }
+                const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+                const formData = new FormData();
+                for (const key in product) {
+                    if (product.hasOwnProperty(key)) {
+                        formData.append(key, product[key as keyof ProductDto] as string | Blob);
+                    }
+                }
+                if (image) {
+                    formData.append('image', image, image.name);
+                }
+
+                return this.http.put<ProductDto>(`${this.apiUrl}/${id}`, formData, { headers }).pipe(
+                    catchError(error => {
+                        console.error('Error in product update process:', error);
+                        return throwError(() => new Error(error.message || 'Product update failed. Please try again.'));
+                    })
+                );
+            }),
+            catchError(this.handleError)
+        );
     }
 
     deleteProduct(id: number): Observable<ProductDto> {
-        return this.http
-            .delete<ProductDto>(`${this.apiUrl}/${id}`)
-            .pipe(catchError(this.handleError));
+        return this.authService.token$.pipe(
+            switchMap(token => {
+                if (!token) {
+                    return throwError(() => new Error('No authentication token available'));
+                }
+                const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+                return this.http.delete<ProductDto>(`${this.apiUrl}/${id}`, { headers }).pipe(
+                    catchError(error => {
+                        console.error('Error in product deletion process:', error);
+                        return throwError(() => new Error(error.message || 'Product deletion failed. Please try again.'));
+                    })
+                );
+            }),
+            catchError(this.handleError)
+        );
     }
 
     uploadProductImage(productId: number, image: File): Observable<any> {
@@ -108,10 +155,18 @@ export class ProductService {
             () => new Error('Something bad happened; please try again later.')
         );
     }
+
+    refreshProducts() {
+        this.getProducts().subscribe(
+            (response) => this.productsSubject.next(response)
+        );
+    }
 }
 interface ProductQueryOptions {
     page?: number;
     limit?: number;
     searchQuery?: string;
     selectedCategory?: number;
+    sortField?: string;
+    sortDirection?: 'asc' | 'desc';
 }

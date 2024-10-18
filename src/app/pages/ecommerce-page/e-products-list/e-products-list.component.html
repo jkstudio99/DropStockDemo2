@@ -50,20 +50,27 @@
             </mat-card-header>
             <mat-card-content>
                 <div class="table-responsive">
-                    <table mat-table [dataSource]="dataSource">
+                    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)">
 
                         <!-- ID Column -->
                         <ng-container matColumnDef="productid">
-                            <th mat-header-cell *matHeaderCellDef>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
                                 รหัสสินค้า
                             </th>
-                            <td mat-cell *matCellDef="let element">
-                                {{element.productid}}
-                            </td>
+                            <td mat-cell *matCellDef="let element; let i = index">{{i + 1}}</td>
                         </ng-container>
 
-                        <!-- Product Column -->
-                        <ng-container matColumnDef="productname">
+                         <!-- Product Picture Column -->
+                         <ng-container matColumnDef="productpicture">
+                            <th mat-header-cell *matHeaderCellDef>
+                                รูปภาพ
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                <img [src]="element.productpicture" alt="Product Picture" style="width: 50px; height: 50px; object-fit: cover;">
+                            </td>
+                        </ng-container>
+                         <!-- Product Column -->
+                         <ng-container matColumnDef="productname">
                             <th mat-header-cell *matHeaderCellDef>
                                 ชื่อสินค้า
                             </th>
@@ -72,20 +79,10 @@
                             </td>
                         </ng-container>
 
-                         <!-- Product Picture Column -->
-                         <ng-container matColumnDef="productpicture">
-                            <th mat-header-cell *matHeaderCellDef>
-                                รูปภาพสินค้า
-                            </th>
-                            <td mat-cell *matCellDef="let element">
-                                <img [src]="element.productpicture" alt="Product Picture" style="width: 50px; height: 50px; object-fit: cover;">
-                            </td>
-                        </ng-container>
-
                         <!-- Category Column -->
                         <ng-container matColumnDef="categoryid">
                             <th mat-header-cell *matHeaderCellDef>
-                                หมวดหมู่สินค้า
+                                หมวดหมู่
                             </th>
                             <td mat-cell *matCellDef="let element">
                                 {{element.categoryid}}
@@ -119,17 +116,12 @@
                             </th>
                             <td mat-cell *matCellDef="let element">
                                 <div class="action-buttons d-flex align-items-center">
-                                    <a [routerLink]="['/dashboard/ecommerce-page/product-details', element.productid]" mat-button>
-                                        <i class="material-symbols-outlined">
-                                            visibility
-                                        </i>
-                                    </a>
                                     <a [routerLink]="['/dashboard/ecommerce-page/edit-product', element.productid]" mat-button>
                                         <i class="material-symbols-outlined">
                                             edit
                                         </i>
                                     </a>
-                                    <button type="button" mat-button (click)="deleteProduct(element.productid)">
+                                    <button type="button" mat-button color="warn" (click)="deleteProduct(element.productid)">
                                         <i class="material-symbols-outlined">
                                             delete
                                         </i>
@@ -153,3 +145,4 @@
         </mat-tab>
     </mat-tab-group>
 </mat-card>
+

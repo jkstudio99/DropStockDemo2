@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -17,6 +17,17 @@ export class CloudinaryService {
     formData.append('upload_preset', environment.cloudinary.uploadPreset);
     formData.append('api_key', environment.cloudinary.apiKey);
 
-    return this.http.post(this.cloudinaryUrl, formData);
+    console.log('Uploading to Cloudinary:', this.cloudinaryUrl);
+    console.log('Upload preset:', environment.cloudinary.uploadPreset);
+
+    return this.http.post(this.cloudinaryUrl, formData).pipe(
+      catchError(error => {
+        console.error('Cloudinary upload error:', error);
+        if (error.error && error.error.error) {
+          console.error('Cloudinary error details:', error.error.error);
+        }
+        return throwError(() => new Error('Image upload failed. Please try again.'));
+      })
+    );
   }
 }

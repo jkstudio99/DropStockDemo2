@@ -67,7 +67,7 @@
             <mat-card-content>
                 <div class="table-responsive">
                     <table mat-table [dataSource]="dataSource">
-        
+
                         <!-- ID Column -->
                         <ng-container matColumnDef="id">
                             <th mat-header-cell *matHeaderCellDef>
@@ -77,7 +77,7 @@
                                 {{element.id}}
                             </td>
                         </ng-container>
-        
+
                         <!-- Status Column -->
                         <ng-container matColumnDef="status">
                             <th mat-header-cell *matHeaderCellDef>
@@ -95,7 +95,7 @@
                                 </span>
                             </td>
                         </ng-container>
-        
+
                         <!-- Amount Column -->
                         <ng-container matColumnDef="amount">
                             <th mat-header-cell *matHeaderCellDef>
@@ -105,7 +105,7 @@
                                 {{element.amount}}
                             </td>
                         </ng-container>
-        
+
                         <!-- Rewards Column -->
                         <ng-container matColumnDef="rewards">
                             <th mat-header-cell *matHeaderCellDef>
@@ -115,7 +115,7 @@
                                 {{element.rewards}}
                             </td>
                         </ng-container>
-        
+
                         <!-- Date Column -->
                         <ng-container matColumnDef="date">
                             <th mat-header-cell *matHeaderCellDef>
@@ -125,10 +125,10 @@
                                 {{element.date}}
                             </td>
                         </ng-container>
-        
+
                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        
+
                     </table>
                 </div>
                 <mat-paginator [pageSizeOptions]="[10]" showFirstLastButtons></mat-paginator>
@@ -155,8 +155,10 @@
                             </span>
                         </div>
                     </div>
-                    <button mat-button [matMenuTriggerFor]="cardHeaderMenu2" class="dot-menu p-0 d-inline-block border-radius-0">
-                        <i class="ri-more-fill"></i>
+                    <button type="button" mat-button [matMenuTriggerFor]="cardHeaderMenu2" class="dot-menu p-0 d-inline-block border-radius-0">
+                        <i class="material-symbols-outlined">
+                            more_vert
+                        </i>
                     </button>
                     <mat-menu #cardHeaderMenu2="matMenu" class="card-header-menu" xPosition="before">
                         <ul class="p-0 mt-0 mb-0 list-unstyled">
@@ -182,31 +184,31 @@
                     <li class="text-black fw-medium">
                         <span class="text-body d-block fw-normal">
                             Account ID:
-                        </span> 
+                        </span>
                         ID-12174123
                     </li>
                     <li class="text-black fw-medium">
                         <span class="text-body d-block fw-normal">
                             Billing Email:
-                        </span> 
+                        </span>
                         ava&#64;trezo.com
                     </li>
                     <li class="text-black fw-medium">
                         <span class="text-body d-block fw-normal">
                             Delivery Address:
-                        </span> 
+                        </span>
                         715 Maple St, Hamletville, England
                     </li>
                     <li class="text-black fw-medium">
                         <span class="text-body d-block fw-normal">
                             Language:
-                        </span> 
+                        </span>
                         English, Spanish
                     </li>
                     <li class="text-black fw-medium">
                         <span class="text-body d-block fw-normal">
                             Latest Transaction:
-                        </span> 
+                        </span>
                         #JAN-121
                     </li>
                 </ul>
