@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID, ViewChild, ElementRef } from '@angular/core';
 import { isPlatformBrowser, NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -9,7 +9,6 @@ import { RouterLink } from '@angular/router';
 import { NgxEditorModule, Editor, Toolbar } from 'ngx-editor';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { FileUploadModule } from '@iplab/ngx-file-upload';
 import {
     FormBuilder,
     FormGroup,
@@ -22,6 +21,10 @@ import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import Swal from 'sweetalert2';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatIconModule } from '@angular/material/icon';
+import { CloudinaryService } from '../../../services/cloudinary.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
     selector: 'app-e-create-product',
@@ -35,106 +38,179 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
         MatInputModule,
         MatSelectModule,
         NgxEditorModule,
-        FileUploadModule,
         MatDatepickerModule,
         MatNativeDateModule,
         ReactiveFormsModule,
         MatProgressSpinnerModule,
+        MatProgressBarModule,
+        MatIconModule,
     ],
     templateUrl: './e-create-product.component.html',
     styleUrl: './e-create-product.component.scss',
 })
 export class ECreateProductComponent implements OnInit {
-    // Text Editor
-    editor!: Editor | null; // Make it nullable
-    toolbar: Toolbar = [
-        ['bold', 'italic'],
-        ['underline', 'strike'],
-        ['code', 'blockquote'],
-        ['ordered_list', 'bullet_list'],
-        [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
-        ['link', 'image'],
-        ['text_color', 'background_color'],
-        ['align_left', 'align_center', 'align_right', 'align_justify'],
-    ];
+    @ViewChild('fileInput') fileInput!: ElementRef;
 
     productForm: FormGroup;
     selectedImage: File | null = null;
-    imagePreview: string | ArrayBuffer | null = null;
+    imagePreviewUrl: string | ArrayBuffer | null = null;
+    isDragover: boolean = false;
 
     isLoading: boolean = false;
+    uploadProgress: number = 0;
 
     constructor(
         private fb: FormBuilder,
         private productService: ProductService,
         private router: Router,
+        private cloudinaryService: CloudinaryService,
+        private authService: AuthService,
         @Inject(PLATFORM_ID) private platformId: Object
     ) {
         this.productForm = this.fb.group({
             productname: ['', [Validators.required]],
-            unitprice: ['', [Validators.required, Validators.min(0)]],
-            unitinstock: ['', [Validators.required, Validators.min(0)]],
-            categoryid: ['', [Validators.required, Validators.min(1), Validators.pattern('^[0-9]*$')]],
+            unitprice: ['', [Validators.required, Validators.min(0), Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
+            unitinstock: ['', [Validators.required, Validators.min(0), Validators.pattern(/^\d+$/)]],
+            categoryname: ['', [Validators.required]],
+            image: [null, [Validators.required]]
         });
     }
 
     ngOnInit(): void {
-        console.log('ngOnInit called');
         this.initializeForm();
-    }
-
-    private initializeForm(): void {
-        // Any initialization logic here
-        // For example, you might fetch categories from an API
-        this.isLoading = true;
-        setTimeout(() => {
-            this.isLoading = false;
-        }, 1000); // Simulate a 1-second loading time
-    }
-
-    ngOnDestroy(): void {
-        if (isPlatformBrowser(this.platformId) && this.editor) {
-            this.editor.destroy();
+        if (!this.authService.isAuthenticated()) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'ไม่ได้เข้าสู่ระบบ',
+                text: 'คุณจำเป็นต้องเข้าสู่ระบบเพื่อเพิ่มสินค้า',
+            }).then(() => {
+                this.router.navigate(['/login']);
+            });
         }
     }
 
-    onFileSelected(event: Event): void {
-        const file = (event.target as HTMLInputElement).files?.[0];
-        if (file) {
+    private initializeForm(): void {
+        this.isLoading = true;
+        setTimeout(() => {
+            this.isLoading = false;
+        }, 1000);
+    }
+
+    onFileSelected(event: any) {
+        const file: File = event.target.files[0];
+        this.handleFile(file);
+    }
+
+    onDragOver(event: DragEvent) {
+        event.preventDefault();
+        event.stopPropagation();
+        this.isDragover = true;
+    }
+
+    onDragLeave(event: DragEvent) {
+        event.preventDefault();
+        event.stopPropagation();
+        this.isDragover = false;
+    }
+
+    onDrop(event: DragEvent) {
+        event.preventDefault();
+        event.stopPropagation();
+        this.isDragover = false;
+        const files = event.dataTransfer?.files;
+        if (files && files.length > 0) {
+            this.handleFile(files[0]);
+        }
+    }
+
+    private handleFile(file: File) {
+        if (file && file.type.startsWith('image/')) {
             this.selectedImage = file;
+            this.productForm.patchValue({ image: file });
+            this.productForm.get('image')?.updateValueAndValidity();
+
             const reader = new FileReader();
-            reader.onload = () => {
-                this.imagePreview = reader.result;
+            reader.onload = (e: any) => {
+                this.imagePreviewUrl = e.target.result;
             };
             reader.readAsDataURL(file);
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Invalid File Type',
+                text: 'Please select an image file.',
+            });
         }
     }
 
     onSubmit(): void {
-        if (this.productForm.valid) {
+        if (this.productForm.valid && this.selectedImage) {
+            this.isLoading = true;
             const productData = this.productForm.value;
-            this.productService
-                .createProduct(productData, this.selectedImage || new File([], ""))
-                .pipe(
-                    catchError((error) => {
-                        console.error('Error creating product:', error);
+            this.productService.createProduct(productData, this.selectedImage)
+                .subscribe({
+                    next: (response) => {
+                        console.log('Product created successfully:', response);
+                        this.isLoading = false;
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'สำเร็จ!',
+                            text: 'เพิ่มสินค้าเรียบร้อยแล้ว',
+                        }).then(() => {
+                            this.router.navigate(['/dashboard/ecommerce-page/products-list']);
+                        });
+                    },
+                    error: (error) => {
+                        console.error('Detailed error creating product:', error);
+                        this.isLoading = false;
                         Swal.fire({
                             icon: 'error',
                             title: 'เกิดข้อผิดพลาด',
-                            text: 'ไม่สามารถเพิ่มสินค้าได้ กรุณาลองใหม่อีกครั้ง',
+                            text: `ไม่สามารถเพิ่มสินค้าได้: ${error.message || 'Unknown error'}`,
                         });
-                        return throwError(() => new Error('Failed to create product'));
-                    })
-                )
-                .subscribe(() => {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'สำเร็จ!',
-                        text: 'เพิ่มสินค้าเรียบร้อยแล้ว',
-                    }).then(() => {
-                        this.router.navigate(['/dashboard/ecommerce-page/products-list']);
-                    });
+                    }
                 });
+        } else {
+            console.error('Form is invalid or no image selected');
+        }
+    }
+
+    private handleError = (error: any) => {
+        console.error('Error:', error);
+        this.isLoading = false;
+        Swal.fire({
+            icon: 'error',
+            title: 'เกิดข้อผิดพลาด',
+            text: `ไม่สามารถเพิ่มสินค้าได้: ${error.message || 'Unknown error'}`,
+        });
+    }
+
+    removeFile(event?: Event) {
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        this.selectedImage = null;
+        this.imagePreviewUrl = null;
+        this.uploadProgress = 0;
+        this.productForm.patchValue({ image: null });
+        this.productForm.get('image')?.updateValueAndValidity();
+        if (this.fileInput) {
+            this.fileInput.nativeElement.value = '';
+        }
+    }
+
+    checkAuthAndSubmit(): void {
+        if (this.authService.isAuthenticated()) {
+            this.onSubmit();
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'ไม่ได้รับอนุญาต',
+                text: 'กรุณาเ้าสู่ระบบก่อนเพิ่มสินค้า',
+            });
+            // Optionally, redirect to login page
+            // this.router.navigate(['/login']);
         }
     }
 }

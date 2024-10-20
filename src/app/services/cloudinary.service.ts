@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, Observable, throwError } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
-
+import { catchError } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
 export class CloudinaryService {
-  private cloudinaryUrl = `https://api.cloudinary.com/v1_1/${environment.cloudinary.cloudName}/image/upload`;
+  private cloudinaryUrl = 'https://api.cloudinary.com/v1_1/' + environment.cloudinary.cloudName + '/image/upload';
 
   constructor(private http: HttpClient) {}
 
@@ -15,18 +15,14 @@ export class CloudinaryService {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('upload_preset', environment.cloudinary.uploadPreset);
-    formData.append('api_key', environment.cloudinary.apiKey);
 
     console.log('Uploading to Cloudinary:', this.cloudinaryUrl);
     console.log('Upload preset:', environment.cloudinary.uploadPreset);
 
     return this.http.post(this.cloudinaryUrl, formData).pipe(
-      catchError(error => {
+      catchError((error: HttpErrorResponse) => {
         console.error('Cloudinary upload error:', error);
-        if (error.error && error.error.error) {
-          console.error('Cloudinary error details:', error.error.error);
-        }
-        return throwError(() => new Error('Image upload failed. Please try again.'));
+        return throwError(() => new Error(`Cloudinary upload failed: ${error.message || 'Unknown error'}`));
       })
     );
   }

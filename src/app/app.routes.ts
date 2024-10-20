@@ -21,15 +21,8 @@ import { ECreateSellerComponent } from './pages/ecommerce-page/e-create-seller/e
 import { ECategoriesComponent } from './pages/ecommerce-page/e-categories/e-categories.component';
 import { ECustomersComponent } from './pages/ecommerce-page/e-customers/e-customers.component';
 import { ECustomerDetailsComponent } from './pages/ecommerce-page/e-customer-details/e-customer-details.component';
-import { EOrdersComponent } from './pages/ecommerce-page/e-orders/e-orders.component';
-import { ECartComponent } from './pages/ecommerce-page/e-cart/e-cart.component';
-import { ECheckoutComponent } from './pages/ecommerce-page/e-checkout/e-checkout.component';
-import { EOrderDetailsComponent } from './pages/ecommerce-page/e-order-details/e-order-details.component';
+import { EOrdersListComponent } from './pages/ecommerce-page/e-orders-list/e-orders-list.component';
 import { ECreateOrderComponent } from './pages/ecommerce-page/e-create-order/e-create-order.component';
-import { EOrderTrackingComponent } from './pages/ecommerce-page/e-order-tracking/e-order-tracking.component';
-import { EProductsGridComponent } from './pages/ecommerce-page/e-products-grid/e-products-grid.component';
-import { EProductsListComponent } from './pages/ecommerce-page/e-products-list/e-products-list.component';
-import { EProductDetailsComponent } from './pages/ecommerce-page/e-product-details/e-product-details.component';
 import { ECreateProductComponent } from './pages/ecommerce-page/e-create-product/e-create-product.component';
 import { EEditProductComponent } from './pages/ecommerce-page/e-edit-product/e-edit-product.component';
 import { InvoicesPageComponent } from './pages/invoices-page/invoices-page.component';
@@ -112,9 +105,6 @@ import { TabsComponent } from './ui-elements/tabs/tabs.component';
 import { TreeComponent } from './ui-elements/tree/tree.component';
 import { VideosComponent } from './ui-elements/videos/videos.component';
 import { UtilitiesComponent } from './ui-elements/utilities/utilities.component';
-import { FormsComponent } from './forms/forms.component';
-import { BasicElementsComponent } from './forms/basic-elements/basic-elements.component';
-import { FileUploaderComponent } from './forms/file-uploader/file-uploader.component';
 import { CreateInvoiceComponent } from './pages/invoices-page/create-invoice/create-invoice.component';
 import { EditInvoiceComponent } from './pages/invoices-page/edit-invoice/edit-invoice.component';
 import { ChartsComponent } from './charts/charts.component';
@@ -129,6 +119,8 @@ import { PolarChartsComponent } from './charts/polar-charts/polar-charts.compone
 import { MoreChartsComponent } from './charts/more-charts/more-charts.component';
 import { AnalyticsComponent } from './dashboard/analytics/analytics.component';
 import { SalesComponent } from './dashboard/sales/sales.component';
+import { EEditOrderComponent } from './pages/ecommerce-page/e-edit-order/e-edit-order.component';
+import { EProductsListComponent } from './pages/ecommerce-page/e-products-list/e-products-list.component';
 
 export const routes: Routes = [
     {
@@ -162,14 +154,10 @@ export const routes: Routes = [
                 path: 'ecommerce-page',
                 component: EcommercePageComponent,
                 children: [
-                    { path: '', component: EProductsGridComponent },
+
                     {
                         path: 'products-list',
                         component: EProductsListComponent,
-                    },
-                    {
-                        path: 'product-details',
-                        component: EProductDetailsComponent,
                     },
                     {
                         path: 'create-product',
@@ -179,23 +167,18 @@ export const routes: Routes = [
                         path: 'edit-product/:id',
                         component: EEditProductComponent,
                     },
-                    { path: 'orders', component: EOrdersComponent },
+                    { path: 'orders-list', component: EOrdersListComponent },
                     {
-                        path: 'order-details',
-                        component: EOrderDetailsComponent,
+                        path: 'edit-order/:id',
+                        component: EEditOrderComponent,
                     },
                     { path: 'create-order', component: ECreateOrderComponent },
-                    {
-                        path: 'order-tracking',
-                        component: EOrderTrackingComponent,
-                    },
+
                     { path: 'customers', component: ECustomersComponent },
                     {
                         path: 'customer-details',
                         component: ECustomerDetailsComponent,
                     },
-                    { path: 'cart', component: ECartComponent },
-                    { path: 'checkout', component: ECheckoutComponent },
                     { path: 'sellers', component: ESellersComponent },
                     {
                         path: 'seller-details',
@@ -324,14 +307,6 @@ export const routes: Routes = [
                     { path: 'pie', component: PieChartsComponent },
                     { path: 'polar', component: PolarChartsComponent },
                     { path: 'more', component: MoreChartsComponent },
-                ],
-            },
-            {
-                path: 'forms',
-                component: FormsComponent,
-                children: [
-                    { path: '', component: BasicElementsComponent },
-                    { path: 'file-uploader', component: FileUploaderComponent },
                 ],
             },
 

@@ -16,18 +16,18 @@
             eCommerce
         </li>
         <li class="breadcrumb-item d-inline-block position-relative">
-            เพิ่มสินค้า
+            Add Products
         </li>
     </ol>
 </div>
 
 <!-- Create Product -->
-<div *ngIf="isLoading" class="loading-spinner">Loading...</div>
+<mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
 <form *ngIf="!isLoading" [formGroup]="productForm" (ngSubmit)="onSubmit()">
-    <div class="row">
-        <div class="col-lg-8">
-            <mat-card class="mb-25 border-radius d-block bg-white border-0 shadow-none">
-                <mat-card-content>
+    <mat-card class="mb-25 border-radius d-block bg-white border-0 shadow-none">
+        <mat-card-content>
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
                     <mat-form-field class="w-100 mb-20">
                         <mat-label>ชื่อสินค้า</mat-label>
                         <input matInput formControlName="productname" placeholder="Enter product name">
@@ -35,57 +35,71 @@
                             กรุณากรอกชื่อสินค้า
                         </mat-error>
                     </mat-form-field>
-
+                </div>
+                <div class="col-lg-6 col-md-6">
                     <mat-form-field class="w-100 mb-20">
                         <mat-label>ราคา</mat-label>
-                        <input matInput type="number" formControlName="unitprice" placeholder="Enter price">
-                        <mat-error *ngIf="productForm.get('unitprice')?.hasError('required')">
-                            กรุณากรอกราคา
-                        </mat-error>
-                        <mat-error *ngIf="productForm.get('unitprice')?.hasError('min')">
-                            ราคาต้องมากกว่าหรือเท่ากับ 0
-                        </mat-error>
+                        <input matInput type="number" step="0.01" formControlName="unitprice" required aria-label="ราคา">
+                        <mat-error *ngIf="productForm.get('unitprice')?.hasError('required')">กรุณากรอกราคา</mat-error>
+                        <mat-error *ngIf="productForm.get('unitprice')?.hasError('min')">ราคาต้องไม่ต่ำกว่า 0</mat-error>
+                        <mat-error *ngIf="productForm.get('unitprice')?.hasError('pattern')">กรุณากรอกราคาที่ถูกต้อง (เช่น 10.99)</mat-error>
                     </mat-form-field>
-
+                </div>
+                <div class="col-lg-6 col-md-6">
                     <mat-form-field class="w-100 mb-20">
                         <mat-label>จำนวน</mat-label>
-                        <input matInput type="number" formControlName="unitinstock" placeholder="Enter stock">
-                        <mat-error *ngIf="productForm.get('unitinstock')?.hasError('required')">
-                            กรุณากรอกจำนวน
-                        </mat-error>
-                        <mat-error *ngIf="productForm.get('unitinstock')?.hasError('min')">
-                            จำนวนต้องมากกว่าหรือเท่ากับ 0
-                        </mat-error>
+                        <input matInput type="number" step="1" formControlName="unitinstock" required aria-label="จำนวน">
+                        <mat-error *ngIf="productForm.get('unitinstock')?.hasError('required')">กรุณากรอกจำนวน</mat-error>
+                        <mat-error *ngIf="productForm.get('unitinstock')?.hasError('min')">จำนวนต้องไม่ต่ำกว่า 0</mat-error>
+                        <mat-error *ngIf="productForm.get('unitinstock')?.hasError('pattern')">กรุณากรอกจำนวนเป็นตัวเลขเต็ม</mat-error>
                     </mat-form-field>
-
+                </div>
+                <div class="col-lg-6 col-md-6">
                     <mat-form-field class="w-100 mb-20">
-                        <mat-label>รหัสหมวดหมู่</mat-label>
-                        <input matInput type="number" formControlName="categoryid" placeholder="Enter category ID">
-                        <mat-error *ngIf="productForm.get('categoryid')?.hasError('required')">
-                            กรุณากรอกรหัสหมวดหมู่
-                        </mat-error>
-                        <mat-error *ngIf="productForm.get('categoryid')?.hasError('min')">
-                            รหัสหมวดหมู่ต้องมากกว่าหรือเท่ากับ 1
-                        </mat-error>
-                        <mat-error *ngIf="productForm.get('categoryid')?.hasError('pattern')">
-                            กรุณากรอกเฉพาะตัวเลขเท่านั้น
+                        <mat-label>ชื่อหมวดหมู่</mat-label>
+                        <input matInput formControlName="categoryname" placeholder="Enter category name">
+                        <mat-error *ngIf="productForm.get('categoryname')?.hasError('required')">
+                            กรุณากรอกชื่อหมวดหมู่
                         </mat-error>
                     </mat-form-field>
-
-                    <div class="product-image-upload mb-20">
-                        <input type="file" (change)="onFileSelected($event)" accept="image/*" #fileInput style="display: none;">
-                        <button type="button" mat-raised-button color="primary" (click)="fileInput.click()">
-                            <i class="material-symbols-outlined">cloud_upload</i>
-                            อัปโหลดรูปภาพ
-                        </button>
-                        <div *ngIf="imagePreview" class="image-preview mt-3">
-                            <img [src]="imagePreview" alt="Product preview" style="max-width: 100%; height: auto;">
+                </div>
+                <div class="col-lg-12 col-md-12">
+                    <div class="file-upload-container"
+                         (dragover)="onDragOver($event)"
+                         (dragleave)="onDragLeave($event)"
+                         (drop)="onDrop($event)">
+                        <input type="file"
+                               #fileInput
+                               (change)="onFileSelected($event)"
+                               accept="image/*"
+                               style="display: none;">
+                        <div class="drag-drop-area"
+                             [class.dragover]="isDragover"
+                             (click)="fileInput.click()">
+                            <ng-container *ngIf="!imagePreviewUrl; else imagePreview">
+                                <i class="material-symbols-outlined">cloud_upload</i>
+                                <p>Drag and drop image here or click to select</p>
+                            </ng-container>
+                            <ng-template #imagePreview>
+                                <div class="image-preview-container">
+                                    <img [src]="imagePreviewUrl" alt="Image preview" style="max-width: 100%; max-height: 200px;">
+                                    <button mat-icon-button class="remove-image-button" (click)="removeFile($event)">
+                                        <span class="material-symbols-outlined">
+                                            close
+                                        </span>
+                                    </button>
+                                </div>
+                                <p>{{ selectedImage?.name }}</p>
+                            </ng-template>
                         </div>
                     </div>
-                </mat-card-content>
-            </mat-card>
-        </div>
-    </div>
+                    <mat-error *ngIf="productForm.get('image')?.hasError('required') && productForm.get('image')?.touched">
+                        Please select an image
+                    </mat-error>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
     <mat-card class="mb-25 border-radius d-block bg-transparent p-0 border-0 shadow-none">
         <mat-card-content>
             <div class="form-btn-box">

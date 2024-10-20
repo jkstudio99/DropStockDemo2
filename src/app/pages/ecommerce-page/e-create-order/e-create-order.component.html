@@ -1,7 +1,7 @@
 <!-- Breadcrumb -->
 <div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
     <h5 class="mb-0">
-        Create Order
+        เพิ่มคำสั่งซื้อ
     </h5>
     <ol class="breadcrumb list-unstyled mt-0 mb-0 p-0">
         <li class="breadcrumb-item d-inline-block position-relative">
@@ -16,386 +16,82 @@
             eCommerce
         </li>
         <li class="breadcrumb-item d-inline-block position-relative">
-            Orders
-        </li>
-        <li class="breadcrumb-item d-inline-block position-relative">
-            Create Order
+            Add Orders
         </li>
     </ol>
 </div>
 
 <!-- Create Order -->
-<div class="row">
-    <div class="col-lg-8">
-        <mat-card class="mb-25 border-radius d-block bg-white border-0 shadow-none">
-            <mat-card-header>
-                <mat-card-title>
-                    <h5 class="mb-0">
-                        Billing Information
-                    </h5>
-                </mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <form>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="main-label d-block fw-medium text-black">
-                                    Customer Name
-                                </label>
-                                <mat-form-field>
-                                    <mat-label>
-                                        Enter customer name
-                                    </mat-label>
-                                    <input matInput placeholder="E.g. Ava Turner">
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="main-label d-block fw-medium text-black">
-                                    Phone Number
-                                </label>
-                                <mat-form-field>
-                                    <mat-label>
-                                        Enter phone number
-                                    </mat-label>
-                                    <input matInput placeholder="E.g. +1 555-123-4567">
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="main-label d-block fw-medium text-black">
-                                    Email Address
-                                </label>
-                                <mat-form-field>
-                                    <mat-label>
-                                        Enter email address
-                                    </mat-label>
-                                    <input matInput placeholder="E.g. ava@trezo.com">
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="main-label d-block fw-medium text-black">
-                                    State
-                                </label>
-                                <mat-form-field>
-                                    <mat-label>
-                                        Select
-                                    </mat-label>
-                                    <mat-select>
-                                        <mat-option value="option1">
-                                            Florida
-                                        </mat-option>
-                                        <mat-option value="option2">
-                                            Wisconsin
-                                        </mat-option>
-                                        <mat-option value="option3">
-                                            Washington
-                                        </mat-option>
-                                        <mat-option value="option4">
-                                            Nebraska
-                                        </mat-option>
-                                        <mat-option value="option5">
-                                            Minnesota
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="main-label d-block fw-medium text-black">
-                                    City
-                                </label>
-                                <mat-form-field>
-                                    <mat-label>
-                                        Select
-                                    </mat-label>
-                                    <mat-select>
-                                        <mat-option value="option1">
-                                            New York
-                                        </mat-option>
-                                        <mat-option value="option2">
-                                            Tokyo
-                                        </mat-option>
-                                        <mat-option value="option3">
-                                            London
-                                        </mat-option>
-                                        <mat-option value="option4">
-                                            Amsterdam
-                                        </mat-option>
-                                        <mat-option value="option5">
-                                            Paris
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="main-label d-block fw-medium text-black">
-                                    ZIP / Postcode
-                                </label>
-                                <mat-form-field>
-                                    <mat-label>
-                                        Enter zip / postcode
-                                    </mat-label>
-                                    <input matInput placeholder="E.g. 3100">
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="main-label d-block fw-medium text-black">
-                                    Street Address
-                                </label>
-                                <mat-form-field>
-                                    <mat-label>
-                                        Enter street address
-                                    </mat-label>
-                                    <input matInput placeholder="E.g. 123 Main Street, Anytown, USA">
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="main-label d-block fw-medium text-black">
-                                    Country
-                                </label>
-                                <mat-form-field>
-                                    <mat-label>
-                                        Select
-                                    </mat-label>
-                                    <mat-select>
-                                        <mat-option value="option1">
-                                            Switzerland
-                                        </mat-option>
-                                        <mat-option value="option2">
-                                            New Zealand
-                                        </mat-option>
-                                        <mat-option value="option3">
-                                            Germany
-                                        </mat-option>
-                                        <mat-option value="option4">
-                                            United States
-                                        </mat-option>
-                                        <mat-option value="option5">
-                                            Japan
-                                        </mat-option>
-                                        <mat-option value="option6">
-                                            Netherlands
-                                        </mat-option>
-                                        <mat-option value="option7">
-                                            Sweden
-                                        </mat-option>
-                                        <mat-option value="option8">
-                                            Canada
-                                        </mat-option>
-                                        <mat-option value="option9">
-                                            United Kingdom
-                                        </mat-option>
-                                        <mat-option value="option10">
-                                            Australia
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label class="main-label d-block fw-medium text-black">
-                                    Order Note (optional)
-                                </label>
-                                <mat-form-field>
-                                    <mat-label>Write your note here....</mat-label>
-                                    <textarea matInput placeholder="E.g. It makes me feel..."></textarea>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-btn-box">
-                        <button type="button" mat-button color="warn">
-                            Cancel
-                        </button>
-                        <button type="button" mat-button color="primary">
-                            <i class="material-symbols-outlined">
-                                add
-                            </i>
-                            Create Order
-                        </button>
-                    </div>
-                </form>
-            </mat-card-content>
-        </mat-card>
+<div *ngIf="isLoading" class="loading-spinner">Loading...</div>
+<form *ngIf="!isLoading" [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-lg-8">
+            <mat-card class="mb-25 border-radius d-block bg-white border-0 shadow-none">
+                <mat-card-content>
+                    <mat-form-field class="w-100 mb-20">
+                        <mat-label>ชื่อคำสั่งซื้อ</mat-label>
+                        <input matInput formControlName="ordername" placeholder="Enter order name">
+                        <mat-error *ngIf="orderForm.get('ordername')?.hasError('required')">
+                            กรุณากรอกชื่อคำสั่งซื้อ
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-100 mb-20">
+                        <mat-label>ราคา</mat-label>
+                        <input matInput type="number" formControlName="orderprice" placeholder="Enter price">
+                        <mat-error *ngIf="orderForm.get('orderprice')?.hasError('required')">
+                            กรุณากรอกราคา
+                        </mat-error>
+                        <mat-error *ngIf="orderForm.get('orderprice')?.hasError('min')">
+                            ราคาต้องมากกว่าหรือเท่ากับ 0
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-100 mb-20">
+                        <mat-label>สถานะ</mat-label>
+                        <mat-select formControlName="orderstatus">
+                            <mat-option value="Pending">Pending</mat-option>
+                            <mat-option value="Completed">Completed</mat-option>
+                            <mat-option value="Cancelled">Cancelled</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="orderForm.get('orderstatus')?.hasError('required')">
+                            กรุณาเลือกสถานะ
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-100 mb-20">
+                        <mat-label>รายละเอียด</mat-label>
+                        <textarea matInput formControlName="orderdetails" placeholder="Enter details"></textarea>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-100 mb-20">
+                        <mat-label>รหัสลูกค้า</mat-label>
+                        <input matInput type="number" formControlName="customerid" placeholder="Enter customer ID">
+                        <mat-error *ngIf="orderForm.get('customerid')?.hasError('required')">
+                            กรุณากรอกรหัสลูกค้า
+                        </mat-error>
+                        <mat-error *ngIf="orderForm.get('customerid')?.hasError('min')">
+                            รหัสลูกค้าต้องมากกว่าหรือเท่ากับ 1
+                        </mat-error>
+                    </mat-form-field>
+                </mat-card-content>
+            </mat-card>
+        </div>
     </div>
-    <div class="col-lg-4">
-        <mat-card class="your-order-card mb-25 border-radius d-block bg-white border-0 shadow-none">
-            <mat-card-header>
-                <mat-card-title>
-                    <h5 class="mb-0">
-                        Your Order
-                    </h5>
-                </mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <div class="your-order-info d-flex align-items-center justify-content-between">
-                    <span class="d-block text-black">
-                        Ordered items
+    <mat-card class="mb-25 border-radius d-block bg-transparent p-0 border-0 shadow-none">
+        <mat-card-content>
+            <div class="form-btn-box">
+                <button type="button" mat-button color="warn" routerLink="/dashboard/ecommerce-page/products-list">
+                    ยกเลิก
+                </button>
+                <button type="submit" mat-button color="primary" [disabled]="orderForm.invalid || isLoading">
+                    <mat-spinner *ngIf="isLoading" diameter="20" class="button-spinner"></mat-spinner>
+                    <span *ngIf="!isLoading">
+                        <i class="material-symbols-outlined">add</i>
+                        เพิ่มคำสั่งซื้อ
                     </span>
-                    <a mat-button routerLink="/dashboard/ecommerce-page/cart">
-                        Edit Cart
-                    </a>
-                </div>
-                <div class="basic-table table-responsive">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th scope="col" class="fw-medium">
-                                    Description
-                                </th>
-                                <th scope="col" class="fw-medium text-end">
-                                    Price
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="text-body">
-                                    Grand Total :
-                                </td>
-                                <td class="text-body text-end">
-                                    $0.00
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-body">
-                                    Discount :
-                                </td>
-                                <td class="text-body text-end">
-                                    $0.00
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-body">
-                                    Tax :
-                                </td>
-                                <td class="text-body text-end">
-                                    $0.00
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="fw-medium">
-                                    Subtotal :
-                                </td>
-                                <td class="text-body text-end">
-                                    $0.00
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-body">
-                                    Shipping Charge :
-                                </td>
-                                <td class="text-body text-end">
-                                    $0.00
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-body">
-                                    Coupon Charge :
-                                </td>
-                                <td class="text-body text-end">
-                                    $0.00
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="fw-medium">
-                                    Total :
-                                </td>
-                                <td class="text-body text-end">
-                                    $0.00
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </mat-card-content>
-        </mat-card>
-        <mat-card class="mb-25 border-radius d-block bg-white border-0 shadow-none">
-            <mat-card-header>
-                <mat-card-title>
-                    <h5 class="mb-0">
-                        Payment Method
-                    </h5>
-                </mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <form>
-                    <div class="form-group">
-                        <label class="main-label d-block fw-medium text-black">
-                            Payment Card
-                        </label>
-                        <mat-form-field>
-                            <mat-label>
-                                Select
-                            </mat-label>
-                            <mat-select>
-                                <mat-option value="option1">
-                                    PayPal
-                                </mat-option>
-                                <mat-option value="option2">
-                                    Stax
-                                </mat-option>
-                                <mat-option value="option3">
-                                    Helcim
-                                </mat-option>
-                                <mat-option value="option4">
-                                    Square
-                                </mat-option>
-                                <mat-option value="option5">
-                                    Stripe
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-                    <div class="form-group">
-                        <label class="main-label d-block fw-medium text-black">
-                            Card Number
-                        </label>
-                        <mat-form-field>
-                            <mat-label>
-                                Enter card number
-                            </mat-label>
-                            <input matInput placeholder="E.g. 3588XXXXXXXXX">
-                        </mat-form-field>
-                    </div>
-                    <div class="form-group">
-                        <label class="main-label d-block fw-medium text-black">
-                            Expiration Date
-                        </label>
-                        <mat-form-field>
-                            <mat-label>
-                                Enter expiration date
-                            </mat-label>
-                            <input matInput placeholder="E.g. MM / YY">
-                        </mat-form-field>
-                    </div>
-                    <div class="form-group mb-0">
-                        <label class="main-label d-block fw-medium text-black">
-                            Security Code
-                        </label>
-                        <mat-form-field>
-                            <mat-label>
-                                Enter security code
-                            </mat-label>
-                            <input matInput placeholder="E.g. CVV">
-                        </mat-form-field>
-                    </div>
-                </form>
-            </mat-card-content>
-        </mat-card>
-    </div>
-</div>
+                </button>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</form>

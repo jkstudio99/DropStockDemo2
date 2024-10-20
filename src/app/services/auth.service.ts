@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { LoginModel, LoginResponse } from '../shared/DTOs/LoginModel';
 import { environment } from '../../environments/environment';
 import { RegisterModel } from '../shared/DTOs/RegisterModel';
@@ -116,9 +116,11 @@ export class AuthService {
             )
             .pipe(
                 map((response) => {
-                    // You might want to automatically log in the user after registration
-                    // or simply return the response
                     return response;
+                }),
+                catchError((error: HttpErrorResponse) => {
+                    console.error('Registration error:', error);
+                    return throwError(() => new Error('Registration failed. Please try again.'));
                 })
             );
     }

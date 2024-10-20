@@ -30,8 +30,19 @@ export class ProductService {
     createProduct(product: ProductDto, image: File): Observable<ProductDto> {
         return this.cloudinaryService.uploadImage(image).pipe(
             switchMap(cloudinaryResponse => {
+                if (!cloudinaryResponse.secure_url) {
+                    console.error('Cloudinary response:', cloudinaryResponse);
+                    throw new Error('Cloudinary did not return a secure URL');
+                }
                 product.productpicture = cloudinaryResponse.secure_url;
                 return this.http.post<ProductDto>(this.apiUrl, product, this.getHttpOptions());
+            }),
+            catchError(error => {
+                console.error('Detailed error in createProduct:', error);
+                if (error.error && error.error.message) {
+                    return throwError(() => new Error(`Failed to create product: ${error.error.message}`));
+                }
+                return throwError(() => new Error(`Failed to create product: ${error.message || 'Unknown error'}`));
             })
         );
     }
@@ -70,10 +81,15 @@ export class ProductService {
         } = options;
 
         let url = `${this.apiUrl}?page=${page}&limit=${limit}`;
-        if (searchQuery) url += `&searchQuery=${encodeURIComponent(searchQuery)}`;
-        if (selectedCategory) url += `&selectedCategory=${selectedCategory}`;
-        if (sortField) url += `&sortField=${sortField}`;
-        if (sortDirection) url += `&sortDirection=${sortDirection}`;
+        if (searchQuery) {
+            url += `&searchQuery=${encodeURIComponent(searchQuery)}`;
+        }
+        if (selectedCategory) {
+            url += `&selectedCategory=${selectedCategory}`;
+        }
+        if (sortField && sortDirection) {
+            url += `&sortField=${sortField}&sortDirection=${sortDirection}`;
+        }
         if (['productid', 'unitprice', 'unitinstock'].includes(sortField)) url += '&sortNumeric=true';
 
         return url;

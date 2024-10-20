@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { OrderDTO } from '../shared/DTOs/OrderModel';
 import { OrderCreateDTO } from '../shared/DTOs/OrderCreateModel';
@@ -29,11 +29,21 @@ export class OrderService {
     }
 
     createOrder(order: OrderCreateDTO): Observable<OrderDTO> {
-        return this.http.post<OrderDTO>(this.apiUrl, order, this.getHttpOptions());
+        return this.http.post<OrderDTO>(this.apiUrl, order, this.getHttpOptions()).pipe(
+            catchError(error => {
+                console.error('Error creating order:', error);
+                return throwError(() => error);
+            })
+        );
     }
 
     updateOrder(id: number, order: OrderUpdateDTO): Observable<OrderDTO> {
-        return this.http.put<OrderDTO>(this.apiUrl + '/' + id, order, this.getHttpOptions());
+        return this.http.put<OrderDTO>(`${this.apiUrl}/${id}`, order, this.getHttpOptions()).pipe(
+            catchError(error => {
+                console.error('Error updating order:', error);
+                return throwError(() => error);
+            })
+        );
     }
 
     deleteOrder(id: number): Observable<unknown> {
@@ -45,12 +55,13 @@ export class OrderService {
             page = 1,
             limit = 10,
             sortField = 'orderid',
-            sortDirection = 'asc'
+            sortDirection = 'asc',
+            searchQuery
         } = options;
 
         let url = `${this.apiUrl}?page=${page}&limit=${limit}`;
-        if (sortField) url += `&sortField=${sortField}`;
-        if (sortDirection) url += `&sortDirection=${sortDirection}`;
+        url += `&sortField=${sortField}&sortDirection=${sortDirection}`;
+        if (searchQuery) url += `&searchQuery=${encodeURIComponent(searchQuery)}`;
         if (sortField === 'orderid') url += '&sortNumeric=true';
         return url;
     }
@@ -68,4 +79,5 @@ interface OrderQueryOptions {
     limit?: number;
     sortField?: string;
     sortDirection?: 'asc' | 'desc';
+    searchQuery?: string;
 }

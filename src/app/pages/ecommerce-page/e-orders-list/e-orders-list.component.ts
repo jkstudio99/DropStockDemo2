@@ -27,9 +27,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { of } from 'rxjs';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
-    selector: 'app-e-orders',
+    selector: 'app-e-orders-list',
     standalone: true,
     imports: [
         RouterLink,
@@ -45,11 +46,12 @@ import { of } from 'rxjs';
         ReactiveFormsModule,
         CurrencyPipe,
         DatePipe,
+        MatTabsModule,
     ],
-    templateUrl: './e-orders.component.html',
-    styleUrls: ['./e-orders.component.scss'],
+    templateUrl: './e-orders-list.component.html',
+    styleUrls: ['./e-orders-list.component.scss'],
 })
-export class EOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
+export class EOrdersListComponent implements OnInit, AfterViewInit, OnDestroy {
     displayedColumns: string[] = [
         'orderid',
         'ordername',
@@ -129,7 +131,9 @@ export class EOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
                 takeUntil(this.unsubscribe$),
                 switchMap((token) => {
                     if (!token) {
-                        return throwError(() => new Error('No authentication token available'));
+                        return throwError(
+                            () => new Error('No authentication token available')
+                        );
                     }
                     return of(token);
                 }),
@@ -153,7 +157,7 @@ export class EOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
                     page: 1,
                     limit: 10,
                     sortField: this.sortField,
-                    sortDirection: this.sortDirection,
+                    sortDirection: this.sortDirection as 'asc' | 'desc',
                 });
             }),
             catchError((refreshError) => {
@@ -193,7 +197,7 @@ export class EOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
             confirmButtonColor: '#001EE0',
             cancelButtonColor: '#d33',
             confirmButtonText: 'ใช่, ลบเลย!',
-            cancelButtonText: 'กเลิก',
+            cancelButtonText: 'ยกเลิก',
         }).then((result) => {
             if (result.isConfirmed) {
                 this.performDeleteOrder(id);
@@ -229,24 +233,37 @@ export class EOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
     sortData(sort: Sort): void {
         this.sortField = sort.active || 'orderid';
         this.sortDirection = sort.direction || 'asc';
-
-        if (this.dataSource.data) {
-            this.dataSource.data = this.dataSource.data.slice().sort((a, b) => {
-                const isAsc = sort.direction === 'asc';
-                switch (sort.active) {
-                    case 'orderid': return this.compare(a.orderid, b.orderid, isAsc);
-                    case 'ordername': return this.compare(a.ordername, b.ordername, isAsc);
-                    case 'orderprice': return this.compare(a.orderprice, b.orderprice, isAsc);
-                    case 'orderstatus': return this.compare(a.orderstatus, b.orderstatus, isAsc);
-                    case 'createddate': return this.compare(new Date(a.createddate), new Date(b.createddate), isAsc);
-                    default: return 0;
-                }
-            });
-        }
+        this.loadOrders(this.paginator.pageIndex + 1, this.paginator.pageSize);
     }
 
-    private compare(a: number | string | Date, b: number | string | Date, isAsc: boolean) {
+    private compare(
+        a: number | string | Date,
+        b: number | string | Date,
+        isAsc: boolean
+    ): number {
         return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+    }
+
+    private loadOrders(page: number = 1, pageSize: number = 10): void {
+        this.orderService
+            .getOrders({
+                page: page,
+                limit: pageSize,
+                sortField: this.sortField,
+                sortDirection: this.sortDirection as 'asc' | 'desc',
+            })
+            .pipe(
+                takeUntil(this.unsubscribe$),
+                catchError((error) => {
+                    console.error('Error loading orders:', error);
+                    this.showErrorAlert('Failed to load orders');
+                    return throwError(() => error);
+                })
+            )
+            .subscribe((response) => {
+                this.dataSource.data = response.orders;
+                this.totalItems = response.total;
+            });
     }
 
     showErrorAlert(message: string) {
@@ -258,59 +275,19 @@ export class EOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     onPageChange(event: PageEvent): void {
-        const pageIndex = event.pageIndex;
-        const pageSize = event.pageSize;
-        this.sortField = this.sort.active || 'orderid';
-        this.sortDirection = this.sort.direction || 'asc';
-        this.checkAuthAndLoadOrders();
-        if (this.dataSource.data) {
-            this.dataSource.data = this.dataSource.data.slice().sort((a, b) => {
-                const isAsc = this.sortDirection === 'asc';
-                switch (this.sortField) {
-                    case 'orderid': return this.compare(a.orderid, b.orderid, isAsc);
-                    case 'ordername': return this.compare(a.ordername, b.ordername, isAsc);
-                    case 'orderprice': return this.compare(a.orderprice, b.orderprice, isAsc);
-                    case 'orderstatus': return this.compare(a.orderstatus, b.orderstatus, isAsc);
-                    case 'createddate': return this.compare(new Date(a.createddate), new Date(b.createddate), isAsc);
-                    default: return 0;
-                }
-            });
-        }
-    }
-
-    private loadOrders(pageIndex: number, pageSize: number): void {
-        this.orderService
-            .getOrders({
-                page: pageIndex,
-                limit: pageSize,
-                sortField: this.sortField,
-                sortDirection: this.sortDirection,
-            })
-            .pipe(takeUntil(this.unsubscribe$))
-            .subscribe({
-                next: (response) => {
-                    this.dataSource.data = response.orders.sort((a, b) =>
-                        this.compare(Number(a.orderid), Number(b.orderid), this.sortDirection === 'asc')
-                    );
-                    this.totalItems = response.total;
-                },
-                error: (error) => {
-                    console.error('Error loading orders:', error);
-                    this.showErrorAlert('Failed to load orders');
-                },
-            });
+        this.loadOrders(event.pageIndex + 1, event.pageSize);
     }
 
     getStatusClass(status: string): string {
         switch (status.toLowerCase()) {
             case 'completed':
-                return 'text-outline-success';
+                return 'text-bg-success';
             case 'pending':
-                return 'text-outline-warning';
+                return 'text-bg-warning';
             case 'cancelled':
-                return 'text-outline-danger';
+                return 'text-bg-danger';
             default:
-                return 'text-outline-secondary';
+                return 'text-bg-secondary';
         }
     }
 }
