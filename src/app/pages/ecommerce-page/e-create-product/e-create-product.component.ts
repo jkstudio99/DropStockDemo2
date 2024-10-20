@@ -25,6 +25,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { CloudinaryService } from '../../../services/cloudinary.service';
 import { AuthService } from '../../../services/auth.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
     selector: 'app-e-create-product',
@@ -60,6 +61,7 @@ export class ECreateProductComponent implements OnInit {
     uploadProgress: number = 0;
 
     constructor(
+        private http: HttpClient,
         private fb: FormBuilder,
         private productService: ProductService,
         private router: Router,
@@ -147,6 +149,19 @@ export class ECreateProductComponent implements OnInit {
         if (this.productForm.valid && this.selectedImage) {
             this.isLoading = true;
             const productData = this.productForm.value;
+
+            console.log('Selected image:', this.selectedImage);
+
+            if (this.selectedImage.size > 10 * 1024 * 1024) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'ไฟล์มีขนาดใหญ่เกินไป',
+                    text: 'กรุณาเลือกไฟล์ที่มีขนาดไม่เกิน 10MB',
+                });
+                this.isLoading = false;
+                return;
+            }
+
             this.productService.createProduct(productData, this.selectedImage)
                 .subscribe({
                     next: (response) => {
