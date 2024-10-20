@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, catchError, switchMap, throwError } from 'rxjs';
+import { Observable, catchError, of, switchMap, throwError } from 'rxjs';
 import { ProductDto, ProductResponse } from '../shared/DTOs/ProductModel';
 import { environment } from '../../environments/environment';
 import { AuthService } from './auth.service';
@@ -28,23 +28,22 @@ export class ProductService {
     }
 
     createProduct(product: ProductDto, image: File): Observable<ProductDto> {
-        return this.cloudinaryService.uploadImage(image).pipe(
-            switchMap(cloudinaryResponse => {
-                if (!cloudinaryResponse.secure_url) {
-                    console.error('Cloudinary response:', cloudinaryResponse);
-                    throw new Error('Cloudinary did not return a secure URL');
-                }
-                product.productpicture = cloudinaryResponse.secure_url;
-                return this.http.post<ProductDto>(this.apiUrl, product, this.getHttpOptions());
-            }),
-            catchError(error => {
-                console.error('Detailed error in createProduct:', error);
-                if (error.error && error.error.message) {
-                    return throwError(() => new Error(`Failed to create product: ${error.error.message}`));
-                }
-                return throwError(() => new Error(`Failed to create product: ${error.message || 'Unknown error'}`));
-            })
+        const formData = new FormData();
+        formData.append('image', image, image.name);
+        for (const key in product) {
+            if (product.hasOwnProperty(key)) {
+                formData.append(
+                    key,
+                    product[key as keyof ProductDto] as string | Blob
+                );
+            }
+        }
+        const token = this.authService.getToken();
+        const headers = new HttpHeaders().set(
+            'Authorization',
+            `Bearer ${token}`
         );
+        return this.http.post<ProductDto>(this.apiUrl, formData, { headers });
     }
 
     updateProduct(id: number, product: ProductDto, image?: File): Observable<ProductDto> {
@@ -61,7 +60,15 @@ export class ProductService {
     }
 
     deleteProduct(id: number): Observable<unknown> {
-        return this.http.delete(`${this.apiUrl}/${id}`, this.getHttpOptions());
+        return this.http.delete(this.apiUrl + '/' + id, this.getHttpOptions()).pipe(
+            switchMap(() => {
+                return of(null);
+            }),
+            catchError(error => {
+                console.error('Error deleting product:', error);
+                return throwError(() => new Error('Failed to delete product'));
+            })
+        );
     }
 
     uploadProductImage(productId: number, image: File): Observable<any> {

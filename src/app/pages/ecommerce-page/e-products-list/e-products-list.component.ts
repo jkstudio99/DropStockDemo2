@@ -227,7 +227,7 @@ export class EProductsListComponent
     }
 
     private handleDeleteProductSuccess() {
-        Swal.fire('ลบแล้ว!', 'สินค้าถูกลบเรียบร้อยแล้ว', 'success');
+        Swal.fire('ลบแล้ว!', 'สินค้าถูกลบเรียบร้���ยแล้ว', 'success');
         this.loadProducts();
     }
 
