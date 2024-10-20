@@ -6,6 +6,7 @@ import { LoginModel, LoginResponse } from '../shared/DTOs/LoginModel';
 import { environment } from '../../environments/environment';
 import { RegisterModel } from '../shared/DTOs/RegisterModel';
 import { ResponseModel } from '../shared/DTOs/ResponseModel';
+import { UserRole } from '../shared/DTOs/UserRole';
 
 @Injectable({
     providedIn: 'root',
@@ -127,5 +128,13 @@ export class AuthService {
             `${environment.apiBaseUrl}/api/Authentication/forgot-password`,
             { email }
         );
+    }
+
+    public get currentUserRoles(): UserRole[] {
+        return this.currentUserValue?.userData.roles || [];
+    }
+
+    hasRole(role: UserRole): boolean {
+        return this.currentUserRoles.includes(role);
     }
 }

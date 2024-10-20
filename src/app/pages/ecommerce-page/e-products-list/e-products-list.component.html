@@ -1,7 +1,7 @@
 <!-- Breadcrumb -->
 <div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
     <h5 class="mb-0">
-        Products List
+        รายการสินค้า
     </h5>
     <ol class="breadcrumb list-unstyled mt-0 mb-0 p-0">
         <li class="breadcrumb-item d-inline-block position-relative">
@@ -34,7 +34,7 @@
                         <i class="material-symbols-outlined">
                             add
                         </i>
-                        Add New Product
+                        เพิ่มสินค้า
                     </a>
                 </mat-card-title>
                 <mat-card-subtitle>
@@ -51,7 +51,6 @@
             <mat-card-content>
                 <div class="table-responsive">
                     <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)">
-
                         <!-- ID Column -->
                         <ng-container matColumnDef="productid">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -71,7 +70,7 @@
                         </ng-container>
                          <!-- Product Column -->
                          <ng-container matColumnDef="productname">
-                            <th mat-header-cell *matHeaderCellDef>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
                                 ชื่อสินค้า
                             </th>
                             <td mat-cell *matCellDef="let element">
@@ -80,28 +79,28 @@
                         </ng-container>
 
                         <!-- Category Column -->
-                        <ng-container matColumnDef="categoryid">
-                            <th mat-header-cell *matHeaderCellDef>
+                        <ng-container matColumnDef="categoryname">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
                                 หมวดหมู่
                             </th>
                             <td mat-cell *matCellDef="let element">
-                                {{element.categoryid}}
+                                {{element.categoryname}}
                             </td>
                         </ng-container>
 
                         <!-- Price Column -->
                         <ng-container matColumnDef="unitprice">
-                            <th mat-header-cell *matHeaderCellDef>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
                                 ราคา
                             </th>
                             <td mat-cell *matCellDef="let element">
-                                {{element.unitprice}}
+                                {{element.unitprice | currency:'฿':'symbol':'1.2-2'}}
                             </td>
                         </ng-container>
 
                         <!-- Stock Column -->
                         <ng-container matColumnDef="unitinstock">
-                            <th mat-header-cell *matHeaderCellDef>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
                                 จำนวน
                             </th>
                             <td mat-cell *matCellDef="let element">
@@ -145,4 +144,3 @@
         </mat-tab>
     </mat-tab-group>
 </mat-card>
-

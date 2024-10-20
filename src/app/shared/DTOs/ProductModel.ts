@@ -1,13 +1,13 @@
 export interface ProductDto {
-  productid?: number;
+  productid: number;
   productname: string;
   unitprice: number;
   unitinstock: number;
-  productpicture?: string;
+  productpicture: string;
   categoryid: number;
-  createddate?: Date;
+  categoryname: string;
+  createddate: Date;
   modifieddate?: Date;
-  categoryname?: string;
 }
 
 export interface ProductResponse {
