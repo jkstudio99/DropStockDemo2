@@ -51,39 +51,39 @@
                         <input matInput type="number" step="1" formControlName="unitinstock" required aria-label="จำนวน">
                         <mat-error *ngIf="productForm.get('unitinstock')?.hasError('required')">กรุณากรอกจำนวน</mat-error>
                         <mat-error *ngIf="productForm.get('unitinstock')?.hasError('min')">จำนวนต้องไม่ต่ำกว่า 0</mat-error>
-                        <mat-error *ngIf="productForm.get('unitinstock')?.hasError('pattern')">กรุณากรอกจำนวนเป็นตัวเลขเต็ม</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <mat-form-field class="w-100 mb-20">
-                        <mat-label>ชื่อหมวดหมู่</mat-label>
-                        <input matInput formControlName="categoryname" placeholder="Enter category name">
-                        <mat-error *ngIf="productForm.get('categoryname')?.hasError('required')">
-                            กรุณากรอกชื่อหมวดหมู่
+                        <mat-label>หมวดหมู่</mat-label>
+                        <mat-select formControlName="categoryid">
+                            <mat-option *ngFor="let category of categories" [value]="category.categoryid">
+                                {{category.categoryname}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="productForm.get('categoryid')?.hasError('required')">
+                            กรุณาเลือกหมวดหมู่
                         </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-12 col-md-12">
                     <div class="file-upload-container"
+                         [ngClass]="{'dragover': isDragover}"
                          (dragover)="onDragOver($event)"
                          (dragleave)="onDragLeave($event)"
                          (drop)="onDrop($event)">
-                        <input type="file"
-                               #fileInput
-                               (change)="onFileSelected($event)"
-                               accept="image/*"
-                               style="display: none;">
-                        <div class="drag-drop-area"
-                             [class.dragover]="isDragover"
-                             (click)="fileInput.click()">
-                            <ng-container *ngIf="!imagePreviewUrl; else imagePreview">
-                                <i class="material-symbols-outlined">cloud_upload</i>
-                                <p>Drag and drop image here or click to select</p>
+                        <div class="drag-drop-area">
+                            <ng-container *ngIf="!imagePreviewUrl; else previewTemplate">
+                                <p>ลากและวางไฟล์ที่นี่ หรือคลิกเพื่อเลือกไฟล์</p>
+                                <button mat-raised-button color="primary" (click)="triggerFileInput()">
+                                    <i class="material-symbols-outlined">upload</i>
+                                    อัปโหลดรูปภาพ
+                                </button>
                             </ng-container>
-                            <ng-template #imagePreview>
+                            <ng-template #previewTemplate>
                                 <div class="image-preview-container">
-                                    <img [src]="imagePreviewUrl" alt="Image preview" style="max-width: 100%; max-height: 200px;">
-                                    <button mat-icon-button class="remove-image-button" (click)="removeFile($event)">
+                                    <img [src]="imagePreviewUrl" alt="Preview" style="max-width: 100%; max-height: 200px;">
+                                    <button mat-icon-button color="warn" class="remove-image-button" (click)="removeFile($event)">
                                         <span class="material-symbols-outlined">
                                             close
                                         </span>
@@ -94,7 +94,7 @@
                         </div>
                     </div>
                     <mat-error *ngIf="productForm.get('image')?.hasError('required') && productForm.get('image')?.touched">
-                        Please select an image
+                        กรุณาเลือกรูปภาพ
                     </mat-error>
                 </div>
             </div>
@@ -117,3 +117,5 @@
         </mat-card-content>
     </mat-card>
 </form>
+
+<input type="file" #fileInput style="display: none;" (change)="onFileSelected($event)" accept="image/*">

@@ -1,7 +1,14 @@
-import { Component, Inject, OnInit, PLATFORM_ID, ViewChild, ElementRef } from '@angular/core';
-import { isPlatformBrowser, NgIf } from '@angular/common';
+import {
+    Component,
+    Inject,
+    OnInit,
+    PLATFORM_ID,
+    ViewChild,
+    ElementRef,
+} from '@angular/core';
+import { isPlatformBrowser, NgIf, NgFor } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
+import { MatCard, MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -25,6 +32,9 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { CloudinaryService } from '../../../services/cloudinary.service';
 import { AuthService } from '../../../services/auth.service';
+import { CategoryService } from '../../../services/category.service';
+import { NgClass } from '@angular/common';
+import { MatCardContent } from '@angular/material/card';
 
 @Component({
     selector: 'app-e-create-product',
@@ -32,6 +42,7 @@ import { AuthService } from '../../../services/auth.service';
     imports: [
         RouterLink,
         NgIf,
+        NgFor,
         MatCardModule,
         MatButtonModule,
         MatFormFieldModule,
@@ -44,20 +55,23 @@ import { AuthService } from '../../../services/auth.service';
         MatProgressSpinnerModule,
         MatProgressBarModule,
         MatIconModule,
+        NgClass,
+        MatCard,
+        MatCardContent,
     ],
     templateUrl: './e-create-product.component.html',
     styleUrl: './e-create-product.component.scss',
 })
 export class ECreateProductComponent implements OnInit {
-    @ViewChild('fileInput') fileInput!: ElementRef;
+    @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
     productForm: FormGroup;
     selectedImage: File | null = null;
     imagePreviewUrl: string | ArrayBuffer | null = null;
     isDragover: boolean = false;
-
     isLoading: boolean = false;
     uploadProgress: number = 0;
+    categories: any[] = [];
 
     constructor(
         private fb: FormBuilder,
@@ -65,35 +79,49 @@ export class ECreateProductComponent implements OnInit {
         private router: Router,
         private cloudinaryService: CloudinaryService,
         private authService: AuthService,
-        @Inject(PLATFORM_ID) private platformId: Object
+        private categoryService: CategoryService
     ) {
         this.productForm = this.fb.group({
-            productname: ['', [Validators.required]],
-            unitprice: ['', [Validators.required, Validators.min(0), Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
-            unitinstock: ['', [Validators.required, Validators.min(0), Validators.pattern(/^\d+$/)]],
-            categoryname: ['', [Validators.required]],
-            image: [null, [Validators.required]]
+            productname: ['', Validators.required],
+            unitprice: [
+                '',
+                [
+                    Validators.required,
+                    Validators.min(0),
+                    Validators.pattern(/^\d+(\.\d{1,2})?$/),
+                ],
+            ],
+            unitinstock: ['', [Validators.required, Validators.min(0)]],
+            categoryid: ['', Validators.required],
+            image: [null, Validators.required],
         });
     }
 
     ngOnInit(): void {
-        this.initializeForm();
+        this.loadCategories();
         if (!this.authService.isAuthenticated()) {
             Swal.fire({
                 icon: 'warning',
                 title: 'ไม่ได้เข้าสู่ระบบ',
                 text: 'คุณจำเป็นต้องเข้าสู่ระบบเพื่อเพิ่มสินค้า',
+                confirmButtonColor: '#001EE0',
+                cancelButtonColor: '#FF4023',
             }).then(() => {
                 this.router.navigate(['/login']);
             });
         }
     }
 
-    private initializeForm(): void {
-        this.isLoading = true;
-        setTimeout(() => {
-            this.isLoading = false;
-        }, 1000);
+    loadCategories(): void {
+        this.categoryService.getActiveCategories().subscribe({
+            next: (categories) => {
+                this.categories = categories;
+            },
+            error: (error) => {
+                console.error('Error loading categories:', error);
+                Swal.fire('Error', 'Failed to load categories', 'error');
+            },
+        });
     }
 
     onFileSelected(event: any) {
@@ -139,6 +167,8 @@ export class ECreateProductComponent implements OnInit {
                 icon: 'error',
                 title: 'Invalid File Type',
                 text: 'Please select an image file.',
+                confirmButtonColor: '#001EE0',
+                cancelButtonColor: '#FF4023',
             });
         }
     }
@@ -147,7 +177,8 @@ export class ECreateProductComponent implements OnInit {
         if (this.productForm.valid && this.selectedImage) {
             this.isLoading = true;
             const productData = this.productForm.value;
-            this.productService.createProduct(productData, this.selectedImage)
+            this.productService
+                .createProduct(productData, this.selectedImage)
                 .subscribe({
                     next: (response) => {
                         console.log('Product created successfully:', response);
@@ -156,19 +187,25 @@ export class ECreateProductComponent implements OnInit {
                             icon: 'success',
                             title: 'สำเร็จ!',
                             text: 'เพิ่มสินค้าเรียบร้อยแล้ว',
+                            confirmButtonColor: '#25B003',
+                            cancelButtonColor: '#FF4023',
                         }).then(() => {
-                            this.router.navigate(['/dashboard/ecommerce-page/products-list']);
+                            this.router.navigate([
+                                '/dashboard/ecommerce-page/products-list',
+                            ]);
                         });
                     },
                     error: (error) => {
-                        console.error('Detailed error creating product:', error);
+                        console.error('Error creating product:', error);
                         this.isLoading = false;
                         Swal.fire({
                             icon: 'error',
                             title: 'เกิดข้อผิดพลาด',
-                            text: `ไม่สามารถเพิ่มสินค้าได้: ${error.message || 'Unknown error'}`,
+                            text: `ไม่สามารถเพิ่มสินค้าได้: ${
+                                error.message || 'Unknown error'
+                            }`,
                         });
-                    }
+                    },
                 });
         } else {
             console.error('Form is invalid or no image selected');
@@ -181,9 +218,11 @@ export class ECreateProductComponent implements OnInit {
         Swal.fire({
             icon: 'error',
             title: 'เกิดข้อผิดพลาด',
-            text: `ไม่สามารถเพิ่มสินค้าได้: ${error.message || 'Unknown error'}`,
+            text: `ไม่สามารถเพิ่มสินค้าได้: ${
+                error.message || 'Unknown error'
+            }`,
         });
-    }
+    };
 
     removeFile(event?: Event) {
         if (event) {
@@ -212,5 +251,9 @@ export class ECreateProductComponent implements OnInit {
             // Optionally, redirect to login page
             // this.router.navigate(['/login']);
         }
+    }
+
+    triggerFileInput() {
+        this.fileInput.nativeElement.click();
     }
 }

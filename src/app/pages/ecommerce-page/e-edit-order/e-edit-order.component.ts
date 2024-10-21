@@ -6,22 +6,35 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+    FormBuilder,
+    FormGroup,
+    ReactiveFormsModule,
+    Validators,
+} from '@angular/forms';
 import { OrderService } from '../../../services/order.service';
 import { finalize } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
     selector: 'app-e-edit-order',
     standalone: true,
     imports: [
-        RouterLink, NgIf, MatCardModule, MatButtonModule, MatFormFieldModule,
-        MatInputModule, MatSelectModule, ReactiveFormsModule,
+        RouterLink,
+        NgIf,
+        MatCardModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        ReactiveFormsModule,
         MatProgressSpinnerModule,
+        MatProgressBarModule,
     ],
     templateUrl: './e-edit-order.component.html',
-    styleUrls: ['./e-edit-order.component.scss']
+    styleUrls: ['./e-edit-order.component.scss'],
 })
 export class EEditOrderComponent implements OnInit {
     orderForm!: FormGroup;
@@ -48,12 +61,15 @@ export class EEditOrderComponent implements OnInit {
             orderprice: ['', [Validators.required, Validators.min(0)]],
             orderstatus: ['', [Validators.required]],
             orderdetails: ['', [Validators.required]],
-            customerid: ['', [Validators.required, Validators.pattern('^[0-9]*$')]]
+            customerid: [
+                '',
+                [Validators.required, Validators.pattern('^[0-9]*$')],
+            ],
         });
     }
 
     private loadOrderData(): void {
-        this.route.params.subscribe(params => {
+        this.route.params.subscribe((params) => {
             this.orderId = +params['id'];
             this.fetchOrderDetails();
         });
@@ -63,7 +79,7 @@ export class EEditOrderComponent implements OnInit {
         this.isLoading = true;
         this.orderService.getOrder(this.orderId).subscribe({
             next: this.handleOrderFetchSuccess.bind(this),
-            error: this.handleOrderFetchError.bind(this)
+            error: this.handleOrderFetchError.bind(this),
         });
     }
 
@@ -75,7 +91,9 @@ export class EEditOrderComponent implements OnInit {
     private handleOrderFetchError(error: any): void {
         console.error('Error fetching order:', error);
         this.isLoading = false;
-        this.showErrorAlert('ไม่สามารถดึงข้อมูลคำสั่งซื้อได้ กรุณาลองใหม่อีกครั้ง');
+        this.showErrorAlert(
+            'ไม่สามารถดึงข้อมูลคำสั่งซื้อได้ กรุณาลองใหม่อีกครั้ง'
+        );
     }
 
     onSubmit(): void {
@@ -87,11 +105,12 @@ export class EEditOrderComponent implements OnInit {
     }
 
     private updateOrder(orderData: any): void {
-        this.orderService.updateOrder(this.orderId, orderData)
-            .pipe(finalize(() => this.isLoading = false))
+        this.orderService
+            .updateOrder(this.orderId, orderData)
+            .pipe(finalize(() => (this.isLoading = false)))
             .subscribe({
                 next: this.handleUpdateSuccess.bind(this),
-                error: this.handleUpdateError.bind(this)
+                error: this.handleUpdateError.bind(this),
             });
     }
 
@@ -100,6 +119,8 @@ export class EEditOrderComponent implements OnInit {
             icon: 'success',
             title: 'สำเร็จ!',
             text: 'แก้ไขคำสั่งซื้อเรียบร้อยแล้ว',
+            confirmButtonColor: '#001EE0',
+            iconColor: '#25B003',
         }).then(() => {
             this.router.navigate(['/dashboard/ecommerce-page/orders']);
         });
@@ -122,6 +143,8 @@ export class EEditOrderComponent implements OnInit {
             icon: 'error',
             title: 'เกิดข้อผิดพลาด',
             text: message,
+            confirmButtonColor: '#001EE0',
+            iconColor: '#FF4023',
         });
     }
 

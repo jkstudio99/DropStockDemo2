@@ -30,6 +30,10 @@ import { MatInputModule } from '@angular/material/input';
 import Swal from 'sweetalert2';
 import { PaginationComponent } from '../../../ui-elements/pagination/pagination.component';
 import { CurrencyPipe } from '@angular/common';
+import { CategoryService } from '../../../services/category.service';
+import { forkJoin } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { NgFor } from '@angular/common';
 
 @Component({
     selector: 'app-e-products-list',
@@ -50,6 +54,7 @@ import { CurrencyPipe } from '@angular/common';
         MatInputModule,
         PaginationComponent,
         CurrencyPipe,
+        NgFor,
     ],
     templateUrl: './e-products-list.component.html',
     styleUrls: ['./e-products-list.component.scss'],
@@ -61,32 +66,42 @@ export class EProductsListComponent
         'productid',
         'productpicture',
         'productname',
-        'categoryname', // Change this from 'categoryid' to 'categoryname'
+        'categoryid',
         'unitprice',
         'unitinstock',
-        'action',
+        'action'
     ];
     dataSource = new MatTableDataSource<ProductDto>();
     isToggled = false;
     sortField = 'productid';
     sortDirection: 'asc' | 'desc' = 'asc';
-
+    totalItems: number = 0;
+    categoryMap: Map<number, string> = new Map();
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
+    pageSize: number = 10;
+    currentPage: number = 1;
+    createdAtSort: 'asc' | 'desc' = 'desc';
+    isLoading = false;
+    searchQuery = '';
+    selectedCategory = '';
 
     private unsubscribe$ = new Subject<void>();
+    private destroy$ = new Subject<void>();
 
     constructor(
         public themeService: CustomizerSettingsService,
         private productService: ProductService,
+        private categoryService: CategoryService,
         private router: Router,
-        private authService: AuthService
+        private authService: AuthService,
     ) {}
 
     ngOnInit(): void {
         console.log('ngOnInit called');
         this.setupThemeToggle();
         this.checkAuthAndLoadProducts();
+        this.loadCategories();
     }
 
     ngAfterViewInit(): void {
@@ -96,6 +111,8 @@ export class EProductsListComponent
     ngOnDestroy(): void {
         this.unsubscribe$.next();
         this.unsubscribe$.complete();
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 
     private setupThemeToggle(): void {
@@ -130,8 +147,8 @@ export class EProductsListComponent
                     return this.dataSource.data.indexOf(item) + 1;
                 case 'productname':
                     return item.productname;
-                case 'categoryname':
-                    return item.categoryname;
+                case 'categoryid':
+                    return item.categoryid;
                 case 'unitprice':
                     return item.unitprice;
                 case 'unitinstock':
@@ -142,14 +159,32 @@ export class EProductsListComponent
         };
     }
 
-    loadProducts(): void {
+    loadProducts(page: number = this.currentPage, pageSize: number = this.pageSize): void {
+        this.isLoading = true;
         this.productService
             .getProducts({
+                page,
+                limit: pageSize,
                 sortField: this.sortField,
                 sortDirection: this.sortDirection,
+                searchQuery: this.searchQuery,
+                selectedCategory: Number(this.selectedCategory) || undefined,
+                createdAtSort: this.createdAtSort,
             })
-            .pipe(catchError(this.handleLoadProductsError.bind(this)))
-            .subscribe(this.handleLoadProductsSuccess.bind(this));
+            .pipe(takeUntil(this.destroy$))
+            .subscribe({
+                next: (response) => {
+                    this.dataSource.data = response.products;
+                    this.totalItems = response.total;
+                    this.currentPage = page;
+                    this.isLoading = false;
+                },
+                error: (error) => {
+                    console.error('Error loading products:', error);
+                    this.showErrorAlert('Failed to load products');
+                    this.isLoading = false;
+                },
+            });
     }
 
     private handleLoadProductsError(error: any) {
@@ -157,7 +192,7 @@ export class EProductsListComponent
         if (error.status === 401) {
             return this.handleUnauthorizedError();
         }
-        return throwError(() => new Error('Failed to load products'));
+        return throwError(() => error);
     }
 
     private handleUnauthorizedError() {
@@ -192,13 +227,19 @@ export class EProductsListComponent
     deleteProduct(id: number): void {
         Swal.fire({
             title: 'คุณแน่ใจหรือไม่?',
-            text: 'คุณไม่สามารถย้อนกลับการกระทำนี้ได้!',
+            text: 'คุณไม่สามารถย้อนกลับกา���กระทำนี้ได้!',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#001EE0',
-            cancelButtonColor: '#d33',
+            cancelButtonColor: '#FF4023',
             confirmButtonText: 'ใช่, ลบเลย!',
             cancelButtonText: 'ยกเลิก',
+            background: '#fff',
+            iconColor: '#001EE0',
+            customClass: {
+                confirmButton: 'btn btn-primary',
+                cancelButton: 'btn btn-danger'
+            }
         }).then((result) => {
             if (result.isConfirmed) {
                 this.performDeleteProduct(id);
@@ -227,31 +268,69 @@ export class EProductsListComponent
     }
 
     private handleDeleteProductSuccess() {
-        Swal.fire('ลบแล้ว!', 'สินค้าถูกลบเรียบร้���ยแล้ว', 'success');
+        Swal.fire({
+            icon: 'success',
+            title: 'ลบแล้ว!',
+            text: 'สินค้าถูกลบเรียบร้อยแล้ว',
+            confirmButtonColor: '#001EE0',
+            iconColor: '#FF4023'
+        });
         this.loadProducts();
     }
 
     sortData(sort: Sort): void {
         this.sortField = sort.active || 'productid';
         this.sortDirection = sort.direction || 'asc';
-
-        if (this.dataSource.data) {
-            this.dataSource.data = this.dataSource.data.slice().sort((a, b) => {
-                const isAsc = sort.direction === 'asc';
-                switch (sort.active) {
-                    case 'productid': return this.compare(Number(a.productid), Number(b.productid), isAsc);
-                    case 'productname': return this.compare(a.productname, b.productname, isAsc);
-                    case 'categoryname': return this.compare(a.categoryname, b.categoryname, isAsc); // Add this line
-                    case 'unitprice': return this.compare(Number(a.unitprice), Number(b.unitprice), isAsc);
-                    case 'unitinstock': return this.compare(Number(a.unitinstock), Number(b.unitinstock), isAsc);
-                    default: return 0;
-                }
-            });
-        }
+        this.loadProducts(1, this.paginator.pageSize);
     }
 
-    private compare(a: number | string | Date, b: number | string | Date, isAsc: boolean): number {
+    private compare(a: number | string, b: number | string, isAsc: boolean): number {
         return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+    }
+
+    showErrorAlert(message: string) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: message,
+            confirmButtonColor: '#001EE0',
+            iconColor: '#FF4023'
+        });
+    }
+
+    showSuccessAlert(message: string) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: message,
+            confirmButtonColor: '#001EE0',
+            iconColor: '#25B003'
+        });
+    }
+
+    onPageChange(event: PageEvent): void {
+        this.currentPage = event.pageIndex + 1;
+        this.pageSize = event.pageSize;
+        this.loadProducts(this.currentPage, this.pageSize);
+    }
+
+    loadCategories(): void {
+        this.categoryService.getCategories().subscribe({
+            next: (categories) => {
+                categories.forEach(category => {
+                    this.categoryMap.set(category.categoryid, category.categoryname);
+                });
+            },
+            error: (error) => {
+                console.error('Error loading categories:', error);
+                this.showErrorAlert('Failed to load categories');
+            }
+        });
+    }
+
+    toggleCreatedAtSort(): void {
+        this.createdAtSort = this.createdAtSort === 'desc' ? 'asc' : 'desc';
+        this.loadProducts(1, this.pageSize);
     }
 }
 
@@ -272,4 +351,3 @@ export interface ErrorResponse {
 }
 
 export type ResponseModel<T = void> = SuccessResponse<T> | ErrorResponse;
-

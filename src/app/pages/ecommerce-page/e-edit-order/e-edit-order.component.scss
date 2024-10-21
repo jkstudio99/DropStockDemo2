@@ -71,3 +71,13 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+.button-spinner {
+    display: inline-block;
+    margin-right: 8px;
+}
+
+.form-btn-box {
+    display: flex;
+    justify-content: flex-start;
+}

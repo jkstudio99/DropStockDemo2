@@ -16,7 +16,7 @@
             eCommerce
         </li>
         <li class="breadcrumb-item d-inline-block position-relative">
-            แก้ไขสินค้า
+            Edit Product
         </li>
     </ol>
 </div>
@@ -44,53 +44,63 @@
                             กรุณากรอกราคา
                         </mat-error>
                         <mat-error *ngIf="productForm.get('unitprice')?.hasError('min')">
-                            ราคาต้องมากกว่าหรือเท่ากับ 0
+                            ราคาต้องไม่ต่ำกว่า 0
                         </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <mat-form-field class="w-100 mb-20">
                         <mat-label>จำนวน</mat-label>
-                        <input matInput type="number" formControlName="unitinstock" placeholder="Enter stock">
+                        <input matInput type="number" step="1" formControlName="unitinstock" required aria-label="จำนวน">
                         <mat-error *ngIf="productForm.get('unitinstock')?.hasError('required')">
                             กรุณากรอกจำนวน
                         </mat-error>
                         <mat-error *ngIf="productForm.get('unitinstock')?.hasError('min')">
-                            จำนวนต้องมากกว่าหรือเท่ากับ 0
+                            จำนวนต้องไม่ต่ำกว่า 0
                         </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <mat-form-field class="w-100 mb-20">
-                        <mat-label>ชื่อหมวดหมู่</mat-label>
-                        <mat-select formControlName="categoryname">
-                            <mat-option *ngFor="let category of categories" [value]="category.name">
-                                {{category.name}}
+                        <mat-label>หมวดหมู่</mat-label>
+                        <mat-select formControlName="categoryid">
+                            <mat-option *ngFor="let category of categories" [value]="category.categoryid">
+                                {{category.categoryname}}
                             </mat-option>
                         </mat-select>
-                        <mat-error *ngIf="productForm.get('categoryname')?.hasError('required')">
+                        <mat-error *ngIf="productForm.get('categoryid')?.hasError('required')">
                             กรุณาเลือกหมวดหมู่
                         </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-12 col-md-12">
-                    <mat-card class="mb-25 border-radius d-block bg-white border-0 shadow-none">
-                        <mat-card-header>
-                            <mat-card-title>
-                                <h5 class="mb-0">File Uploader</h5>
-                            </mat-card-title>
-                        </mat-card-header>
-                        <mat-card-content>
-                            <div class="file-upload-container">
-                                <input type="file" (change)="onFileSelected($event)" accept="image/*" #fileInput style="display: none;">
-                                <div class="drag-drop-area" (click)="fileInput.click()" (dragover)="onDragOver($event)" (drop)="onDrop($event)">
-                                    <i class="material-symbols-outlined">cloud_upload</i>
-                                    <p>Drag and drop files</p>
-                                    <p>or click here</p>
+                    <div class="file-upload-container"
+                         [ngClass]="{'dragover': isDragover}"
+                         (dragover)="onDragOver($event)"
+                         (dragleave)="onDragLeave($event)"
+                         (drop)="onDrop($event)">
+                        <div class="drag-drop-area" (click)="fileInput.click()">
+                            <ng-container *ngIf="!imagePreview; else previewTemplate">
+                                <p>ลากและวางไฟล์ที่นี่ หรือคลิกเพื่อเลือกไฟล์</p>
+                                <button mat-raised-button color="primary">
+                                    <i class="material-symbols-outlined">upload</i>
+                                    อัพโหลดรูปภาพ
+                                </button>
+                            </ng-container>
+                            <ng-template #previewTemplate>
+                                <div class="image-preview-container">
+                                    <img [src]="imagePreview" alt="Preview" style="max-width: 100%; max-height: 200px;">
+                                    <button mat-icon-button color="warn" class="remove-image-button" (click)="removeFile($event)">
+                                        <span class="material-symbols-outlined">close</span>
+                                    </button>
                                 </div>
-                            </div>
-                        </mat-card-content>
-                    </mat-card>
+                                <p>{{ selectedImage?.name }}</p>
+                            </ng-template>
+                        </div>
+                    </div>
+                    <mat-error *ngIf="productForm.get('image')?.hasError('required') && productForm.get('image')?.touched">
+                        Please select an image
+                    </mat-error>
                 </div>
             </div>
         </mat-card-content>
@@ -101,7 +111,7 @@
                 <button type="button" mat-button color="warn" routerLink="/dashboard/ecommerce-page/products-list">
                     ยกเลิก
                 </button>
-                <button type="submit" mat-button color="primary" [disabled]="productForm.invalid || isLoading">
+                <button type="submit" mat-button color="primary" [disabled]="productForm.invalid || (!selectedImage && !imagePreview) || isLoading">
                     <mat-spinner *ngIf="isLoading" diameter="20" class="button-spinner"></mat-spinner>
                     <span *ngIf="!isLoading">
                         <i class="material-symbols-outlined">save</i>
@@ -113,4 +123,5 @@
     </mat-card>
 </form>
 
-<mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+<input type="file" #fileInput style="display: none" (change)="onFileSelected($event)" accept="image/*">
+

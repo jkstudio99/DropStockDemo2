@@ -7,7 +7,7 @@ import { AuthService } from './auth.service';
 import { CloudinaryService } from './cloudinary.service';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class ProductService {
     private apiUrl = environment.apiBaseUrl + '/product';
@@ -18,13 +18,18 @@ export class ProductService {
         private cloudinaryService: CloudinaryService
     ) {}
 
-    getProducts(options: ProductQueryOptions = {}): Observable<ProductResponse> {
+    getProducts(
+        options: ProductQueryOptions = {}
+    ): Observable<ProductResponse> {
         const reqUrl = this.buildProductsUrl(options);
         return this.http.get<ProductResponse>(reqUrl, this.getHttpOptions());
     }
 
     getProduct(id: number): Observable<ProductDto> {
-        return this.http.get<ProductDto>(this.apiUrl + '/' + id, this.getHttpOptions());
+        return this.http.get<ProductDto>(
+            this.apiUrl + '/' + id,
+            this.getHttpOptions()
+        );
     }
 
     createProduct(product: ProductDto, image: File): Observable<ProductDto> {
@@ -46,73 +51,98 @@ export class ProductService {
         return this.http.post<ProductDto>(this.apiUrl, formData, { headers });
     }
 
-    updateProduct(id: number, product: ProductDto, image?: File): Observable<ProductDto> {
+    updateProduct(
+        id: number,
+        product: Partial<ProductDto>,
+        image?: File
+    ): Observable<ProductDto> {
+        const formData = new FormData();
+        Object.keys(product).forEach((key) => {
+            if (product[key as keyof ProductDto] !== undefined) {
+                formData.append(
+                    key,
+                    product[key as keyof ProductDto] as string | Blob
+                );
+            }
+        });
         if (image) {
-            return this.cloudinaryService.uploadImage(image).pipe(
-                switchMap(cloudinaryResponse => {
-                    product.productpicture = cloudinaryResponse.secure_url;
-                    return this.http.put<ProductDto>(this.apiUrl + '/' + id, product, this.getHttpOptions());
-                })
-            );
-        } else {
-            return this.http.put<ProductDto>(this.apiUrl + '/' + id, product, this.getHttpOptions());
+            formData.append('image', image, image.name);
         }
+        return this.http.put<ProductDto>(
+            this.apiUrl + '/' + id,
+            formData,
+            this.getHttpOptions()
+        );
     }
 
     deleteProduct(id: number): Observable<unknown> {
-        return this.http.delete(this.apiUrl + '/' + id, this.getHttpOptions()).pipe(
-            switchMap(() => {
-                return of(null);
-            }),
-            catchError(error => {
-                console.error('Error deleting product:', error);
-                return throwError(() => new Error('Failed to delete product'));
-            })
-        );
+        return this.http
+            .delete(this.apiUrl + '/' + id, this.getHttpOptions())
+            .pipe(
+                switchMap(() => {
+                    return of(null);
+                }),
+                catchError((error) => {
+                    console.error('Error deleting product:', error);
+                    return throwError(
+                        () => new Error('Failed to delete product')
+                    );
+                })
+            );
     }
 
     uploadProductImage(productId: number, image: File): Observable<any> {
         const formData = new FormData();
         formData.append('image', image, image.name);
-        return this.http.post(`${this.apiUrl}/${productId}/upload-image`, formData, this.getHttpOptions());
+        return this.http.post(
+            `${this.apiUrl}/${productId}/upload-image`,
+            formData,
+            this.getHttpOptions()
+        );
     }
 
     private buildProductsUrl(options: ProductQueryOptions): string {
         const {
             page = 1,
-            limit = 100,
+            limit = 10,
             searchQuery,
             selectedCategory,
             sortField = 'productid',
-            sortDirection = 'asc'
+            sortDirection = 'asc',
+            createdAtSort = 'desc',
         } = options;
 
-        let url = `${this.apiUrl}?page=${page}&limit=${limit}`;
+        let url = this.apiUrl + '?';
+
+        url += `page=${page}&`;
+        url += `limit=${limit}&`;
         if (searchQuery) {
-            url += `&searchQuery=${encodeURIComponent(searchQuery)}`;
+            url += `searchQuery=${encodeURIComponent(searchQuery)}&`;
         }
         if (selectedCategory) {
-            url += `&selectedCategory=${selectedCategory}`;
+            url += `selectedCategory=${selectedCategory}&`;
         }
-        if (sortField && sortDirection) {
-            url += `&sortField=${sortField}&sortDirection=${sortDirection}`;
-        }
-        if (['productid', 'unitprice', 'unitinstock'].includes(sortField)) url += '&sortNumeric=true';
+        url += `sortField=${sortField}&sortDirection=${sortDirection}&`;
+        url += `createdAtSort=${createdAtSort}&`;
 
-        return url;
+        // Remove trailing '&' if exists
+        return url.endsWith('&') ? url.slice(0, -1) : url;
     }
 
     private getHttpOptions(): { headers: HttpHeaders } {
         const token = this.authService.getToken();
         return {
-            headers: new HttpHeaders().set('Authorization', `Bearer ${token}`)
+            headers: new HttpHeaders().set('Authorization', `Bearer ${token}`),
         };
     }
 
     private createFormData(product: ProductDto, image?: File): FormData {
         const formData = new FormData();
-        Object.keys(product).forEach(key => {
-            formData.append(key, product[key as keyof ProductDto] as string | Blob);
+        Object.keys(product).forEach((key) => {
+            formData.append(
+                key,
+                product[key as keyof ProductDto] as string | Blob
+            );
         });
         if (image) {
             formData.append('image', image, image.name);
@@ -124,8 +154,9 @@ export class ProductService {
 interface ProductQueryOptions {
     page?: number;
     limit?: number;
-    searchQuery?: string;
-    selectedCategory?: number;
     sortField?: string;
     sortDirection?: 'asc' | 'desc';
+    searchQuery?: string;
+    selectedCategory?: number;
+    createdAtSort?: 'asc' | 'desc';
 }

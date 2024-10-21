@@ -79,12 +79,12 @@
                         </ng-container>
 
                         <!-- Category Column -->
-                        <ng-container matColumnDef="categoryname">
+                        <ng-container matColumnDef="categoryid">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header>
                                 หมวดหมู่
                             </th>
                             <td mat-cell *matCellDef="let element">
-                                {{element.categoryname}}
+                                {{categoryMap.get(element.categoryid) || 'N/A'}}
                             </td>
                         </ng-container>
 
@@ -139,8 +139,15 @@
 
                     </table>
                 </div>
-                <mat-paginator [pageSizeOptions]="[10, 25, 50]" showFirstLastButtons></mat-paginator>
+                <mat-paginator
+                  [length]="totalItems"
+                  [pageSize]="pageSize"
+                  [pageSizeOptions]="[5, 10, 25, 100]"
+                  (page)="onPageChange($event)"
+                  [pageIndex]="currentPage - 1">
+                </mat-paginator>
             </mat-card-content>
         </mat-tab>
     </mat-tab-group>
 </mat-card>
+

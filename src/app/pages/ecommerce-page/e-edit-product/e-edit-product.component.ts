@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { NgIf } from '@angular/common';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { NgIf, NgFor, NgClass } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -13,10 +13,17 @@ import {
     Validators,
 } from '@angular/forms';
 import { ProductService } from '../../../services/product.service';
-import { finalize } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatIconModule } from '@angular/material/icon';
+import { CloudinaryService } from '../../../services/cloudinary.service';
+import { AuthService } from '../../../services/auth.service';
+import { CategoryService } from '../../../services/category.service';
+import { CategoryModel } from '../../../shared/DTOs/CategoryModel';
+import { ProductDto } from '../../../shared/DTOs/ProductModel';
+import { switchMap, of, catchError } from 'rxjs';
 
 @Component({
     selector: 'app-e-edit-product',
@@ -24,6 +31,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     imports: [
         RouterLink,
         NgIf,
+        NgFor,
+        NgClass,
         MatCardModule,
         MatButtonModule,
         MatFormFieldModule,
@@ -32,29 +41,35 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
         ReactiveFormsModule,
         MatProgressSpinnerModule,
         MatProgressBarModule,
+        MatIconModule,
     ],
     templateUrl: './e-edit-product.component.html',
     styleUrls: ['./e-edit-product.component.scss'],
 })
 export class EEditProductComponent implements OnInit {
+    @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
     productForm!: FormGroup;
+    isLoading = false;
     selectedImage: File | null = null;
     imagePreview: string | ArrayBuffer | null = null;
-    isLoading = false;
-    productId: number;
-    uploadProgress: number = 0;
+    uploadProgress = 0;
+    isDragover = false;
+    categories: CategoryModel[] = [];
+    productId!: number;
 
     constructor(
         private fb: FormBuilder,
         private productService: ProductService,
         private router: Router,
-        private route: ActivatedRoute
-    ) {
-        this.initForm();
-        this.productId = 0;
-    }
+        private route: ActivatedRoute,
+        private cloudinaryService: CloudinaryService,
+        private authService: AuthService,
+        private categoryService: CategoryService
+    ) {}
 
     ngOnInit(): void {
+        this.initForm();
+        this.loadCategories();
         this.loadProductData();
     }
 
@@ -63,7 +78,21 @@ export class EEditProductComponent implements OnInit {
             productname: ['', [Validators.required]],
             unitprice: ['', [Validators.required, Validators.min(0)]],
             unitinstock: ['', [Validators.required, Validators.min(0)]],
-            categoryname: ['', [Validators.required]],
+            categoryid: ['', [Validators.required]],
+            image: [null],
+            // ไม่จำเป็นต้องเพิ่ม createddate และ modifieddate ที่นี่
+        });
+    }
+
+    private loadCategories(): void {
+        this.categoryService.getActiveCategories().subscribe({
+            next: (categories) => {
+                this.categories = categories;
+            },
+            error: (error) => {
+                console.error('Error loading categories:', error);
+                Swal.fire('Error', 'Failed to load categories', 'error');
+            },
         });
     }
 
@@ -83,7 +112,12 @@ export class EEditProductComponent implements OnInit {
     }
 
     private handleProductFetchSuccess(product: any): void {
-        this.productForm.patchValue(product);
+        this.productForm.patchValue({
+            productname: product.productname,
+            unitprice: product.unitprice,
+            unitinstock: product.unitinstock,
+            categoryid: product.categoryid,
+        });
         this.imagePreview = product.productpicture;
         this.isLoading = false;
     }
@@ -94,82 +128,110 @@ export class EEditProductComponent implements OnInit {
         this.showErrorAlert('ไม่สามารถดึงข้อมูลสินค้าได้ กรุณาลองใหม่อีกครั้ง');
     }
 
-    onFileSelected(event: Event) {
-        const element = event.currentTarget as HTMLInputElement;
-        const fileList: FileList | null = element.files;
-        if (fileList) {
-            this.selectedImage = fileList[0];
-            console.log('File selected:', this.selectedImage);
-            const reader = new FileReader();
-            reader.onload = (e: any) => {
-                this.imagePreview = e.target.result;
-            };
-            reader.readAsDataURL(this.selectedImage as File);
-        }
+    onFileSelected(event: any) {
+        const file: File = event.target.files[0];
+        this.handleFile(file);
     }
 
     onDragOver(event: DragEvent) {
         event.preventDefault();
         event.stopPropagation();
+        this.isDragover = true;
+    }
+
+    onDragLeave(event: DragEvent) {
+        event.preventDefault();
+        event.stopPropagation();
+        this.isDragover = false;
     }
 
     onDrop(event: DragEvent) {
         event.preventDefault();
         event.stopPropagation();
+        this.isDragover = false;
         const files = event.dataTransfer?.files;
         if (files && files.length > 0) {
-            this.onFileSelected({ target: { files: [files[0]] } } as unknown as Event);
+            this.handleFile(files[0]);
         }
     }
 
-    removeFile() {
+    handleFile(file: File) {
+        if (file && file.type.startsWith('image/')) {
+            this.selectedImage = file;
+            this.productForm.patchValue({ image: file });
+            this.productForm.get('image')?.updateValueAndValidity();
+
+            const reader = new FileReader();
+            reader.onload = (e: any) => {
+                this.imagePreview = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Invalid File Type',
+                text: 'Please select an image file.',
+                confirmButtonColor: '#001EE0',
+                iconColor: '#FF4023',
+            });
+        }
+    }
+
+    removeFile(event: Event): void {
+        event.preventDefault();
+        event.stopPropagation();
         this.selectedImage = null;
         this.imagePreview = null;
-        this.uploadProgress = 0;
+        this.productForm.patchValue({ image: null });
+        this.productForm.get('image')?.updateValueAndValidity();
     }
 
     onSubmit(): void {
-        if (this.productForm.valid) {
+        if (
+            this.productForm.valid &&
+            (this.selectedImage || this.imagePreview)
+        ) {
             this.isLoading = true;
             const productData = this.productForm.value;
-            this.updateProduct(productData);
+            this.productService
+                .updateProduct(
+                    this.productId,
+                    productData,
+                    this.selectedImage as File
+                )
+                .subscribe({
+                    next: (response) => {
+                        console.log('Product updated successfully:', response);
+                        this.isLoading = false;
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'สำเร็จ!',
+                            text: 'แก้ไขสินค้าเรียบร้อยแล้ว',
+                            confirmButtonColor: '#001EE0',
+                            iconColor: '#25B003',
+                        }).then(() => {
+                            this.router.navigate([
+                                '/dashboard/ecommerce-page/products-list',
+                            ]);
+                        });
+                    },
+                    error: (error) => {
+                        console.error('Error updating product:', error);
+                        this.isLoading = false;
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'เกิดข้อผิดพลาด',
+                            confirmButtonColor: '#001EE0',
+                            iconColor: '#FF4023',
+                            text: `ไม่สามารถแก้ไขสินค้าได้: ${
+                                error.message || 'Unknown error'
+                            }`,
+                        });
+                    },
+                });
+        } else {
+            console.error('Form is invalid or no image selected/previewed');
         }
-    }
-
-    private updateProduct(productData: any): void {
-        this.productService
-            .updateProduct(
-                this.productId,
-                productData,
-                this.selectedImage as File
-            )
-            .pipe(finalize(() => (this.isLoading = false)))
-            .subscribe({
-                next: this.handleUpdateSuccess.bind(this),
-                error: this.handleUpdateError.bind(this),
-            });
-    }
-
-    private handleUpdateSuccess(): void {
-        Swal.fire({
-            icon: 'success',
-            title: 'สำเ็จ!',
-            text: 'แก้ไขสินค้าเรียบร้อยแล้ว',
-        }).then(() => {
-            this.router.navigate(['/dashboard/ecommerce-page/products-list']);
-        });
-    }
-
-    private handleUpdateError(error: any): void {
-        console.error('Error updating product:', error);
-        let errorMessage = 'ไม่สามารถแก้ไขสินค้าได้ กรุณาลองใหม่อีกครั้ง';
-        if (error.message) {
-            errorMessage = error.message;
-        } else if (error.error && error.error.message) {
-            errorMessage = error.error.message;
-        }
-        console.error('Detailed error:', JSON.stringify(error, null, 2));
-        this.showErrorAlert(errorMessage);
     }
 
     private showErrorAlert(message: string): void {
@@ -177,6 +239,51 @@ export class EEditProductComponent implements OnInit {
             icon: 'error',
             title: 'เกิดข้อผิดพลาด',
             text: message,
+            confirmButtonColor: '#001EE0',
+            iconColor: '#FF4023',
         });
+    }
+
+    private showPartialSuccessAlert(): void {
+        Swal.fire({
+            icon: 'warning',
+            title: 'สำเร็จบางส่วน',
+            text: 'แก้ไขข้อมูลสินค้าสำเร็จ แต่ไม่สามารถอัปโหลดรูปภาพได้',
+            showCancelButton: true,
+            confirmButtonText: 'ลองอีกครั้ง',
+            cancelButtonText: 'ตกลง',
+            confirmButtonColor: '#001EE0',
+            iconColor: '#FF4023',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.retryImageUpload();
+            } else {
+                this.router.navigate([
+                    '/dashboard/ecommerce-page/products-list',
+                ]);
+            }
+        });
+    }
+
+    private retryImageUpload(): void {
+        if (this.selectedImage && this.productId) {
+            this.isLoading = true;
+            this.productService
+                .uploadProductImage(this.productId, this.selectedImage)
+                .subscribe({
+                    next: () => {
+                        this.onSubmit();
+                    },
+                    error: (error) => {
+                        console.error('Error uploading image on retry:', error);
+                        this.showErrorAlert(
+                            'ไม่สามารถอัปโหลดรูปภาพได้ กรุณาลองใหม่อีกครั้ง'
+                        );
+                    },
+                    complete: () => {
+                        this.isLoading = false;
+                    },
+                });
+        }
     }
 }

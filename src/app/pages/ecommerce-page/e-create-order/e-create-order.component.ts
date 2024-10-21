@@ -15,6 +15,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgIf } from '@angular/common';
 import { AuthService } from '../../../services/auth.service';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
     selector: 'app-e-create-order',
@@ -29,7 +30,8 @@ import { MatIconModule } from '@angular/material/icon';
         ReactiveFormsModule,
         MatProgressSpinnerModule,
         NgIf,
-        MatIconModule
+        MatIconModule,
+        MatProgressBarModule
     ],
     templateUrl: './e-create-order.component.html',
     styleUrl: './e-create-order.component.scss'

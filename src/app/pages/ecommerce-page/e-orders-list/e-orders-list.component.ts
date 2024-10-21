@@ -195,7 +195,7 @@ export class EOrdersListComponent implements OnInit, AfterViewInit, OnDestroy {
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#001EE0',
-            cancelButtonColor: '#d33',
+            cancelButtonColor: '#FF4023',
             confirmButtonText: 'ใช่, ลบเลย!',
             cancelButtonText: 'ยกเลิก',
         }).then((result) => {
@@ -226,8 +226,15 @@ export class EOrdersListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     private handleDeleteOrderSuccess() {
-        Swal.fire('ลบแล้ว!', 'คำสั่งซื้อถูกลบเรียบร้อยแล้ว', 'success');
-        this.checkAuthAndLoadOrders();
+        Swal.fire({
+            icon: 'success',
+            title: 'สำเร็จ!',
+            text: 'คำสั่งซื้อถูกลบเรียบร้อยแล้ว',
+            confirmButtonColor: '#001EE0',
+            iconColor: '#25B003',
+        }).then(() => {
+            this.checkAuthAndLoadOrders();
+        });
     }
 
     sortData(sort: Sort): void {
