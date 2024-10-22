@@ -7,16 +7,14 @@ import { CustomizerSettingsService } from '../../customizer-settings/customizer-
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { TranslateService } from '@ngx-translate/core';
-
 @Component({
     selector: 'app-forgot-password',
     standalone: true,
     imports: [RouterLink, MatButtonModule, MatFormFieldModule, MatInputModule],
     templateUrl: './forgot-password.component.html',
-    styleUrl: './forgot-password.component.scss'
+    styleUrl: './forgot-password.component.scss',
 })
 export class ForgotPasswordComponent {
-
     // isToggled
     isToggled = false;
 
@@ -26,14 +24,14 @@ export class ForgotPasswordComponent {
         private authService: AuthService,
         private translate: TranslateService
     ) {
-        this.themeService.isToggled$.subscribe(isToggled => {
+        this.themeService.isToggled$.subscribe((isToggled) => {
             this.isToggled = isToggled;
         });
         this.forgotPasswordForm = this.fb.group({
-            email: ['', [Validators.required, Validators.email]]
+            email: ['', [Validators.required, Validators.email]],
         });
     }
-    
+
     forgotPasswordForm: FormGroup;
     message: string = '';
 
@@ -43,11 +41,16 @@ export class ForgotPasswordComponent {
             // Implement the forgot password functionality in AuthService
             this.authService.forgotPassword(email).subscribe({
                 next: () => {
-                    this.message = this.translate.instant('FORGOT_PASSWORD.SUCCESS_MESSAGE');
+                    this.message = this.translate.instant(
+                        'FORGOT_PASSWORD.SUCCESS_MESSAGE'
+                    );
                 },
                 error: (error) => {
-                    this.message = this.translate.instant('FORGOT_PASSWORD.ERROR_MESSAGE', { message: error.error?.message || 'An error occurred' });
-                }
+                    this.message = this.translate.instant(
+                        'FORGOT_PASSWORD.ERROR_MESSAGE',
+                        { message: error.error?.message || 'An error occurred' }
+                    );
+                },
             });
         }
     }

@@ -7,7 +7,7 @@
         z-index: 6;
         left: 0;
         top: 0;
-        
+
         .logo {
             border-bottom: 1px solid var(--borderColor);
             padding: 22px 25px 19px;
@@ -16,12 +16,12 @@
             right: 0;
             left: 0;
             top: 0;
-            
+
             a {
                 transition: unset;
                 display: flex;
                 align-items: center;
-                
+
                 span {
                     margin-left: 8px;
                     font-size: 24px;
@@ -41,7 +41,7 @@
             cursor: pointer;
             position: absolute;
             visibility: hidden;
-    
+
             span {
                 height: 1px;
                 width: 25px;
@@ -50,7 +50,7 @@
             &.active {
                 opacity: 1;
                 visibility: visible;
-                
+
                 span {
                     &.top-bar {
                         transform: rotate(45deg);
@@ -131,7 +131,7 @@
                             }
                             .mat-content {
                                 display: block;
-            
+
                                 .mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
                                     display: block;
                                     margin-right: 0;
@@ -162,7 +162,7 @@
                                 position: absolute;
                                 right: 8px;
                                 top: 50%;
-            
+
                                 svg {
                                     display: none;
                                 }
@@ -190,7 +190,7 @@
                                 color: var(--orangeColor);
                                 transform: translateY(-50%);
                                 background-color: #FFF5ED;
-                                
+
                                 &.style-two {
                                     color: #00b69b;
                                     background: rgba(0, 182, 155, 0.07);
@@ -230,7 +230,7 @@
                         }
                         .mat-expansion-panel-body {
                             padding: 4px 0 0;
-            
+
                             .mat-expansion-panel {
                                 margin-bottom: 0;
                             }
@@ -275,7 +275,7 @@
                                 &.mat-expanded {
                                     background-color: #e7effd !important;
                                     color: var(--primaryColor);
-            
+
                                     .mat-content {
                                         .mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
                                             color: var(--primaryColor) !important;
@@ -293,7 +293,7 @@
                                 &:hover {
                                     background-color: #e7effd !important;
                                     color: var(--primaryColor);
-            
+
                                     .mat-content {
                                         .mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
                                             color: var(--primaryColor) !important;
@@ -351,7 +351,7 @@
                                         &:hover, &.active {
                                             background-color: #ECF0FF;
                                             color: var(--primaryColor);
-            
+
                                             &::after {
                                                 border-color: var(--primaryColor);
                                             }
@@ -467,10 +467,10 @@
                     .mat-accordion {
                         .mat-expansion-panel {
                             color: var(--whiteColor);
-                            
+
                             .mat-expansion-panel-header {
                                 color: var(--whiteColor);
-                                
+
                                 .mat-content {
                                     .mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
                                         color: var(--whiteColor);
@@ -479,7 +479,7 @@
                                 &.mat-expanded {
                                     color: var(--whiteColor);
                                     background-color: #15203c;
-    
+
                                     i {
                                         color: var(--whiteColor);
                                     }
@@ -492,7 +492,7 @@
                                 &:hover {
                                     color: var(--whiteColor);
                                     background-color: #15203c;
-    
+
                                     i {
                                         color: var(--whiteColor);
                                     }
@@ -536,7 +536,7 @@
                                 .mat-expansion-panel-header {
                                     color: var(--whiteColor);
                                     background-color: #15203c;
-    
+
                                     i {
                                         color: var(--whiteColor);
                                     }
@@ -555,7 +555,7 @@
                         }
                         .sidebar-menu-link {
                             color: var(--whiteColor);
-                            
+
                             &:hover, &.active {
                                 color: var(--primaryColor);
                                 background-color: #15203c;
@@ -572,7 +572,7 @@
 
             a {
                 color: var(--whiteColor);
-        
+
                 &:hover {
                     color: var(--primaryColor);
                 }
@@ -591,10 +591,10 @@
                     .mat-accordion {
                         .mat-expansion-panel {
                             color: var(--whiteColor);
-                            
+
                             .mat-expansion-panel-header {
                                 color: var(--whiteColor);
-                                
+
                                 .mat-content {
                                     .mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
                                         color: var(--whiteColor);
@@ -603,7 +603,7 @@
                                 &.mat-expanded {
                                     color: var(--whiteColor);
                                     background-color: #15203c;
-    
+
                                     i {
                                         color: var(--whiteColor);
                                     }
@@ -616,7 +616,7 @@
                                 &:hover {
                                     color: var(--whiteColor);
                                     background-color: #15203c;
-    
+
                                     i {
                                         color: var(--whiteColor);
                                     }
@@ -660,7 +660,7 @@
                                 .mat-expansion-panel-header {
                                     color: var(--whiteColor);
                                     background-color: #15203c;
-    
+
                                     i {
                                         color: var(--whiteColor);
                                     }
@@ -679,7 +679,7 @@
                         }
                         .sidebar-menu-link {
                             color: var(--whiteColor);
-                            
+
                             &:hover, &.active {
                                 color: var(--primaryColor);
                                 background-color: #15203c;
@@ -704,7 +704,7 @@
 
             .logo {
                 a {
-                    
+
                     span {
                         margin: {
                             left: 0;
@@ -719,7 +719,7 @@
             }
             .ng-scrollbar {
                 height: 100vh;
-    
+
                 .ng-scroll-content {
                     .ng-scrollbar-sticky {
                         right: auto;
@@ -783,7 +783,7 @@
                                 }
                                 .sidebar-sub-menu {
                                     padding-right: 0;
-                                    
+
                                     .sidemenu-item {
                                         .sidemenu-link {
                                             padding: {
@@ -839,7 +839,7 @@
             &.component-rtl-enabled {
                 left: auto;
                 right: -100%;
-    
+
                 &.right-sidebar {
                     left: -100%;
                     right: auto;
@@ -856,10 +856,10 @@
         .sidebar-area {
             width: 300px;
             left: -100%;
-            
+
             .logo {
                 padding: 15px;
-                
+
                 a {
                     img {
                         max-width: 140px;
@@ -902,7 +902,7 @@
                                 }
                                 .mat-expansion-indicator {
                                     right: 8px;
-                
+
                                     &::before {
                                         font-size: 17px;
                                     }
@@ -1049,7 +1049,7 @@
                 &.right-sidebar {
                     left: -100%;
                     right: auto;
-    
+
                     &.active {
                         right: auto;
                         left: 0;
@@ -1092,7 +1092,7 @@
                 &.right-sidebar {
                     right: auto;
                     left: -100%;
-    
+
                     &.active {
                         right: auto;
                         left: 0;
@@ -1132,7 +1132,7 @@
                 &.right-sidebar {
                     right: auto;
                     left: -100%;
-    
+
                     &.active {
                         right: auto;
                         left: 0;
@@ -1146,15 +1146,15 @@
 
 /* Min width 1200px */
 @media (min-width: 1200px) {
-    
+
     ::ng-deep {
         .sidebar-area {
             &.active, &.hide-sidebar {
                 width: 60px;
-    
+
                 .logo {
                     padding: 15px 12px;
-                    
+
                     a {
                         img {
                             max-width: 36px;
@@ -1207,7 +1207,7 @@
                                 width: 36px;
                                 height: 36px;
                                 margin-bottom: 5px;
-        
+
                                 i {
                                     left: 0;
                                     right: 0;
@@ -1225,7 +1225,7 @@
 
                     .logo {
                         padding: 22px 25px 19px;
-                        
+
                         a {
                             img {
                                 max-width: 180px;
@@ -1364,14 +1364,14 @@
 
             &.active, &.hide-sidebar {
                 width: 60px;
-    
+
                 &:hover {
                     width: 240px;
                 }
             }
             .logo {
                 padding: 22px 25px 19px;
-                
+
                 a {
                     img {
                         max-width: 280px;
@@ -1387,10 +1387,10 @@
 @media only screen and (min-width: 1600px) {
     .logo {
         padding: 22px 25px 19px;
-        
+
         a {
             img {
-                max-width: 260px;
+                width: 240px;
             }
         }
     }

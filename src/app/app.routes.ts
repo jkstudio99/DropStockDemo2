@@ -13,11 +13,6 @@ import { ContactsComponent } from './apps/contacts/contacts.component';
 import { CalendarComponent } from './apps/calendar/calendar.component';
 import { ChatComponent } from './apps/chat/chat.component';
 import { EcommercePageComponent } from './pages/ecommerce-page/ecommerce-page.component';
-import { EReviewsComponent } from './pages/ecommerce-page/e-reviews/e-reviews.component';
-import { ERefundsComponent } from './pages/ecommerce-page/e-refunds/e-refunds.component';
-import { ESellersComponent } from './pages/ecommerce-page/e-sellers/e-sellers.component';
-import { ESellerDetailsComponent } from './pages/ecommerce-page/e-seller-details/e-seller-details.component';
-import { ECreateSellerComponent } from './pages/ecommerce-page/e-create-seller/e-create-seller.component';
 import { ECategoriesComponent } from './pages/ecommerce-page/e-categories/e-categories.component';
 import { ECustomersComponent } from './pages/ecommerce-page/e-customers/e-customers.component';
 import { ECustomerDetailsComponent } from './pages/ecommerce-page/e-customer-details/e-customer-details.component';
@@ -32,19 +27,11 @@ import { UsersPageComponent } from './pages/users-page/users-page.component';
 import { TeamMembersComponent } from './pages/users-page/team-members/team-members.component';
 import { UsersListComponent } from './pages/users-page/users-list/users-list.component';
 import { AddUserComponent } from './pages/users-page/add-user/add-user.component';
-import { EventsPageComponent } from './pages/events-page/events-page.component';
-import { EventsGridComponent } from './pages/events-page/events-grid/events-grid.component';
-import { EventsListComponent } from './pages/events-page/events-list/events-list.component';
-import { EventDetailsComponent } from './pages/events-page/event-details/event-details.component';
-import { CreateAnEventComponent } from './pages/events-page/create-an-event/create-an-event.component';
-import { EditAnEventComponent } from './pages/events-page/edit-an-event/edit-an-event.component';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { PUserProfileComponent } from './pages/profile-page/p-user-profile/p-user-profile.component';
 import { PTeamsComponent } from './pages/profile-page/p-teams/p-teams.component';
 import { PProjectsComponent } from './pages/profile-page/p-projects/p-projects.component';
-import { WidgetsComponent } from './widgets/widgets.component';
 import { InternalErrorComponent } from './common/internal-error/internal-error.component';
-import { SearchPageComponent } from './pages/search-page/search-page.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { SettingsComponent } from './settings/settings.component';
 import { AccountSettingsComponent } from './settings/account-settings/account-settings.component';
@@ -57,7 +44,6 @@ import { SignUpComponent } from './authentication/sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './authentication/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './authentication/reset-password/reset-password.component';
 import { ConfirmEmailComponent } from './authentication/confirm-email/confirm-email.component';
-import { LockScreenComponent } from './authentication/lock-screen/lock-screen.component';
 import { LogoutComponent } from './authentication/logout/logout.component';
 import { UiElementsComponent } from './ui-elements/ui-elements.component';
 import { AlertsComponent } from './ui-elements/alerts/alerts.component';
@@ -121,6 +107,9 @@ import { AnalyticsComponent } from './dashboard/analytics/analytics.component';
 import { SalesComponent } from './dashboard/sales/sales.component';
 import { EEditOrderComponent } from './pages/ecommerce-page/e-edit-order/e-edit-order.component';
 import { EProductsListComponent } from './pages/ecommerce-page/e-products-list/e-products-list.component';
+import { authguardGuard } from './shared/guards/authguard.guard';
+import { RoleGuard } from './shared/guards/role.guard';
+import { UserRole } from './shared/DTOs/UserRoleModel';
 
 export const routes: Routes = [
     {
@@ -137,6 +126,7 @@ export const routes: Routes = [
     {
         path: 'dashboard',
         component: DashboardComponent,
+        canActivate: [authguardGuard],
         children: [
             { path: '', component: EcommerceComponent },
             { path: 'analytics', component: AnalyticsComponent },
@@ -153,8 +143,11 @@ export const routes: Routes = [
             {
                 path: 'ecommerce-page',
                 component: EcommercePageComponent,
+                canActivate: [authguardGuard, RoleGuard],
+                data: {
+                    roles: [UserRole.Admin, UserRole.Manager, UserRole.User],
+                },
                 children: [
-
                     {
                         path: 'products-list',
                         component: EProductsListComponent,
@@ -179,33 +172,7 @@ export const routes: Routes = [
                         path: 'customer-details',
                         component: ECustomerDetailsComponent,
                     },
-                    { path: 'sellers', component: ESellersComponent },
-                    {
-                        path: 'seller-details',
-                        component: ESellerDetailsComponent,
-                    },
-                    {
-                        path: 'create-seller',
-                        component: ECreateSellerComponent,
-                    },
                     { path: 'categories', component: ECategoriesComponent },
-                    { path: 'reviews', component: EReviewsComponent },
-                    { path: 'refunds', component: ERefundsComponent },
-                ],
-            },
-
-            {
-                path: 'events',
-                component: EventsPageComponent,
-                children: [
-                    { path: '', component: EventsGridComponent },
-                    { path: 'events-list', component: EventsListComponent },
-                    { path: 'event-details', component: EventDetailsComponent },
-                    {
-                        path: 'create-an-event',
-                        component: CreateAnEventComponent,
-                    },
-                    { path: 'edit-an-event', component: EditAnEventComponent },
                 ],
             },
 
@@ -309,10 +276,7 @@ export const routes: Routes = [
                     { path: 'more', component: MoreChartsComponent },
                 ],
             },
-
-            { path: 'search', component: SearchPageComponent },
             { path: 'internal-error', component: InternalErrorComponent },
-            { path: 'widgets', component: WidgetsComponent },
             { path: 'my-profile', component: MyProfileComponent },
             {
                 path: 'settings',
@@ -345,7 +309,6 @@ export const routes: Routes = [
             { path: 'forgot-password', component: ForgotPasswordComponent },
             { path: 'reset-password', component: ResetPasswordComponent },
             { path: 'confirm-email', component: ConfirmEmailComponent },
-            { path: 'lock-screen', component: LockScreenComponent },
             { path: 'logout', component: LogoutComponent },
         ],
     },

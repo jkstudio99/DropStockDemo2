@@ -6,13 +6,13 @@
         right: 25px;
         z-index: 5;
         top: 0;
-    
+
         .header-left-side {
             .burger-menu {
                 top: 1px;
                 cursor: pointer;
                 margin-right: 23px;
-    
+
                 i {
                     font-size: 20px;
                 }
@@ -22,7 +22,7 @@
             }
             .search-box {
                 width: 260px;
-                
+
                 button {
                     top: 50%;
                     right: 15px;
@@ -30,7 +30,7 @@
                     position: absolute;
                     color: var(--primaryColor);
                     transform: translateY(-50%);
-                    
+
                     i {
                         font-size: 20px;
                     }
@@ -73,7 +73,7 @@
                         color: #FE7A36;
                         position: relative;
                         display: inline-block;
-    
+
                         .mdc-button__label {
                             i {
                                 font-size: 22px;
@@ -89,7 +89,7 @@
                         padding: 0 12px 0 0;
                         display: inline-block;
                         color: var(--bodyColor);
-    
+
                         .mdc-button__label {
                             i {
                                 font-size: 22px;
@@ -115,7 +115,7 @@
                         position: relative;
                         display: inline-block;
                         color: var(--bodyColor);
-    
+
                         .mdc-button__label {
                             i {
                                 font-size: 24px;
@@ -131,7 +131,7 @@
                         position: relative;
                         display: inline-block;
                         color: var(--bodyColor);
-    
+
                         .mdc-button__label {
                             i {
                                 font-size: 24px;
@@ -228,7 +228,7 @@
 
             a {
                 color: var(--whiteColor);
-        
+
                 &:hover {
                     color: var(--primaryColor);
                 }
@@ -264,7 +264,7 @@
         &.component-rtl-enabled {
             left: 25px;
             right: 285px;
-    
+
             .header-left-side {
                 .burger-menu {
                     margin: {
@@ -344,7 +344,7 @@
             &.right-sidebar {
                 left: 285px;
                 right: 25px;
-    
+
                 &.active, &.hide-sidebar {
                     right: 25px;
                     left: 85px;
@@ -364,7 +364,7 @@
 
             .mat-mdc-menu-content {
                 padding: 25px 15px 8px;
-                
+
                 ul {
                     display: flex;
                     flex-wrap: wrap;
@@ -399,7 +399,7 @@
 
             .mat-mdc-menu-content {
                 padding: 15px 0 0;
-                
+
                 .title {
                     padding: 0 20px 15px;
                     font-size: 15px;
@@ -407,7 +407,7 @@
                 .menu-body {
                     li {
                         border-bottom: 1px dashed var(--borderColor);
-    
+
                         .mdc-button {
                             width: 100%;
                             height: auto;
@@ -415,12 +415,12 @@
                             min-width: auto;
                             padding: 12px 20px;
                             color: var(--blackColor);
-                            
+
                             .mdc-button__label {
                                 display: flex;
                                 font-weight: 500;
                                 align-items: center;
-                                
+
                                 img {
                                     margin-right: 10px;
                                     width: 30px;
@@ -625,7 +625,7 @@
             }
             &.language-menu-dropdown {
                 background: #0A0E19;
-    
+
                 .mat-mdc-menu-content {
                     .menu-body {
                         li {
@@ -742,7 +742,7 @@
             &.right-sidebar {
                 left: 25px;
                 right: 25px;
-    
+
                 &.active, &.hide-sidebar {
                     right: 25px;
                 }
@@ -750,7 +750,7 @@
             &.component-rtl-enabled {
                 left: 25px;
                 right: 25px;
-        
+
                 &.active, &.hide-sidebar {
                     left: 25px;
                     right: 25px;
@@ -758,7 +758,7 @@
                 &.right-sidebar {
                     left: 25px;
                     right: 25px;
-        
+
                     &.active, &.hide-sidebar {
                         right: 25px;
                         left: 25px;
@@ -780,7 +780,7 @@
             left: 15px;
             right: 15px;
             padding: 13px 15px;
-        
+
             .header-left-side {
                 justify-content: center;
 
@@ -789,7 +789,7 @@
                 }
                 .search-box {
                     width: 250px;
-                    
+
                     button {
                         right: 13px;
                     }
@@ -892,7 +892,7 @@
             &.right-sidebar {
                 left: 15px;
                 right: 15px;
-    
+
                 &.active, &.hide-sidebar {
                     right: 15px;
                 }
@@ -900,7 +900,7 @@
             &.component-rtl-enabled {
                 right: 15px;
                 left: 15px;
-                
+
                 .header-left-side {
                     .burger-menu {
                         margin: {
@@ -942,7 +942,7 @@
                 &.right-sidebar {
                     left: 15px;
                     right: 15px;
-        
+
                     &.active, &.hide-sidebar {
                         right: 15px;
                         left: 15px;
@@ -954,10 +954,10 @@
             &.apps-menu-dropdown {
                 width: 240px;
                 max-width: 240px;
-    
+
                 .mat-mdc-menu-content {
                     padding: 20px 10px 5px;
-                    
+
                     ul {
                         li {
                             a {
@@ -970,10 +970,10 @@
             &.language-menu-dropdown {
                 width: 200px;
                 max-width: 200px;
-    
+
                 .mat-mdc-menu-content {
                     padding: 13px 0 0;
-                    
+
                     .title {
                         padding: 0 18px 13px;
                         font-size: 13px;
@@ -982,7 +982,7 @@
                         li {
                             .mdc-button {
                                 padding: 11px 18px;
-                                
+
                                 .mdc-button__label {
                                     img {
                                         width: 27px;
@@ -996,10 +996,10 @@
             &.notifications-menu-dropdown {
                 width: 290px;
                 max-width: 290px;
-    
+
                 .mat-mdc-menu-content {
                     padding: 15px 0;
-    
+
                     .title {
                         padding: {
                             left: 18px;
@@ -1008,7 +1008,7 @@
                         };
                         span {
                             font-size: 13px;
-    
+
                             span {
                                 font-size: 12px;
                             }
@@ -1016,15 +1016,15 @@
                     }
                     .menu-body {
                         margin-bottom: 15px;
-    
+
                         li {
                             padding: 15px 18px 15px 75px;
-    
+
                             .icon {
                                 left: 18px;
                                 width: 40px;
                                 height: 40px;
-    
+
                                 i {
                                     font-size: 20px;
                                 }
@@ -1045,10 +1045,10 @@
                 width: 195px;
                 max-width: 195px;
                 margin-top: 13px;
-    
+
                 .mat-mdc-menu-content {
                     padding: 15px 0;
-    
+
                     .admin {
                         padding-bottom: 10px;
                         margin: {
@@ -1073,7 +1073,7 @@
                         li {
                             a {
                                 padding: 7px 18px 7px 46px;
-    
+
                                 i {
                                     left: 18px;
                                     font-size: 20px;
@@ -1140,7 +1140,7 @@
         .header-area {
             left: 25px;
             right: 25px;
-        
+
             .header-left-side {
                 .burger-menu {
                     margin-right: 18px;
@@ -1161,7 +1161,7 @@
                     .mat-mdc-button {
                         &.profile-menu-btn {
                             padding: 0 12px 0 0;
-                            
+
                             .mdc-button__label {
                                 span {
                                     font-size: 0;
@@ -1186,14 +1186,14 @@
             }
             &.right-sidebar {
                 right: 25px;
-    
+
                 &.active, &.hide-sidebar {
                     right: 25px;
                 }
             }
             &.component-rtl-enabled {
                 right: 25px;
-        
+
                 .header-left-side {
                     .burger-menu {
                         margin: {
@@ -1237,7 +1237,7 @@
                 &.right-sidebar {
                     right: 25px;
                     left: 25px;
-        
+
                     &.active, &.hide-sidebar {
                         right: 25px;
                         left: 25px;
@@ -1255,7 +1255,7 @@
     ::ng-deep {
         .header-area {
             left: 25px;
-            
+
             &.active, &.hide-sidebar {
                 left: 25px;
             }
@@ -1268,14 +1268,14 @@
             }
             &.right-sidebar {
                 right: 25px;
-    
+
                 &.active, &.hide-sidebar {
                     right: 25px;
                 }
             }
             &.component-rtl-enabled {
                 right: 25px;
-            
+
                 &.active, &.hide-sidebar {
                     right: 25px;
                     left: 25px;
@@ -1283,7 +1283,7 @@
                 &.right-sidebar {
                     right: 25px;
                     left: 25px;
-        
+
                     &.active, &.hide-sidebar {
                         right: 25px;
                         left: 25px;
@@ -1301,21 +1301,21 @@
     ::ng-deep {
         .header-area {
             left: 265px;
-            
+
             &.active, &.hide-sidebar {
                 left: 85px;
             }
             &.right-sidebar {
                 left: 25px;
                 right: 265px;
-    
+
                 &.active, &.hide-sidebar {
                     right: 85px;
                 }
             }
             &.component-rtl-enabled {
                 right: 265px;
-            
+
                 &.active, &.hide-sidebar {
                     left: 25px;
                     right: 85px;
@@ -1323,7 +1323,7 @@
                 &.right-sidebar {
                     left: 265px;
                     right: 25px;
-        
+
                     &.active, &.hide-sidebar {
                         right: 25px;
                         left: 85px;

@@ -50,7 +50,7 @@
             </mat-card-header>
             <mat-card-content>
                 <div class="table-responsive">
-                    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)">
+                    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" matPaginator #paginator>
                         <!-- ID Column -->
                         <ng-container matColumnDef="productid">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header>
