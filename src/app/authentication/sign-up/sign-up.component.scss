@@ -130,7 +130,7 @@
                 };
             }
             .info {
-                line-height: 1.6;
+
 
                 a {
                     &:hover {
@@ -825,5 +825,15 @@
   .trezo-form {
     max-width: 100%;
     margin: 0 auto;
+  }
+}
+
+::ng-deep {
+  .mat-select-panel {
+    .mat-option {
+      .mat-option-pseudo-checkbox {
+        color: white;
+      }
+    }
   }
 }

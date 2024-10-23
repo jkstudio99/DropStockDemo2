@@ -126,8 +126,15 @@ export class EOrdersListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     private checkAuthAndLoadOrders(): void {
-        this.authService.token$
+        of(this.authService.getToken())
             .pipe(
+                takeUntil(this.unsubscribe$),
+                switchMap((token) => {
+                    if (!token) {
+                        return throwError(() => new Error('No authentication token available'));
+                    }
+                    return of(token);
+                }),
                 takeUntil(this.unsubscribe$),
                 switchMap((token) => {
                     if (!token) {
@@ -168,18 +175,22 @@ export class EOrdersListComponent implements OnInit, AfterViewInit, OnDestroy {
         );
     }
 
-    private handleLoadOrdersSuccess(response: any) {
+    private handleLoadOrdersSuccess(response: { orders: OrderDTO[], totalItems: number }): void {
         console.log('API response:', response);
         this.dataSource.data = response.orders;
         this.totalItems = response.totalItems;
     }
 
-    private handleLoadOrdersError(error: any) {
+    private handleLoadOrdersError(error: unknown) {
         console.error('Error loading orders:', error);
-        if (error.status === 401) {
-            this.router.navigate(['/authentication/sign-in']);
+        if (error instanceof Error) {
+            if ('status' in error && error.status === 401) {
+                this.router.navigate(['/authentication/sign-in']);
+            } else {
+                this.showErrorAlert('Failed to load orders');
+            }
         } else {
-            this.showErrorAlert('Failed to load orders');
+            this.showErrorAlert('An unknown error occurred');
         }
     }
 
@@ -215,9 +226,9 @@ export class EOrdersListComponent implements OnInit, AfterViewInit, OnDestroy {
             });
     }
 
-    private handleDeleteOrderError(error: any, id: number) {
+    private handleDeleteOrderError(error: unknown, id: number) {
         console.error('Error deleting order:', error);
-        if (error.status === 401) {
+        if (typeof error === 'object' && error !== null && 'status' in error && error.status === 401) {
             return this.authService
                 .refreshToken()
                 .pipe(switchMap(() => this.orderService.deleteOrder(id)));

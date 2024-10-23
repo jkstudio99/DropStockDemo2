@@ -28,6 +28,8 @@
       "LOGO_ALT": "Logo",
       "TITLE": "Sign up to DropStock",
       "SUBTITLE": "Sign up with username, email and password",
+      "ROLE": "Role",
+      "SELECT_ROLE": "Select your role",
       "USERNAME": "Username",
       "USERNAME_PLACEHOLDER": "Enter your username",
       "USERNAME_REQUIRED": "Username is required",
@@ -49,6 +51,9 @@
       "AND": "and",
       "PRIVACY_POLICY": "Privacy Policy",
       "ALREADY_HAVE_ACCOUNT": "Already have an account.",
-      "SIGN_IN": "Sign In"
+      "SIGN_IN": "Sign In",
+      "ROLE_USER": "User",
+      "ROLE_MANAGER": "Manager",
+      "ROLE_ADMIN": "Admin"
     }
   }

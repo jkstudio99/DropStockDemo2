@@ -45,52 +45,6 @@ import { ForgotPasswordComponent } from './authentication/forgot-password/forgot
 import { ResetPasswordComponent } from './authentication/reset-password/reset-password.component';
 import { ConfirmEmailComponent } from './authentication/confirm-email/confirm-email.component';
 import { LogoutComponent } from './authentication/logout/logout.component';
-import { UiElementsComponent } from './ui-elements/ui-elements.component';
-import { AlertsComponent } from './ui-elements/alerts/alerts.component';
-import { AutocompleteComponent } from './ui-elements/autocomplete/autocomplete.component';
-import { AccordionComponent } from './ui-elements/accordion/accordion.component';
-import { AvatarsComponent } from './ui-elements/avatars/avatars.component';
-import { BadgesComponent } from './ui-elements/badges/badges.component';
-import { BreadcrumbComponent } from './ui-elements/breadcrumb/breadcrumb.component';
-import { ButtonToggleComponent } from './ui-elements/button-toggle/button-toggle.component';
-import { BottomSheetComponent } from './ui-elements/bottom-sheet/bottom-sheet.component';
-import { ButtonsComponent } from './ui-elements/buttons/buttons.component';
-import { CardComponent } from './ui-elements/card/card.component';
-import { CarouselComponent } from './ui-elements/carousel/carousel.component';
-import { CheckboxComponent } from './ui-elements/checkbox/checkbox.component';
-import { ChipsComponent } from './ui-elements/chips/chips.component';
-import { ClipboardComponent } from './ui-elements/clipboard/clipboard.component';
-import { ColorPickerComponent } from './ui-elements/color-picker/color-picker.component';
-import { DividerComponent } from './ui-elements/divider/divider.component';
-import { DragDropComponent } from './ui-elements/drag-drop/drag-drop.component';
-import { DatepickerComponent } from './ui-elements/datepicker/datepicker.component';
-import { DialogComponent } from './ui-elements/dialog/dialog.component';
-import { GridListComponent } from './ui-elements/grid-list/grid-list.component';
-import { FormFieldComponent } from './ui-elements/form-field/form-field.component';
-import { ExpansionComponent } from './ui-elements/expansion/expansion.component';
-import { IconComponent } from './ui-elements/icon/icon.component';
-import { InputComponent } from './ui-elements/input/input.component';
-import { ListComponent } from './ui-elements/list/list.component';
-import { ListboxComponent } from './ui-elements/listbox/listbox.component';
-import { MenusComponent } from './ui-elements/menus/menus.component';
-import { PaginationComponent } from './ui-elements/pagination/pagination.component';
-import { ProgressBarComponent } from './ui-elements/progress-bar/progress-bar.component';
-import { RadioComponent } from './ui-elements/radio/radio.component';
-import { RatioComponent } from './ui-elements/ratio/ratio.component';
-import { SelectComponent } from './ui-elements/select/select.component';
-import { SidenavComponent } from './ui-elements/sidenav/sidenav.component';
-import { SlideToggleComponent } from './ui-elements/slide-toggle/slide-toggle.component';
-import { SliderComponent } from './ui-elements/slider/slider.component';
-import { SnackbarComponent } from './ui-elements/snackbar/snackbar.component';
-import { StepperComponent } from './ui-elements/stepper/stepper.component';
-import { TypographyComponent } from './ui-elements/typography/typography.component';
-import { TooltipComponent } from './ui-elements/tooltip/tooltip.component';
-import { ToolbarComponent } from './ui-elements/toolbar/toolbar.component';
-import { TableComponent } from './ui-elements/table/table.component';
-import { TabsComponent } from './ui-elements/tabs/tabs.component';
-import { TreeComponent } from './ui-elements/tree/tree.component';
-import { VideosComponent } from './ui-elements/videos/videos.component';
-import { UtilitiesComponent } from './ui-elements/utilities/utilities.component';
 import { CreateInvoiceComponent } from './pages/invoices-page/create-invoice/create-invoice.component';
 import { EditInvoiceComponent } from './pages/invoices-page/edit-invoice/edit-invoice.component';
 import { ChartsComponent } from './charts/charts.component';
@@ -110,6 +64,8 @@ import { EProductsListComponent } from './pages/ecommerce-page/e-products-list/e
 import { authguardGuard } from './shared/guards/authguard.guard';
 import { RoleGuard } from './shared/guards/role.guard';
 import { UserRole } from './shared/DTOs/UserRoleModel';
+import { PaginationComponent } from './ui-elements/pagination/pagination.component';
+import { UiElementsComponent } from './ui-elements/ui-elements.component';
 
 export const routes: Routes = [
     {
@@ -214,51 +170,7 @@ export const routes: Routes = [
                 path: 'ui-kit',
                 component: UiElementsComponent,
                 children: [
-                    { path: '', component: AlertsComponent },
-                    { path: 'autocomplete', component: AutocompleteComponent },
-                    { path: 'avatars', component: AvatarsComponent },
-                    { path: 'accordion', component: AccordionComponent },
-                    { path: 'badges', component: BadgesComponent },
-                    { path: 'breadcrumb', component: BreadcrumbComponent },
-                    { path: 'button-toggle', component: ButtonToggleComponent },
-                    { path: 'bottom-sheet', component: BottomSheetComponent },
-                    { path: 'buttons', component: ButtonsComponent },
-                    { path: 'card', component: CardComponent },
-                    { path: 'carousel', component: CarouselComponent },
-                    { path: 'checkbox', component: CheckboxComponent },
-                    { path: 'chips', component: ChipsComponent },
-                    { path: 'clipboard', component: ClipboardComponent },
-                    { path: 'color-picker', component: ColorPickerComponent },
-                    { path: 'datepicker', component: DatepickerComponent },
-                    { path: 'dialog', component: DialogComponent },
-                    { path: 'divider', component: DividerComponent },
-                    { path: 'drag-drop', component: DragDropComponent },
-                    { path: 'expansion', component: ExpansionComponent },
-                    { path: 'form-field', component: FormFieldComponent },
-                    { path: 'grid-list', component: GridListComponent },
-                    { path: 'input', component: InputComponent },
-                    { path: 'icon', component: IconComponent },
-                    { path: 'list', component: ListComponent },
-                    { path: 'listbox', component: ListboxComponent },
-                    { path: 'menus', component: MenusComponent },
                     { path: 'pagination', component: PaginationComponent },
-                    { path: 'progress-bar', component: ProgressBarComponent },
-                    { path: 'radio', component: RadioComponent },
-                    { path: 'ratio', component: RatioComponent },
-                    { path: 'select', component: SelectComponent },
-                    { path: 'sidenav', component: SidenavComponent },
-                    { path: 'slide-toggle', component: SlideToggleComponent },
-                    { path: 'slider', component: SliderComponent },
-                    { path: 'snackbar', component: SnackbarComponent },
-                    { path: 'stepper', component: StepperComponent },
-                    { path: 'table', component: TableComponent },
-                    { path: 'tabs', component: TabsComponent },
-                    { path: 'toolbar', component: ToolbarComponent },
-                    { path: 'tooltip', component: TooltipComponent },
-                    { path: 'tree', component: TreeComponent },
-                    { path: 'typography', component: TypographyComponent },
-                    { path: 'videos', component: VideosComponent },
-                    { path: 'utilities', component: UtilitiesComponent },
                 ],
             },
             {

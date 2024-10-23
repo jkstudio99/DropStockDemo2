@@ -30,6 +30,8 @@
       "USERNAME_PLACEHOLDER": "กรอกชื่อผู้ใช้ของคุณ",
       "USERNAME_REQUIRED": "จำเป็นต้องระบุชื่อผู้ใช้",
       "USERNAME_INVALID": "กรุณาใส่ชื่อผู้ใช้ที่ถูกต้อง",
+      "ROLE": "บทบาท",
+      "SELECT_ROLE": "เลือกสิทธิ์ผู้ใช้ของคุณ",
       "EMAIL": "อีเมล",
       "EMAIL_PLACEHOLDER": "example@dropstock.com",
       "EMAIL_REQUIRED": "จำเป็นต้องระบุอีเมล",

@@ -5,7 +5,7 @@ export interface LoginModel {
 }
 
 export interface LoginResponse {
-    token: string;
+    accessToken: string;
     refreshToken: string;
     expiresIn: number;
     userData: {

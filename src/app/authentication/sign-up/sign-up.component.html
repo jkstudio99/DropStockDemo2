@@ -89,6 +89,19 @@
               {{ 'SIGN_UP.PASSWORD_MISMATCH' | translate }}
             </div>
           </div>
+          <div class="form-group">
+            <label class="main-label d-block fw-medium text-black">
+              {{ 'SIGN_UP.ROLE' | translate }}
+            </label>
+            <mat-form-field>
+              <mat-label>{{ 'SIGN_UP.ROLE_PLACEHOLDER' | translate }}</mat-label>
+              <mat-select formControlName="role">
+                <mat-option value="User">{{ 'SIGN_UP.ROLE_USER' | translate }}</mat-option>
+                <mat-option value="Manager">{{ 'SIGN_UP.ROLE_MANAGER' | translate }}</mat-option>
+                <mat-option value="Admin">{{ 'SIGN_UP.ROLE_ADMIN' | translate }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
           <button type="submit" mat-button [disabled]="isLoading || signUpForm.invalid">
             <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
             <ng-container *ngIf="!isLoading">
@@ -96,14 +109,19 @@
               {{ 'SIGN_UP.SUBMIT_BUTTON' | translate }}
             </ng-container>
           </button>
-          <p class="info">
-            {{ 'SIGN_UP.TERMS_AGREEMENT' | translate }} <a class="fw-medium" routerLink=".">{{ 'SIGN_UP.TERMS_OF_SERVICE' | translate }}</a> {{ 'SIGN_UP.AND' | translate }} <a class="fw-medium" routerLink=".">{{ 'SIGN_UP.PRIVACY_POLICY' | translate }}</a>.
-          </p>
-          <p class="info">
+          <mat-checkbox>
+            <p class="info">
+              {{ 'SIGN_UP.TERMS_AGREEMENT' | translate }} <a class="fw-medium" routerLink="/authentication/terms-of-service">{{ 'SIGN_UP.TERMS_OF_SERVICE' | translate }}</a> {{ 'SIGN_UP.AND' | translate }} <a class="fw-medium" routerLink="/authentication/privacy-policy">{{ 'SIGN_UP.PRIVACY_POLICY' | translate }}</a>.
+            </p>
+          </mat-checkbox>
+          <p class="info mt-10">
             {{ 'SIGN_UP.ALREADY_HAVE_ACCOUNT' | translate }} <a routerLink="/authentication/sign-in" class="fw-semibold text-primary">{{ 'SIGN_UP.SIGN_IN' | translate }}</a>
           </p>
-          <p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
-        </form>
+            <div>
+                <p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
+            </div>
+
+            </form>
       </div>
     </div>
   </div>

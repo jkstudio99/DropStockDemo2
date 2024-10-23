@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
     CanActivateFn,
     Router,
@@ -37,3 +37,10 @@ export class RoleGuard {
         return true;
     };
 }
+export const roleGuard: CanActivateFn = (route, state) => {
+    const roleGuardInstance = new RoleGuard(
+        inject(AuthService),
+        inject(Router)
+    );
+    return roleGuardInstance.canActivate(route, state);
+};
