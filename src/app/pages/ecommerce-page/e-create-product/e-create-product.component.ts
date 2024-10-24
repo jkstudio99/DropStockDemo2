@@ -99,7 +99,7 @@ export class ECreateProductComponent implements OnInit {
 
     ngOnInit(): void {
         this.loadCategories();
-        if (!this.authService.isAuthenticated()) {
+        if (!this.authService.isUserAuthenticated()) {
             Swal.fire({
                 icon: 'warning',
                 title: 'ไม่ได้เข้าสู่ระบบ',
@@ -240,17 +240,19 @@ export class ECreateProductComponent implements OnInit {
     }
 
     checkAuthAndSubmit(): void {
-        if (this.authService.isAuthenticated()) {
-            this.onSubmit();
-        } else {
+        this.authService.isUserAuthenticated().then((isAuthenticated) => {
+            if (isAuthenticated) {
+                this.onSubmit();
+            } else {
             Swal.fire({
                 icon: 'error',
                 title: 'ไม่ได้รับอนุญาต',
-                text: 'กรุณาเ้าสู่ระบบก่อนเพิ่มสินค้า',
+                text: 'กรุณาเข้าสู่ระบบก่อนเพิ่มสินค้า',
             });
             // Optionally, redirect to login page
             // this.router.navigate(['/login']);
         }
+        });
     }
 
     triggerFileInput() {

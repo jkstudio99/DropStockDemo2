@@ -129,11 +129,13 @@ export class EProductsListComponent
     }
 
     private checkAuthAndLoadProducts(): void {
-        if (this.authService.isAuthenticated()) {
-            this.loadProducts();
-        } else {
-            this.router.navigate(['/authentication/sign-in']);
-        }
+        this.authService.isUserAuthenticated().then((isAuthenticated) => {
+            if (isAuthenticated) {
+                this.loadProducts();
+            } else {
+                this.router.navigate(['/authentication/sign-in']);
+            }
+        });
     }
 
     private setupDataSource(): void {
