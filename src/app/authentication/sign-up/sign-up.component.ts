@@ -106,8 +106,14 @@ export class SignUpComponent implements OnInit, OnDestroy {
             });
 
         this.languageService.initializeLanguage().then(() => {
-            console.log('Language initialized:', this.languageService.getCurrentLanguage());
-            console.log('TranslateService current lang:', this.translate.currentLang);
+            console.log(
+                'Language initialized:',
+                this.languageService.getCurrentLanguage()
+            );
+            console.log(
+                'TranslateService current lang:',
+                this.translate.currentLang
+            );
         });
     }
 

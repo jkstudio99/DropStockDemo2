@@ -61,11 +61,11 @@ import { AnalyticsComponent } from './dashboard/analytics/analytics.component';
 import { SalesComponent } from './dashboard/sales/sales.component';
 import { EEditOrderComponent } from './pages/ecommerce-page/e-edit-order/e-edit-order.component';
 import { EProductsListComponent } from './pages/ecommerce-page/e-products-list/e-products-list.component';
-import { authguardGuard } from './shared/guards/authguard.guard';
-import { RoleGuard } from './shared/guards/role.guard';
-import { UserRole } from './shared/DTOs/UserRoleModel';
+import { authGuard } from './shared/guards/authguard.guard';
 import { PaginationComponent } from './ui-elements/pagination/pagination.component';
 import { UiElementsComponent } from './ui-elements/ui-elements.component';
+import { managerGuard } from './shared/guards/manager.guard';
+import { adminGuard } from './shared/guards/admin.guard';
 
 export const routes: Routes = [
     {
@@ -82,7 +82,7 @@ export const routes: Routes = [
     {
         path: 'dashboard',
         component: DashboardComponent,
-        canActivate: [authguardGuard],
+        canActivate: [authGuard],
         children: [
             { path: '', component: EcommerceComponent },
             { path: 'analytics', component: AnalyticsComponent },
@@ -99,36 +99,40 @@ export const routes: Routes = [
             {
                 path: 'ecommerce-page',
                 component: EcommercePageComponent,
-                canActivate: [authguardGuard, RoleGuard],
-                data: {
-                    roles: [UserRole.Admin, UserRole.Manager, UserRole.User],
-                },
                 children: [
                     {
-                        path: 'products-list',
+                        path: '',
                         component: EProductsListComponent,
+                        canActivate: [authGuard],
                     },
                     {
                         path: 'create-product',
                         component: ECreateProductComponent,
+                        canActivate: [adminGuard, managerGuard],
                     },
                     {
                         path: 'edit-product/:id',
                         component: EEditProductComponent,
+                        canActivate: [adminGuard, managerGuard],
                     },
-                    { path: 'orders-list', component: EOrdersListComponent },
                     {
-                        path: 'edit-order/:id',
-                        component: EEditOrderComponent,
+                        path: 'delete-product/:id',
+                        component: ECreateProductComponent,
+                        canActivate: [adminGuard, managerGuard],
                     },
-                    { path: 'create-order', component: ECreateOrderComponent },
-
                     { path: 'customers', component: ECustomersComponent },
                     {
-                        path: 'customer-details',
+                        path: 'customer-details/:id',
                         component: ECustomerDetailsComponent,
                     },
-                    { path: 'categories', component: ECategoriesComponent },
+                    { path: 'orders', component: EOrdersListComponent },
+                    { path: 'create-order', component: ECreateOrderComponent },
+                    { path: 'edit-order/:id', component: EEditOrderComponent },
+                    {
+                        path: 'categories',
+                        component: ECategoriesComponent,
+                        canActivate: [adminGuard],
+                    },
                 ],
             },
 

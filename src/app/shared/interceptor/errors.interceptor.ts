@@ -34,29 +34,32 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
             } else if (err.status === 401) {
                 if (authService.getToken()) {
                     return authService.refreshToken().pipe(
-                        switchMap(() => next(req)), // Retry the original request
+                        switchMap(() => {
+                            const newRequest = req.clone({
+                                setHeaders: {
+                                    Authorization: `Bearer ${authService.getToken()}`
+                                }
+                            });
+                            return next(newRequest);
+                        }),
                         catchError(() => {
-                            router.navigate(['/authentication/sign-in']);
-                            return throwError(
-                                () =>
-                                    new Error(
-                                        translateService.instant(
-                                            'ERRORS.SESSION_EXPIRED'
-                                        )
-                                    )
-                            );
+                            authService.logout();
+                            router.navigate(['/authentication/sign-in'], {
+                                queryParams: { returnUrl: router.url },
+                            });
+                            return throwError(() => new Error(translateService.instant('ERRORS.SESSION_EXPIRED')));
                         })
                     );
                 } else {
-                    message = err.error ? err.error : err.message;
+                    authService.logout();
                     router.navigate(['/authentication/sign-in'], {
                         queryParams: { returnUrl: router.url },
                     });
+                    return throwError(() => new Error(translateService.instant('ERRORS.UNAUTHORIZED')));
                 }
             } else {
                 message = translateService.instant('ERRORS.UNEXPECTED');
             }
-
             return throwError(() => new Error(message));
         })
     );

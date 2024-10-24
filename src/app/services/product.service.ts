@@ -5,6 +5,9 @@ import { ProductDto, ProductResponse } from '../shared/DTOs/ProductModel';
 import { environment } from '../../environments/environment';
 import { AuthService } from './auth.service';
 import { CloudinaryService } from './cloudinary.service';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
+import { UserRole } from '../shared/DTOs/UserRoleModel';
 
 @Injectable({
     providedIn: 'root',
@@ -15,7 +18,8 @@ export class ProductService {
     constructor(
         private http: HttpClient,
         private authService: AuthService,
-        private cloudinaryService: CloudinaryService
+        private cloudinaryService: CloudinaryService,
+        private router: Router
     ) {}
 
     getProducts(
@@ -75,20 +79,52 @@ export class ProductService {
         );
     }
 
-    deleteProduct(id: number): Observable<unknown> {
-        return this.http
-            .delete(this.apiUrl + '/' + id, this.getHttpOptions())
-            .pipe(
-                switchMap(() => {
-                    return of(null);
-                }),
-                catchError((error) => {
-                    console.error('Error deleting product:', error);
-                    return throwError(
-                        () => new Error('Failed to delete product')
-                    );
-                })
-            );
+    deleteProduct(id: number): Observable<void> {
+        return new Observable<void>((observer) => {
+            Swal.fire({
+                title: 'คุณแน่ใจหรือไม่?',
+                text: 'คุณไม่สามารถย้อนกลับกากระทำนี้ได้!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#001EE0',
+                cancelButtonColor: '#FF4023',
+                confirmButtonText: 'ใช่, ลบเลย!',
+                cancelButtonText: 'ยกเลิก',
+                background: '#fff',
+                iconColor: '#001EE0',
+                customClass: {
+                    confirmButton: 'btn btn-primary',
+                    cancelButton: 'btn btn-danger',
+                },
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.http
+                        .delete<void>(
+                            `${this.apiUrl}/${id}`,
+                            this.getHttpOptions()
+                        )
+                        .subscribe({
+                            next: () => {
+                                observer.next();
+                                observer.complete();
+                            },
+                            error: (err) => {
+                                observer.error(err);
+                            },
+                        });
+                } else {
+                    observer.complete();
+                }
+            });
+        });
+    }
+
+    private showErrorAlert(message: string): void {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: message,
+        });
     }
 
     uploadProductImage(productId: number, image: File): Observable<any> {
@@ -131,8 +167,14 @@ export class ProductService {
 
     private getHttpOptions(): { headers: HttpHeaders } {
         const token = this.authService.getToken();
+        if (!token) {
+            console.error('No token available');
+        }
         return {
-            headers: new HttpHeaders().set('Authorization', `Bearer ${token}`),
+            headers: new HttpHeaders().set(
+                'Authorization',
+                `Bearer ${token || ''}`
+            ),
         };
     }
 
@@ -149,8 +191,34 @@ export class ProductService {
         }
         return formData;
     }
-}
 
+    private checkAuthAndLoadProducts(): void {
+        this.authService.isUserAuthenticated().then((isAuthenticated) => {
+            if (isAuthenticated) {
+                this.getProducts();
+            } else {
+                this.authService
+                    .refreshToken()
+                    .pipe(
+                        switchMap(() => this.authService.isUserAuthenticated())
+                    )
+                    .subscribe({
+                        next: (isAuthenticated) => {
+                            if (isAuthenticated) {
+                                this.getProducts();
+                            } else {
+                                throw new Error('Authentication failed');
+                            }
+                        },
+                        error: (error) => {
+                            console.error('Authentication error:', error);
+                            this.router.navigate(['/authentication/sign-in']);
+                        },
+                    });
+            }
+        });
+    }
+}
 interface ProductQueryOptions {
     page?: number;
     limit?: number;

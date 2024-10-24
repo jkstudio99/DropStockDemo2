@@ -28,7 +28,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
         MatProgressSpinnerModule,
     ],
     templateUrl: './forgot-password.component.html',
-    styleUrls: ['./forgot-password.component.scss']
+    styleUrls: ['./forgot-password.component.scss'],
 })
 export class ForgotPasswordComponent {
     forgotPasswordForm: FormGroup;
@@ -56,8 +56,10 @@ export class ForgotPasswordComponent {
                     Swal.fire({
                         icon: 'success',
                         title: 'Success!',
-                        text: response.message || 'เราได้ส่งคำแนะนำในการรีเซ็ตรหัสผ่านไปยังอีเมลของคุณแล้ว',
-                        confirmButtonText: 'OK'
+                        text:
+                            response.message ||
+                            'เราได้ส่งคำแนะนำในการรีเซ็ตรหัสผ่านไปยังอีเมลของคุณแล้ว',
+                        confirmButtonText: 'OK',
                     });
                     this.forgotPasswordForm.reset();
                 },
@@ -66,8 +68,10 @@ export class ForgotPasswordComponent {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: error.error?.message || 'เกิดข้อผิดพลาด โปรดลองอีกครั้ง',
-                        confirmButtonText: 'OK'
+                        text:
+                            error.error?.message ||
+                            'เกิดข้อผิดพลาด โปรดลองอีกครั้ง',
+                        confirmButtonText: 'OK',
                     });
                 },
             });

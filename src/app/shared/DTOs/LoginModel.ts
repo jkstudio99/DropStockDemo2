@@ -5,12 +5,11 @@ export interface LoginModel {
 }
 
 export interface LoginResponse {
-    accessToken: string;
+    token: string;
     refreshToken: string;
-    expiresIn: number;
+    expiration: string;
     userData: {
-        id: string;
-        username: string;
+        userName: string;
         email: string;
         roles: string[];
     };

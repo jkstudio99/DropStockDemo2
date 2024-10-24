@@ -34,6 +34,7 @@ import { CategoryService } from '../../../services/category.service';
 import { forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { NgFor } from '@angular/common';
+import { UserRole } from '../../../shared/DTOs/UserRole';
 
 @Component({
     selector: 'app-e-products-list',
@@ -85,6 +86,8 @@ export class EProductsListComponent
     isLoading = false;
     searchQuery = '';
     selectedCategory = '';
+    isAdmin: boolean = false;
+    isManager: boolean = false;
 
     private unsubscribe$ = new Subject<void>();
     private destroy$ = new Subject<void>();
@@ -102,6 +105,8 @@ export class EProductsListComponent
         this.setupThemeToggle();
         this.checkAuthAndLoadProducts();
         this.loadCategories();
+        this.isAdmin = this.authService.hasRole(UserRole.Admin);
+        this.isManager = this.authService.hasRole(UserRole.Manager);
     }
 
     ngAfterViewInit(): void {
@@ -171,7 +176,10 @@ export class EProductsListComponent
                 selectedCategory: Number(this.selectedCategory) || undefined,
                 createdAtSort: this.createdAtSort,
             })
-            .pipe(takeUntil(this.destroy$))
+            .pipe(
+                takeUntil(this.destroy$),
+                catchError((error) => this.handleLoadProductsError(error))
+            )
             .subscribe({
                 next: (response) => {
                     this.dataSource.data = response.products;
@@ -180,8 +188,8 @@ export class EProductsListComponent
                     this.isLoading = false;
                 },
                 error: (error) => {
-                    console.error('Error loading products:', error);
-                    this.showErrorAlert('Failed to load products');
+                    console.error('Error after retry:', error);
+                    this.showErrorAlert('Failed to load products after retry');
                     this.isLoading = false;
                 },
             });
@@ -227,7 +235,7 @@ export class EProductsListComponent
     deleteProduct(id: number): void {
         Swal.fire({
             title: 'คุณแน่ใจหรือไม่?',
-            text: 'คุณไม่สามารถย้อนกลับกา���กระทำนี้ได้!',
+            text: 'คุณไม่สามารถย้อนกลับกากระทำนี้ได้!',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#001EE0',
@@ -242,35 +250,21 @@ export class EProductsListComponent
             }
         }).then((result) => {
             if (result.isConfirmed) {
-                this.performDeleteProduct(id);
+                this.productService.deleteProduct(id).subscribe({
+                    next: () => this.handleDeleteProductSuccess(),
+                    error: (error: any) => {
+                        console.error('Error deleting product:', error);
+                        this.showErrorAlert('Failed to delete product. Please try again.');
+                    }
+                });
             }
         });
-    }
-
-    private performDeleteProduct(id: number): void {
-        this.productService
-            .deleteProduct(id)
-            .pipe(catchError(this.handleDeleteProductError.bind(this, id)))
-            .subscribe({
-                next: this.handleDeleteProductSuccess.bind(this),
-                error: this.handleDeleteProductError.bind(this, id),
-            });
-    }
-
-    private handleDeleteProductError(error: any, id: number) {
-        console.error('Error deleting product:', error);
-        if (error.status === 401) {
-            return this.authService
-                .refreshToken()
-                .pipe(switchMap(() => this.productService.deleteProduct(id)));
-        }
-        return throwError(() => error);
     }
 
     private handleDeleteProductSuccess() {
         Swal.fire({
             icon: 'success',
-            title: 'ลบแล้ว!',
+            title: 'ลบแลว!',
             text: 'สินค้าถูกลบเรียบร้อยแล้ว',
             confirmButtonColor: '#001EE0',
             iconColor: '#FF4023'

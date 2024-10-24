@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, firstValueFrom, Subject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { LoginModel, LoginResponse } from '../shared/DTOs/LoginModel';
 import { environment } from '../../environments/environment';
@@ -9,141 +9,138 @@ import { ResponseModel } from '../shared/DTOs/ResponseModel';
 import { UserRole } from '../shared/DTOs/UserRole';
 import { RefreshTokenDto } from '../shared/DTOs/TokenRefreshDTO';
 import { TokenResultDto } from '../shared/DTOs/TokenResultDTO';
-import { jwtDecode } from 'jwt-decode';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { ForgotPasswordModel } from '../shared/DTOs/ForgotPasswordModel';
+import { ResetPasswordModel } from '../shared/DTOs/ResetPasswordModel';
+
+export const authKey = {
+    accessToken: 'auth.jwt:' + location.origin,
+    refreshToken: 'auth.rt:' + location.origin,
+};
 
 @Injectable({
     providedIn: 'root',
 })
 export class AuthService {
+    private authChangeSub = new Subject<boolean>();
+    authChanged = this.authChangeSub.asObservable();
+    jwtHelper = new JwtHelperService();
+
     constructor(private http: HttpClient) {}
 
-    private getUserFromStorage(): LoginResponse | null {
-        const storedUser = localStorage.getItem('currentUser');
-        return storedUser ? JSON.parse(storedUser) : null;
-    }
-
-    login(loginModel: LoginModel): Observable<LoginResponse> {
+    register(request: RegisterModel): Observable<unknown> {
+        const reqUrl = environment.apiBaseUrl + '/authentication/register';
         return this.http
-            .post<LoginResponse>(
-                environment.apiBaseUrl + '/authentication/login',
-                loginModel
-            )
-            .pipe(
-                tap((response) => this.setUserData(response)),
-                catchError(this.handleError)
-            );
-    }
-
-    private setUserData(response: LoginResponse): void {
-        console.log('AccessToken:', response.accessToken);
-        console.log('RefreshToken:', response.refreshToken);
-        this.setToken(response.accessToken);
-        localStorage.setItem('refreshToken', response.refreshToken);
-        localStorage.setItem('currentUser', JSON.stringify(response));
-    }
-
-    logout(): void {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-        localStorage.removeItem('currentUser');
-    }
-
-    refreshToken(): Observable<TokenResultDto> {
-        const refreshTokenDto: RefreshTokenDto = {
-            accessToken: this.getToken() || '',
-            refreshToken: localStorage.getItem('refreshToken') || '',
-        };
-
-        return this.http
-            .post<TokenResultDto>(
-                environment.apiBaseUrl + '/authentication/refresh-token',
-                refreshTokenDto
-            )
-            .pipe(
-                tap((result) => {
-                    if (result.accessToken) {
-                        this.setToken(result.accessToken);
-                    }
-                    if (result.refreshToken) {
-                        localStorage.setItem(
-                            'refreshToken',
-                            result.refreshToken
-                        );
-                    }
-                }),
-                catchError(this.handleError)
-            );
-    }
-
-    register(registerModel: RegisterModel): Observable<ResponseModel> {
-        let endpoint = environment.apiBaseUrl + '/authentication/register-user';
-
-        switch (registerModel.role) {
-            case UserRole.Manager:
-                endpoint =
-                    environment.apiBaseUrl + '/authentication/register-manager';
-                break;
-            case UserRole.Admin:
-                endpoint =
-                    environment.apiBaseUrl + '/authentication/register-admin';
-                break;
-        }
-
-        return this.http
-            .post<ResponseModel>(endpoint, registerModel)
+            .post<unknown>(reqUrl, request)
             .pipe(catchError(this.handleError));
     }
 
-    isAuthenticated(): boolean {
-        const token = this.getToken();
-        return token ? !this.isTokenExpired(token) : false;
+    login(request: LoginModel): Observable<TokenResultDto> {
+        const reqUrl = environment.apiBaseUrl + '/authentication/login';
+        return this.http.post<TokenResultDto>(reqUrl, request).pipe(
+            tap((response) => {
+                if (response && response.accessToken) {
+                    if (response.refreshToken) {
+                        this.setToken(
+                            response.accessToken,
+                            response.refreshToken
+                        );
+                    }
+                }
+            }),
+            catchError(this.handleError)
+        );
     }
 
-    hasRole(role: UserRole): boolean {
-        const token = this.getToken();
-        if (token) {
+    logout(): void {
+        const reqUrl = environment.apiBaseUrl + '/authentication/logout';
+        this.http.post<unknown>(reqUrl, {}).subscribe(() => {
+            this.clearLocalStorage();
+        });
+    }
+
+    refreshToken(): Observable<TokenResultDto> {
+        const reqUrl = environment.apiBaseUrl + '/authentication/refresh-token';
+        const req: RefreshTokenDto = {
+            accessToken: localStorage.getItem(authKey.accessToken) || '',
+            refreshToken: localStorage.getItem(authKey.refreshToken) || '',
+        };
+
+        return this.http.post<TokenResultDto>(reqUrl, req).pipe(
+            tap((result) => {
+                if (result.accessToken && result.refreshToken) {
+                    this.setToken(result.accessToken, result.refreshToken);
+                }
+            }),
+            catchError(this.handleError)
+        );
+    }
+
+    async isUserAuthenticated(): Promise<boolean> {
+        const accessToken = localStorage.getItem(authKey.accessToken);
+        if (!accessToken || this.jwtHelper.isTokenExpired(accessToken)) {
             try {
-                const decodedToken: any = jwtDecode(token);
-                return (
-                    decodedToken &&
-                    decodedToken.roles &&
-                    decodedToken.roles.includes(role.toString())
-                );
+                const res = await firstValueFrom(this.refreshToken());
+                this.setToken(res.accessToken!, res.refreshToken!);
+                return true;
             } catch (error) {
-                console.error('Error decoding token:', error);
+                this.clearLocalStorage();
                 return false;
             }
+        }
+        return true;
+    }
+
+    forgotPassword(request: ForgotPasswordModel): Observable<unknown> {
+        const reqUrl =
+            environment.apiBaseUrl + '/authentication/forgot-password';
+        return this.http
+            .post<unknown>(reqUrl, request)
+            .pipe(catchError(this.handleError));
+    }
+
+    resetPassword(request: ResetPasswordModel): Observable<unknown> {
+        const reqUrl =
+            environment.apiBaseUrl + '/authentication/reset-password';
+        return this.http
+            .post<unknown>(reqUrl, request)
+            .pipe(catchError(this.handleError));
+    }
+
+    getToken(): string | null {
+        return localStorage.getItem(authKey.accessToken);
+    }
+    isUserInRole(role: string): boolean {
+        const token = this.getToken();
+        if (token) {
+            const decodedToken = this.jwtHelper.decodeToken(token);
+            const userRoles = decodedToken['roles'];
+            if (userRoles && Array.isArray(userRoles)) {
+                return userRoles.includes(role);
+            }
+            return userRoles === role;
         }
         return false;
     }
 
-    isTokenExpired(token: string): boolean {
-        if (!token) {
-            return true;
+    getUserRole(): string | null {
+        const token = this.getToken();
+        if (token) {
+            const decodedToken = this.jwtHelper.decodeToken(token);
+            return decodedToken['role'] || null;
         }
-
-        try {
-            const decoded: any = jwtDecode(token);
-            if (!decoded.exp) {
-                return true; // ไม่มี exp ถือว่าหมดอายุ
-            }
-            const expiryDate = new Date(0);
-            expiryDate.setUTCSeconds(decoded.exp);
-
-            return !(expiryDate.valueOf() > new Date().valueOf());
-        } catch (error) {
-            console.error('Error decoding token:', error);
-            return true; // หาก decode ไม่ได้ ให้ถือว่าหมดอายุ
-        }
+        return null;
     }
 
-    forgotPassword(email: string): Observable<unknown> {
-        return this.http
-            .post<unknown>(
-                environment.apiBaseUrl + '/authentication/forgot-password',
-                { email }
-            )
-            .pipe(catchError(this.handleError));
+    private setToken(accessToken: string, refreshToken: string): void {
+        localStorage.setItem(authKey.accessToken, accessToken);
+        localStorage.setItem(authKey.refreshToken, refreshToken);
+    }
+
+    private clearLocalStorage(): void {
+        localStorage.removeItem(authKey.accessToken);
+        localStorage.removeItem(authKey.refreshToken);
+        localStorage.removeItem('currentUser');
     }
 
     private handleError(error: HttpErrorResponse) {
@@ -151,17 +148,5 @@ export class AuthService {
         return throwError(
             () => new Error('An error occurred. Please try again.')
         );
-    }
-
-    getToken(): string | null {
-        return localStorage.getItem('accessToken');
-    }
-
-    setToken(token: string): void {
-        if (token) {
-            localStorage.setItem('accessToken', token); // เก็บ access token
-        } else {
-            console.error('Attempt to set undefined token');
-        }
     }
 }

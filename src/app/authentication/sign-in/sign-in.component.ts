@@ -2,27 +2,29 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { CustomizerSettingsService } from '../../customizer-settings/customizer-settings.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth.service'; // ปรับตรงนี้
+import { AuthService } from '../../services/auth.service';
 import { LanguageService } from '../../services/language.service';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { takeUntil, finalize } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
+import Swal from 'sweetalert2';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
-import { ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
-import Swal from 'sweetalert2';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { finalize } from 'rxjs/operators';
 
 @Component({
     selector: 'app-sign-in',
     standalone: true,
+    templateUrl: './sign-in.component.html',
+    styleUrls: ['./sign-in.component.scss'],
     imports: [
         CommonModule,
         ReactiveFormsModule,
@@ -36,25 +38,23 @@ import { finalize } from 'rxjs/operators';
         RouterLink,
         MatProgressSpinnerModule,
     ],
-    templateUrl: './sign-in.component.html',
-    styleUrls: ['./sign-in.component.scss'],
 })
 export class SignInComponent implements OnInit, OnDestroy {
-    hide = true; // ตัวแปรสำหรับแสดง/ซ่อนรหัสผ่าน
-    loginForm: FormGroup; // ฟอร์มล็อกอิน
-    errorMessage: string = ''; // ข้อความแสดงข้อผิดพลาด
-    isLoading = false; // สถานะการโหลด
-    private unsubscribe$ = new Subject<void>(); // Subject สำหรับ unsubscribe
+    hide = true; // To toggle password visibility
+    loginForm: FormGroup; // Login form
+    errorMessage: string = ''; // To display error message
+    isLoading = false; // Loading status indicator
+    private unsubscribe$ = new Subject<void>(); // Subject for cleanup
 
     constructor(
-        public themeService: CustomizerSettingsService, // ใช้บริการสำหรับธีม
-        private fb: FormBuilder, // ใช้ FormBuilder สำหรับฟอร์ม
-        private authService: AuthService, // ใช้ AuthService สำหรับการล็อกอิน
-        private router: Router, // ใช้ Router สำหรับนำทาง
-        private languageService: LanguageService, // ใช้ LanguageService สำหรับการเปลี่ยนภาษา
-        private translate: TranslateService // ใช้ TranslateService สำหรับการแปล
+        public themeService: CustomizerSettingsService,
+        private fb: FormBuilder,
+        private authService: AuthService,
+        private router: Router,
+        private languageService: LanguageService,
+        private translate: TranslateService
     ) {
-        // กำหนดค่าฟอร์มการล็อกอิน พร้อมการตรวจสอบค่า
+        // Define the form with validators
         this.loginForm = this.fb.group({
             username: [
                 '',
@@ -78,14 +78,14 @@ export class SignInComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        // จัดการการเปลี่ยนแปลงธีมจาก CustomizerSettingsService
+        // Subscribe to theme changes
         this.themeService.isToggled$
             .pipe(takeUntil(this.unsubscribe$))
-            .subscribe((isToggled) => {
-                // จัดการธีมเมื่อมีการเปลี่ยนแปลง
+            .subscribe(() => {
+                // Handle theme changes
             });
 
-        // ใช้ภาษาปัจจุบันจาก LanguageService และตั้งค่าการแปล
+        // Set current language for translation
         const currentLang = this.languageService.getCurrentLanguage();
         this.translate.use(currentLang);
         console.log('Current language:', currentLang);
@@ -96,28 +96,28 @@ export class SignInComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        // ปิดการ subscribe เพื่อป้องกันการรั่วไหลของข้อมูล
+        // Cleanup to prevent memory leaks
         this.unsubscribe$.next();
         this.unsubscribe$.complete();
     }
 
-    // ฟังก์ชันสำหรับคืนค่าภาษาปัจจุบัน
+    // Return the current language
     getCurrentLanguage(): string {
         return this.languageService.getCurrentLanguage();
     }
 
-    // ฟังก์ชันสำหรับเปลี่ยนภาษา
+    // Function to change the language
     changeLanguage(lang: string): void {
-        this.languageService.changeLanguage(lang); // เปลี่ยนภาษาผ่าน LanguageService
+        this.languageService.changeLanguage(lang);
         this.translate.use(lang);
     }
 
-    // ฟังก์ชันสำหรับแสดงหรือซ่อนรหัสผ่าน
+    // Toggle password visibility
     togglePasswordVisibility(): void {
         this.hide = !this.hide;
     }
 
-    // ฟังก์ชันสำหรับส่งฟอร์มล็อกอิน
+    // Handle form submission
     onSubmit(): void {
         if (this.loginForm.valid) {
             this.isLoading = true;
@@ -132,6 +132,7 @@ export class SignInComponent implements OnInit, OnDestroy {
                 )
                 .subscribe({
                     next: (res) => {
+                        localStorage.setItem('accessToken', res.token!);
                         localStorage.setItem('refreshToken', res.refreshToken!);
                         localStorage.setItem(
                             'currentUser',
@@ -186,6 +187,7 @@ export class SignInComponent implements OnInit, OnDestroy {
         }
     }
 
+    // Get the appropriate error message for form fields
     getErrorMessage(controlName: string): string {
         const control = this.loginForm.get(controlName);
         if (control?.hasError('required')) {
