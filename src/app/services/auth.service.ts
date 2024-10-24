@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { LoginModel, LoginResponse } from '../shared/DTOs/LoginModel';
 import { environment } from '../../environments/environment';
@@ -9,36 +9,17 @@ import { ResponseModel } from '../shared/DTOs/ResponseModel';
 import { UserRole } from '../shared/DTOs/UserRole';
 import { RefreshTokenDto } from '../shared/DTOs/TokenRefreshDTO';
 import { TokenResultDto } from '../shared/DTOs/TokenResultDTO';
-import { JwtHelperService } from '@auth0/angular-jwt';
-
-export const AUTH_KEY = {
-    accessToken: 'auth.jwt:' + location.origin,
-    refreshToken: 'auth.rt:' + location.origin,
-};
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
     providedIn: 'root',
 })
 export class AuthService {
-    private currentUserSubject: BehaviorSubject<LoginResponse | null>;
-    public currentUser: Observable<LoginResponse | null>;
-    private jwtHelper: JwtHelperService;
-
-    constructor(private http: HttpClient) {
-        this.jwtHelper = new JwtHelperService();
-        this.currentUserSubject = new BehaviorSubject<LoginResponse | null>(
-            this.getUserFromStorage()
-        );
-        this.currentUser = this.currentUserSubject.asObservable();
-    }
+    constructor(private http: HttpClient) {}
 
     private getUserFromStorage(): LoginResponse | null {
         const storedUser = localStorage.getItem('currentUser');
         return storedUser ? JSON.parse(storedUser) : null;
-    }
-
-    public get currentUserValue(): LoginResponse | null {
-        return this.currentUserSubject.value;
     }
 
     login(loginModel: LoginModel): Observable<LoginResponse> {
@@ -54,25 +35,23 @@ export class AuthService {
     }
 
     private setUserData(response: LoginResponse): void {
-        console.log('AccessToken:', response.accessToken); // ตรวจสอบการส่งโทเค็น
+        console.log('AccessToken:', response.accessToken);
         console.log('RefreshToken:', response.refreshToken);
-        localStorage.setItem(AUTH_KEY.accessToken, response.accessToken);
-        localStorage.setItem(AUTH_KEY.refreshToken, response.refreshToken);
+        this.setToken(response.accessToken);
+        localStorage.setItem('refreshToken', response.refreshToken);
         localStorage.setItem('currentUser', JSON.stringify(response));
-        this.currentUserSubject.next(response);
     }
 
     logout(): void {
-        localStorage.removeItem(AUTH_KEY.accessToken);
-        localStorage.removeItem(AUTH_KEY.refreshToken);
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
         localStorage.removeItem('currentUser');
-        this.currentUserSubject.next(null);
     }
 
     refreshToken(): Observable<TokenResultDto> {
         const refreshTokenDto: RefreshTokenDto = {
-            accessToken: localStorage.getItem(AUTH_KEY.accessToken) || '',
-            refreshToken: localStorage.getItem(AUTH_KEY.refreshToken) || '',
+            accessToken: this.getToken() || '',
+            refreshToken: localStorage.getItem('refreshToken') || '',
         };
 
         return this.http
@@ -83,14 +62,11 @@ export class AuthService {
             .pipe(
                 tap((result) => {
                     if (result.accessToken) {
-                        localStorage.setItem(
-                            AUTH_KEY.accessToken,
-                            result.accessToken
-                        );
+                        this.setToken(result.accessToken);
                     }
                     if (result.refreshToken) {
                         localStorage.setItem(
-                            AUTH_KEY.refreshToken,
+                            'refreshToken',
                             result.refreshToken
                         );
                     }
@@ -120,25 +96,45 @@ export class AuthService {
 
     isAuthenticated(): boolean {
         const token = this.getToken();
-        return token ? !this.jwtHelper.isTokenExpired(token) : false;
+        return token ? !this.isTokenExpired(token) : false;
     }
 
     hasRole(role: UserRole): boolean {
         const token = this.getToken();
         if (token) {
-            const decodedToken = this.jwtHelper.decodeToken(token);
-            return (
-                decodedToken &&
-                decodedToken.roles &&
-                decodedToken.roles.includes(role.toString())
-            );
+            try {
+                const decodedToken: any = jwtDecode(token);
+                return (
+                    decodedToken &&
+                    decodedToken.roles &&
+                    decodedToken.roles.includes(role.toString())
+                );
+            } catch (error) {
+                console.error('Error decoding token:', error);
+                return false;
+            }
         }
         return false;
     }
 
-    getTokenExpirationDate(): Date | null {
-        const token = this.getToken();
-        return token ? this.jwtHelper.getTokenExpirationDate(token) : null;
+    isTokenExpired(token: string): boolean {
+        if (!token) {
+            return true;
+        }
+
+        try {
+            const decoded: any = jwtDecode(token);
+            if (!decoded.exp) {
+                return true; // ไม่มี exp ถือว่าหมดอายุ
+            }
+            const expiryDate = new Date(0);
+            expiryDate.setUTCSeconds(decoded.exp);
+
+            return !(expiryDate.valueOf() > new Date().valueOf());
+        } catch (error) {
+            console.error('Error decoding token:', error);
+            return true; // หาก decode ไม่ได้ ให้ถือว่าหมดอายุ
+        }
     }
 
     forgotPassword(email: string): Observable<unknown> {
@@ -158,10 +154,14 @@ export class AuthService {
     }
 
     getToken(): string | null {
-        return localStorage.getItem(AUTH_KEY.accessToken);
+        return localStorage.getItem('accessToken');
     }
 
     setToken(token: string): void {
-        localStorage.setItem(AUTH_KEY.accessToken, token);
+        if (token) {
+            localStorage.setItem('accessToken', token); // เก็บ access token
+        } else {
+            console.error('Attempt to set undefined token');
+        }
     }
 }

@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { CustomizerSettingsService } from '../../customizer-settings/customizer-settings.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AUTH_KEY, AuthService } from '../../services/auth.service';
+import { AuthService } from '../../services/auth.service'; // ปรับตรงนี้
 import { LanguageService } from '../../services/language.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -48,10 +48,10 @@ export class SignInComponent implements OnInit, OnDestroy {
 
     constructor(
         public themeService: CustomizerSettingsService, // ใช้บริการสำหรับธีม
-        private fb: FormBuilder, // ใช้ FormBuilder สำหรับร์ม
+        private fb: FormBuilder, // ใช้ FormBuilder สำหรับฟอร์ม
         private authService: AuthService, // ใช้ AuthService สำหรับการล็อกอิน
-        private router: Router, // ใช้ Router ำหรับนำทาง
-        private languageService: LanguageService, // ใช้ LanguageService สำหรับกเปลี่ยนภาษา
+        private router: Router, // ใช้ Router สำหรับนำทาง
+        private languageService: LanguageService, // ใช้ LanguageService สำหรับการเปลี่ยนภาษา
         private translate: TranslateService // ใช้ TranslateService สำหรับการแปล
     ) {
         // กำหนดค่าฟอร์มการล็อกอิน พร้อมการตรวจสอบค่า
@@ -85,7 +85,7 @@ export class SignInComponent implements OnInit, OnDestroy {
                 // จัดการธีมเมื่อมีการเปลี่ยนแปลง
             });
 
-        // ใช้ภาษาปัจจุบันจาก LanguageService และตั้งค่ากรแปล
+        // ใช้ภาษาปัจจุบันจาก LanguageService และตั้งค่าการแปล
         const currentLang = this.languageService.getCurrentLanguage();
         this.translate.use(currentLang);
         console.log('Current language:', currentLang);
@@ -96,12 +96,12 @@ export class SignInComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        // ปิดการ subscribe เพื่อป้องกนการรั่วไหลของข้อมูล
+        // ปิดการ subscribe เพื่อป้องกันการรั่วไหลของข้อมูล
         this.unsubscribe$.next();
         this.unsubscribe$.complete();
     }
 
-    // ฟัง์ชันสำหรับคืนค่าภาษาปัจจุบัน
+    // ฟังก์ชันสำหรับคืนค่าภาษาปัจจุบัน
     getCurrentLanguage(): string {
         return this.languageService.getCurrentLanguage();
     }
@@ -117,7 +117,7 @@ export class SignInComponent implements OnInit, OnDestroy {
         this.hide = !this.hide;
     }
 
-    // ฟังก์ชันสหรับส่งฟอร์มล็อกอิน
+    // ฟังก์ชันสำหรับส่งฟอร์มล็อกอิน
     onSubmit(): void {
         if (this.loginForm.valid) {
             this.isLoading = true;
@@ -132,14 +132,7 @@ export class SignInComponent implements OnInit, OnDestroy {
                 )
                 .subscribe({
                     next: (res) => {
-                        localStorage.setItem(
-                            AUTH_KEY.accessToken,
-                            res.accessToken!
-                        );
-                        localStorage.setItem(
-                            AUTH_KEY.refreshToken,
-                            res.refreshToken!
-                        );
+                        localStorage.setItem('refreshToken', res.refreshToken!);
                         localStorage.setItem(
                             'currentUser',
                             JSON.stringify(res)

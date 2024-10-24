@@ -18,7 +18,7 @@ import { OrderService } from '../../../services/order.service';
 import { OrderDTO } from '../../../shared/DTOs/OrderModel';
 import { AuthService } from '../../../services/auth.service';
 import { catchError, takeUntil, switchMap } from 'rxjs/operators';
-import { Subject, throwError } from 'rxjs';
+import { Subject, throwError, of } from 'rxjs';
 import { NgClass, NgIf, CurrencyPipe, DatePipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -26,7 +26,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { of } from 'rxjs';
 import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
@@ -79,7 +78,6 @@ export class EOrdersListComponent implements OnInit, AfterViewInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
-        console.log('ngOnInit called');
         this.setupThemeToggle();
         this.checkAuthAndLoadOrders();
     }
@@ -131,35 +129,39 @@ export class EOrdersListComponent implements OnInit, AfterViewInit, OnDestroy {
                 takeUntil(this.unsubscribe$),
                 switchMap((token) => {
                     if (!token) {
-                        return throwError(() => new Error('No authentication token available'));
-                    }
-                    return of(token);
-                }),
-                takeUntil(this.unsubscribe$),
-                switchMap((token) => {
-                    if (!token) {
                         return throwError(
                             () => new Error('No authentication token available')
                         );
                     }
                     return of(token);
                 }),
+                switchMap((token) => {
+                    // ถ้ามี token ให้ทำการโหลดคำสั่งซื้อ
+                    return this.orderService.getOrders({
+                        page: 1,
+                        limit: 10,
+                        sortField: this.sortField,
+                        sortDirection: this.sortDirection as 'asc' | 'desc',
+                    });
+                }),
                 catchError((error) => {
                     if (error.status === 401) {
+                        // กรณีที่เกิด 401 Unauthorized ให้ทำการ refresh token
                         return this.handleUnauthorizedError();
                     }
                     return throwError(() => error);
                 })
             )
             .subscribe({
-                next: () => this.loadOrders(1, 10),
-                error: this.handleLoadOrdersError.bind(this),
+                next: (response) => this.handleLoadOrdersSuccess(response),
+                error: (error) => this.handleLoadOrdersError(error),
             });
     }
 
     private handleUnauthorizedError() {
         return this.authService.refreshToken().pipe(
             switchMap(() => {
+                // โหลดคำสั่งซื้ออีกครั้งหลังจาก refresh token สำเร็จ
                 return this.orderService.getOrders({
                     page: 1,
                     limit: 10,
@@ -175,10 +177,13 @@ export class EOrdersListComponent implements OnInit, AfterViewInit, OnDestroy {
         );
     }
 
-    private handleLoadOrdersSuccess(response: { orders: OrderDTO[], totalItems: number }): void {
+    private handleLoadOrdersSuccess(response: {
+        orders: OrderDTO[];
+        total: number;
+    }): void {
         console.log('API response:', response);
         this.dataSource.data = response.orders;
-        this.totalItems = response.totalItems;
+        this.totalItems = response.total;
     }
 
     private handleLoadOrdersError(error: unknown) {
@@ -228,7 +233,12 @@ export class EOrdersListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     private handleDeleteOrderError(error: unknown, id: number) {
         console.error('Error deleting order:', error);
-        if (typeof error === 'object' && error !== null && 'status' in error && error.status === 401) {
+        if (
+            typeof error === 'object' &&
+            error !== null &&
+            'status' in error &&
+            error.status === 401
+        ) {
             return this.authService
                 .refreshToken()
                 .pipe(switchMap(() => this.orderService.deleteOrder(id)));
@@ -252,14 +262,6 @@ export class EOrdersListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.sortField = sort.active || 'orderid';
         this.sortDirection = sort.direction || 'asc';
         this.loadOrders(this.paginator.pageIndex + 1, this.paginator.pageSize);
-    }
-
-    private compare(
-        a: number | string | Date,
-        b: number | string | Date,
-        isAsc: boolean
-    ): number {
-        return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
     }
 
     private loadOrders(page: number = 1, pageSize: number = 10): void {
@@ -286,10 +288,6 @@ export class EOrdersListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     showErrorAlert(message: string) {
         Swal.fire('Error', message, 'error');
-    }
-
-    showSuccessAlert(message: string) {
-        Swal.fire('Success', message, 'success');
     }
 
     onPageChange(event: PageEvent): void {
